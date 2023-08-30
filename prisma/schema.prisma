@@ -17,6 +17,8 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // Ordered by the created date.
+  @@index([createdAt])
 // Mapping the model to a table.
   @@map("posts")
 }
