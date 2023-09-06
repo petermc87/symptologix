@@ -1,34 +1,72 @@
-import Image from 'next/image'
+"use client"
+
 import styles from './page.module.css'
-import db from './modules/db'
-import { faker } from '@faker-js/faker'
-import { revalidatePath } from 'next/cache'
+import submitForm from '../../actions/submitForm'
 import Button from './components/Button'
+import { Form } from 'react-bootstrap'
+import { useTransition, useState, FormEvent } from 'react'
+import { Post } from '../../typings'
 
-export default async function Home() {
-  // Fetching data from the database.
-  const posts = await db.post.findMany({ orderBy: {createdAt: 'desc'}})
 
-  //  Server side function -> creates the post request to the database.
-  const generatePosts = async () => {
-    'use server'
 
-    await db.post.createMany({
-      data: [
-        { content: faker.lorem.sentence() },
-        { content: faker.lorem.sentence() },
-        { content: faker.lorem.sentence() },
-      ]
-    })
-    revalidatePath('/')
+export default function Home() {
+
+
+  // Enable transition hook for transitioning phase.
+  const [isPending, startTransition] = useTransition()
+
+  // Store the posts in state
+  const [allPosts, setAllPosts] = useState<Post[] | null | void >(null)
+
+  // Creating a post based on an input from the user.
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    // 'use server'
+     e.preventDefault()
+
+    // Creating a new FormData instance from react and createing the event as 
+    // a html type
+    const formData = new FormData(e.target as HTMLFormElement)
+    const inputQuery = formData.get("inputquery")?.toString()
+
+    
+    if (inputQuery) {
+      try {
+        const posts = await submitForm(inputQuery)
+        setAllPosts(posts)
+      } catch (error) {
+        console.error(error)
+      }
+    }
   }
+
 
   return (
     <main className={styles.main}>
-      <Button onClick={generatePosts}>Generate Posts</Button>
-      {posts.map(post => (
-        <div key={post.id}>{post.content}</div>
-      ))}
+      <Form onSubmit={(e) => startTransition(() => handleSubmit(e))}>
+
+        <Form.Group className='mb-3'>
+          <Form.Label>Create Input</Form.Label>
+          <Form.Control 
+            name='inputquery'
+            placeholder='Enter any text'
+          />
+        </Form.Group>
+        <Button type="submit" className='mb-3'>
+          Submit
+        </Button>
+      </Form>
+      {isPending ? 
+          <div>Submitting...</div>  
+         : ''}
+      { 
+        allPosts ?
+          allPosts.map((post) => {
+            return (
+              <div key={post.id}>{post.content}</div>
+            )
+          })
+        : ''}
     </main>
   )
 }
+
