@@ -6,3 +6,7 @@ export type Post = {
     id?: string
     content: string
 }
+
+export type Category = {
+    category?: string | undefined
+}

@@ -6,12 +6,10 @@ import Button from './components/Button'
 import { Form } from 'react-bootstrap'
 import { useTransition, useState, FormEvent } from 'react'
 import { Post } from '../../typings'
-
+import LogForm from './components/LogForm'
 
 
 export default function Home() {
-
-
   // Enable transition hook for transitioning phase.
   const [isPending, startTransition] = useTransition()
 
@@ -42,6 +40,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      <LogForm/>
       <Form onSubmit={(e) => startTransition(() => handleSubmit(e))}>
 
         <Form.Group className='mb-3'>
