@@ -14,8 +14,9 @@ Symptologix is app created for people to log smyptoms on the go on either mobile
 ## Planning
 
 ### ERD
+The diagram was created by first mapping out the `prisma` schema. This was then passed into the prisma to ERD generator here: [ERD Generator](https://prisma-erd.simonknott.de/).
 
-The diagram was created by first mapping out the `prisma` schema. This was then passed into the prisma to ERD generated here: [ERD Generator](https://prisma-erd.simonknott.de/).
+![ERD](public/images/erd.png)
 
 ### Wireframing
 Below shows a typical logging step using a wireflow. It shows steps to create a `Category`, `Subcategory` and `Entry`.
