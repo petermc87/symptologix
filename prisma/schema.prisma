@@ -1,24 +1,58 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "postgres"
+  url      = env("POSTGRES_URL")
 }
 
-model Post {
-  // Cuid is like nano id
-  id String @id @default(cuid())
-  content String 
+model User {
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  name           String
+  username       String   @unique
+  email          String   @unique
+  hashedPassword String?
+  logs           Log[]
+}
+
+model Log {
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id])
+  entries   Entry[]
+}
 
-  // Ordered by the created date.
-  @@index([createdAt])
-// Mapping the model to a table.
-  @@map("posts")
+model Entry {
+  id            Int         @id @default(autoincrement())
+  date          DateTime    @default(now())
+  entry         String?
+  logId         Int         @unique
+  log           Log         @relation(fields: [logId], references: [id])
+  subCategoryId Int         @unique
+  subcategory   SubCategory @relation(fields: [subCategoryId], references: [id])
+}
+
+model SubCategory {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  name       String   @unique
+  categoryId Int      @unique
+  category   Category @relation(fields: [categoryId], references: [id])
+  entries    Entry[]
+}
+
+model Category {
+  id            Int           @id @default(autoincrement())
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  name          String        @unique
+  subCategories SubCategory[]
 }
