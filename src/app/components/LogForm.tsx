@@ -16,8 +16,9 @@ export default function LogForm () {
         const catData = new FormData(e.target as HTMLFormElement)
         const category = catData.get('category')?.toString()
 
+        
         if (category) {
-            setCategories(categories.push(category))
+            setCategories(categories + category)
         }
         
 
