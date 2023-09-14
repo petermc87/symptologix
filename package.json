@@ -10,7 +10,8 @@
     "db:migrate": "TS_NODE_COMPILER_OPTIONS='{ \"module\": \"commonjs\"}' knex migrate:latest",
     "db:migrate:undo": "TS_NODE_COMPILER_OPTIONS='{ \"module\": \"commonjs\"}' knex migrate:down",
     "db:migrate:make": "TS_NODE_COMPILER_OPTIONS='{ \"module\": \"commonjs\"}' knex migrate:make",
-    "migrate:postgres": "dotenv -e .env.local pnpx prisma migrate dev"
+    "migrate:postgres": "dotenv -e .env.local pnpx prisma migrate dev",
+    "prisma:studio": "dotenv -e .env.local -- npx prisma studio"
   },
   "dependencies": {
     "@faker-js/faker": "^8.0.2",

@@ -1,20 +1,18 @@
-"use server"
+"use server";
 
-import db from '../src/app/modules/db'
+import db from "../src/app/modules/db";
 
+export default async function submitForm(submitForm: string) {
+  // Posting the new entry.
+  await db.category.create({
+    data: { name: submitForm },
+  });
 
-export default async function submitForm(e: string) {
-    // Save the event as a variable.
-    const newContent = e
+  // Fetching all posts from the database.
+  const categories = await db.category.findMany({
+    orderBy: { createdAt: "desc" },
+  });
 
-    // Posting the new entry.
-    await db.post.create({
-        data: {content: newContent}
-    })
-
-    // Fetching all posts from the database.
-    const posts = await db.post.findMany({ orderBy: {createdAt: 'desc'}})
-    
-    // Return the data posted.
-    return posts
+  // Return the data posted.
+  return categories;
 }
