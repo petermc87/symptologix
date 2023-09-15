@@ -1,8 +1,8 @@
 export type User = {
-  name: sstring | undefined;
-  username: string | undefined;
-  email: string | undefined;
-  password: string | undefined;
+  name: string;
+  username: string;
+  email: string;
+  password: string;
   logs: Log[];
 };
 
@@ -13,18 +13,26 @@ export type Log = {
 };
 
 export type Entry = {
-  entry: string | undefined;
+  entry: string;
   logId: integer;
   subCategoryId: integer;
 };
 
 export type Category = {
   name: string;
-  [key: string, key: integer]: Subcategory;
+  subCategories: SubCategory[];
 };
 
 export type Subcategory = {
-  name: string | undefined;
+  name: string;
   categoryId: integer;
   entries: Entry[];
 };
+
+//--- Alternate type for storing an array of a specific object. ---//
+// [{ entry, logId, subCategoryId }]: Entry; --> This wouldn;t work because its not tied to
+// the entries key within the Subcategory type.
+//
+//
+//--- Using TS out of the box Array type. ---//
+// entries: Array<{ entry: string; logId: integer; subCategoryId: integer }>;
