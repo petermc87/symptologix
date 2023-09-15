@@ -12,6 +12,9 @@ interface LoginForm {
   password: string;
 }
 
+// Declare prop types for passing useState variable as a prop.
+export type FormTypes = boolean;
+
 // NOTE: the landing page will have a login/signup button in the middle
 // or in the nav bar to make one of those appear
 
@@ -20,27 +23,25 @@ interface LoginForm {
 export default function Home() {
   // Create state that will deteremine whether its a login or signup form.
   // true = Login, false = Signup.
-  const [formState, setFormState] = useState<Boolean>(false);
+  const [formState, setFormState] = useState<FormTypes>(false);
 
   return (
     <main className={styles.main}>
       <div>
         {/* Set the state to usertype. NOTE: we dont need to set complex types. */}
         {/* We could use a boolean here. */}
-        <div onClick={() => setFormState(true)}>Login</div>or
-        <div onClick={() => setFormState(false)}>signup</div>
+        <div onClick={() => setFormState(false)}>Login</div>or
+        <div onClick={() => setFormState(true)}>signup</div>
       </div>
       {/* If our form is true, then we pass in props for login (part of user types), */}
       {/* and if its false, we pass in Signup form props (most of singup.) */}
       {formState ? (
         <>
-          login
-          <LoginForm />
+          <LoginForm state={formState} />
         </>
       ) : (
         <>
-          signup
-          <SingnUpForm />
+          <SingnUpForm state={formState} />
         </>
       )}
     </main>
