@@ -1,6 +1,8 @@
 import { Button, Form } from "react-bootstrap";
 import { FormTypes } from "../page";
 
+// Desctructure the props in the state variable being passed down.
+// This variable has been named state from page.tsx props being passed.
 type FormPropsType = {
   state: FormTypes;
 };
