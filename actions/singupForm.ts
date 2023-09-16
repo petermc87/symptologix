@@ -16,4 +16,7 @@ export default async function AuthController({ email, password }: User) {
   } catch (error) {
     console.error(error);
   }
+
+  if (checkEmail) {
+  }
 }
