@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { FormTypes } from "../page";
 
@@ -8,9 +9,33 @@ type FormPropsType = {
 };
 
 export default function LoginSingupForm({ state }: FormPropsType) {
+  // Create state to manage whether the button click was signup or login.
+  const [buttonState, setButtonState] = useState<Boolean>(false);
+
+  // The handle submit function will contain a statement to instigate
+  // either a login or signup.
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (buttonState) {
+      //Login state will be true
+    } else {
+      // Signup State
+      // Desctructure form types before passing it into the authController. Use Kiddo or
+      // mediamingle as an example.
+
+      // authController()
+
+      console.log("this is signup state");
+    }
+  };
+
   return (
     <>
-      <Form>
+      <Form
+        onSubmit={(e) => {
+          handleSubmit(e);
+        }}
+      >
         <Form.Group className="mb-2">
           {/* Name and username only show up as an option at signup. */}
           {state ? (
@@ -33,10 +58,27 @@ export default function LoginSingupForm({ state }: FormPropsType) {
             className="mb-2"
           />
         </Form.Group>
+
         {state ? (
-          <Button className="mb-1">SIGNUP</Button>
+          <Button
+            onClick={() => {
+              setButtonState(false);
+            }}
+            className="mb-1"
+            type="submit"
+          >
+            SIGNUP
+          </Button>
         ) : (
-          <Button className="mb-1">LOGIN</Button>
+          <Button
+            onClick={() => {
+              setButtonState(true);
+            }}
+            className="mb-1"
+            type="submit"
+          >
+            LOGIN
+          </Button>
         )}
       </Form>
     </>

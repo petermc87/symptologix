@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import { User } from "../typings";
 
 // Bring in email and password props from signup/login form components.
-export default async function AuthController({ email, password }: User) {
+export default async function authController({ email, password }: User) {
   // Destructure the email and password props here.
 
   // Create a try catch here to await an object a user coming back.
