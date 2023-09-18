@@ -5,7 +5,12 @@ import bcrypt from "bcrypt";
 import { User } from "../typings";
 
 // Bring in email and password props from signup/login form components.
-export default async function authController({ email, password }: User) {
+export default async function authController({
+  email,
+  password,
+  username,
+  name,
+}: User) {
   // Destructure the email and password props here.
 
   // Create a try catch here to await an object a user coming back.
@@ -27,15 +32,17 @@ export default async function authController({ email, password }: User) {
     const saltRounds = 10;
     let salted_password: any = await bcrypt.hash(password, saltRounds);
     let newUser;
+    console.log(salted_password);
     try {
       newUser = await db.user.create({
         data: {
           email: email,
           password: salted_password,
-          name: "",
-          username: "",
+          name: name,
+          username: username,
         },
       });
+      console.log(newUser);
     } catch (error) {
       console.error(error);
     }

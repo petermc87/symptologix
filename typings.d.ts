@@ -3,7 +3,7 @@ export type User = {
   username: string;
   email: string;
   password: string;
-  logs: Log[];
+  logs?: Log[];
 };
 
 export type Log = {

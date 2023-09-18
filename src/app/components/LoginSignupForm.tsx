@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import authController from "../../../actions/singupForm";
 import { FormTypes } from "../page";
 
 // Desctructure the props in the state variable being passed down.
@@ -14,8 +15,21 @@ export default function LoginSingupForm({ state }: FormPropsType) {
 
   // The handle submit function will contain a statement to instigate
   // either a login or signup.
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+
+    // Storing each target value in a variable to be passed down.
+    const target = e.target as typeof e.target & {
+      name: string;
+      email: string;
+      username: string;
+      password: any;
+    };
+    //-- EXAMPLE CODE FROM ANOTHER PROJECT. FOR REF ONLY --//
+    // // Setting the input type as a standard form Element.
+    // const data = new FormData(e.target as HTMLFormElement);
+    // const urlQuery = data.get("urlquery")?.toString().trim();
+
     if (buttonState) {
       //Login state will be true
     } else {
@@ -23,7 +37,7 @@ export default function LoginSingupForm({ state }: FormPropsType) {
       // Desctructure form types before passing it into the authController. Use Kiddo or
       // mediamingle as an example.
 
-      // authController()
+      authController(target);
 
       console.log("this is signup state");
     }
