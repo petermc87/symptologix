@@ -25,6 +25,7 @@ export default async function authController({
     console.error(error);
   }
 
+  // Statements based on the output of the check above.
   if (checkEmail) {
     return "Email Is Already taken.";
   } else {
@@ -46,5 +47,6 @@ export default async function authController({
     } catch (error) {
       console.error(error);
     }
+    return newUser;
   }
 }

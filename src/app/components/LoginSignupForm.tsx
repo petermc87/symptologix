@@ -15,31 +15,32 @@ export default function LoginSingupForm({ state }: FormPropsType) {
 
   // The handle submit function will contain a statement to instigate
   // either a login or signup.
-  const handleSubmit = (e: SyntheticEvent) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
     // Storing each target value in a variable to be passed down.
     const target = e.target as typeof e.target & {
-      name: string;
-      email: string;
-      username: string;
-      password: any;
+      name: { value: string };
+      email: { value: string };
+      username: { value: string };
+      password: { value: any };
     };
-    //-- EXAMPLE CODE FROM ANOTHER PROJECT. FOR REF ONLY --//
-    // // Setting the input type as a standard form Element.
-    // const data = new FormData(e.target as HTMLFormElement);
-    // const urlQuery = data.get("urlquery")?.toString().trim();
 
+    // Extracting the values from the form.
+    const name = target.name.value;
+    const email = target.email.value;
+    const username = target.username.value;
+    const password = target.password.value;
+
+    // Button for checking whether the client chooses login or signup on the landing page.
     if (buttonState) {
       //Login state will be true
     } else {
       // Signup State
       // Desctructure form types before passing it into the authController. Use Kiddo or
       // mediamingle as an example.
-
-      authController(target);
-
-      console.log("this is signup state");
+      const user = await authController({ email, password, username, name });
+      console.log(user);
     }
   };
 
