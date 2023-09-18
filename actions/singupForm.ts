@@ -33,7 +33,6 @@ export default async function authController({
     const saltRounds = 10;
     let salted_password: any = await bcrypt.hash(password, saltRounds);
     let newUser;
-    console.log(salted_password);
     try {
       newUser = await db.user.create({
         data: {
@@ -43,7 +42,6 @@ export default async function authController({
           username: username,
         },
       });
-      console.log(newUser);
     } catch (error) {
       console.error(error);
     }

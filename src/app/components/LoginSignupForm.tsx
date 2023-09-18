@@ -34,13 +34,13 @@ export default function LoginSingupForm({ state }: FormPropsType) {
 
     // Button for checking whether the client chooses login or signup on the landing page.
     if (buttonState) {
-      //Login state will be true
+      // --> Login state <-- //
+      // Will be true
     } else {
-      // Signup State
+      // --> Signup State <-- //
       // Desctructure form types before passing it into the authController. Use Kiddo or
       // mediamingle as an example.
       const user = await authController({ email, password, username, name });
-      console.log(user);
     }
   };
 
