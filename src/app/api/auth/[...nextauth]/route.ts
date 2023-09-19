@@ -1,4 +1,5 @@
 import db from "@/app/modules/db";
+import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
@@ -18,6 +19,7 @@ declare module "next-auth" {
   interface Session {
     user: {
       id: number | unknown;
+      username: string | unknown;
     };
   }
 }
@@ -71,6 +73,7 @@ const authOptions: NextAuthOptions = {
     // The sessions user id will be the token id
     session({ session, token }) {
       session.user.id = token.id;
+      session.user.username = token.username;
       return session;
     },
 
@@ -79,6 +82,7 @@ const authOptions: NextAuthOptions = {
       if (account) {
         token.accessToken = account.access_token;
         token.id = user.id;
+        token.username = (user as User).username;
       }
       return token;
     },
@@ -96,3 +100,4 @@ const authOptions: NextAuthOptions = {
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
+//  sdfgsdfgsdf

@@ -146,7 +146,7 @@ export default function LoginSingupForm({ state }: FormPropsType) {
   );
 }
 
-// // THIS DIDNT WORK: Persist the message component using localStorage. -> Add underneath state declaration.
+// //TODO: THIS DIDNT WORK: Persist the message component using localStorage. -> Add underneath state declaration.
 // useEffect(() => {
 //   if (emailExists) {
 //     // @ts-ignore
