@@ -8,12 +8,21 @@ import CredentialsProvider from "next-auth/providers/credentials";
 // This is because the types for next-auth have id as a string and not a user. Here, we
 // reassign the types.
 declare module "next-auth" {
+  // Types for destructuring the credentials in the authorize function.
   interface User {
     id: number;
-    password: string | undefined | null;
+    password: string | undefined | number | null;
     email: string | undefined | null;
   }
+  // Login session types for the ID.
+  interface Session {
+    user: {
+      id: number | unknown;
+    };
+  }
 }
+
+declare module "next-auth" {}
 
 const authOptions: NextAuthOptions = {
   // These could be google, or facebook, etc...
@@ -40,43 +49,50 @@ const authOptions: NextAuthOptions = {
 
         // Provided we have the email and password entered, using bcypt compare.
         if (user?.email && user?.password) {
-          console.log(user.email, user.password);
-          bcrypt.compare(
-            user?.password,
+          const isPasswordValid = await bcrypt.compare(
             credentials.password,
-            (err: any, user: any) => {
-              if (err) return err;
-              // Return the user object if the password matches!
-              if (user) {
-                console.log(user);
-                return user;
-              } else {
-                return null;
-              }
-            }
+            user.password
           );
+          // If the password is not valid, just return null.
+          if (!isPasswordValid) {
+            console.log("Not valid");
+            return null;
+          }
+          // Otherwise, its a success, so return the user object
+          return user;
         }
-        // Otherwise return null, like in the case of an invalid password.
+        // Otherwise return null, which would be other cases besides passowrd invalid.
         return null;
       },
     }),
   ],
+  // This will be instigated right after the account is retrieved.
+  callbacks: {
+    // The sessions user id will be the token id
+    session({ session, token }) {
+      session.user.id = token.id;
+      return session;
+    },
+
+    // Creating the token. Requires: user id for the tokend id.
+    jwt({ token, account, user }) {
+      if (account) {
+        token.accessToken = account.access_token;
+        token.id = user.id;
+      }
+      return token;
+    },
+  },
+  // Current page where signin is happening.
+  pages: {
+    signIn: "/",
+  },
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.JWT_SESSION_SECRET,
 };
 
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
-
-// if (user?.email && user?.password) {
-//   bcrypt.compare(
-//     user?.password,
-//     credentials.password,
-//     (err: any, data: any) => {
-//       if (err) return err;
-//       if (data) return data;
-//       else {
-//         return null;
-//       }
-//     }
-//   );
-// }

@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import { User } from "../typings";
 
 // Bring in email and password props from signup/login form components.
-export default async function authController({
+export default async function registerUser({
   email,
   password,
   username,
@@ -27,11 +27,11 @@ export default async function authController({
 
   // Statements based on the output of the check above.
   if (checkEmail) {
-    return "Email Is Already taken.";
+    return "Email already exists";
   } else {
     // Will add a new user to the database if the email is not already taken.
     const saltRounds = 10;
-    let salted_password: any = await bcrypt.hash(password, saltRounds);
+    let salted_password = await bcrypt.hash(password, saltRounds);
     let newUser;
     try {
       newUser = await db.user.create({
@@ -44,6 +44,7 @@ export default async function authController({
       });
     } catch (error) {
       console.error(error);
+      return "There was an error when trying to signup. Please try again";
     }
     return newUser;
   }

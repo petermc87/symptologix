@@ -18,8 +18,6 @@ export default function InputForm() {
     const formData = new FormData(e.target as HTMLFormElement);
     const inputQuery = formData.get("inputquery")?.toString();
 
-    console.log(inputQuery);
-
     //Converting the content to types for postgres.
     if (inputQuery) {
       try {
