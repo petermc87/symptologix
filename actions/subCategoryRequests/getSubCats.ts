@@ -2,16 +2,15 @@
 
 import db from "@/app/modules/db";
 
-// // Refactor to try out revalidation.
-// export const revalidate = 3;
-export default async function getSubCategories(categoryId: any) {
-  // const getSubCategories = cache(async (categoryId: any) => {
-  const subCategories = db.subCategory.findMany({
-    where: { categoryId: categoryId },
-  });
+export default async function getSubCategories() {
+  // OLD WAY: Filtering by cat id. This is more work!!
+  // const subCategories = db.subCategory.findMany({
+  //   where: { categoryId: categoryId },
+  // });
+
+  // BETTER WAY: Call all subcategories and filter by cat in the front end.
+  // Only one call needed!
+  const subCategories = db.subCategory.findMany();
 
   return subCategories;
 }
-
-// export default getSubCategories;
-// }

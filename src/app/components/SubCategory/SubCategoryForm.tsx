@@ -1,21 +1,23 @@
-import { Category, SubCategory } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { Category } from "@prisma/client";
+import { Dispatch } from "react";
 import { Button, ButtonGroup, Dropdown, Form } from "react-bootstrap";
 import getSubCategories from "../../../../actions/subCategoryRequests/getSubCats";
 import submitSubCat from "../../../../actions/subCategoryRequests/submitSubCat";
+import { Subcategory } from "../../../../typings";
 
 // Desctructure props passed down.
+//TODO: Update Restructure for state subCategories and setter SetAllSubcategories
 type SubCategoryProps = {
   category: Category;
+  subCategories: Subcategory[];
+  setAllSubCategories: Dispatch<any>;
 };
 
-export default function SubCategoryForm({ category }: SubCategoryProps) {
-  // Create state for storing all categories that were previously created
-  // for that category.
-  const [subCategories, setAllSubCategories] = useState<
-    SubCategory | null | any
-  >([]);
-
+export default function SubCategoryForm({
+  category,
+  subCategories,
+  setAllSubCategories,
+}: SubCategoryProps) {
   let categoryId: number;
   // Handle submit function to take in the subcat form element.
   const handleSubmit = async (e: any) => {
@@ -31,7 +33,7 @@ export default function SubCategoryForm({ category }: SubCategoryProps) {
       try {
         const returnedSubCategories = await submitSubCat({ name, categoryId });
         setAllSubCategories(returnedSubCategories);
-        const subCategories = await getSubCategories(categoryId);
+        const subCategories = await getSubCategories();
         setAllSubCategories(subCategories);
       } catch (error) {
         console.error(error);
@@ -39,22 +41,6 @@ export default function SubCategoryForm({ category }: SubCategoryProps) {
     }
   };
 
-  // Consider making one call to the database at the page level. This will mean that it will only be called once
-  // and refreshed once another subcategory is created.
-  useEffect(() => {
-    const getSubcategories = async () => {
-      try {
-        const subCategories = await getSubCategories(categoryId);
-
-        setAllSubCategories(subCategories);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getSubcategories();
-  }, []);
-
-  console.log(subCategories[1].name);
   return (
     <div>
       {subCategories ? (

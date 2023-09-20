@@ -4,6 +4,8 @@ import { FormEvent, useEffect, useState, useTransition } from "react";
 import { Form } from "react-bootstrap";
 import getCategories from "../../../actions/categoryRequests/getCats";
 import submitForm from "../../../actions/categoryRequests/submitCat";
+import getSubCategories from "../../../actions/subCategoryRequests/getSubCats";
+import { Subcategory } from "../../../typings";
 import Button from "./Button";
 import SubCategoryForm from "./SubCategory/SubCategoryForm";
 //TODO: Create a state that will manage shich input is being created (i.e. category, subcategory, or entry.)
@@ -15,6 +17,12 @@ export default function InputForm() {
   // Categories taken from the database and stored in state.
   // TODO: Create a serverside handler for getting cateogories list.
   const [categories, setCategories] = useState<Category[] | null>([]);
+
+  // Create state for storing all subCategories that were previously created
+  // for that category.
+  const [subCategories, setAllSubCategories] = useState<
+    Subcategory | null | any
+  >([]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     // 'use server'
@@ -46,9 +54,6 @@ export default function InputForm() {
     const allCategories = async () => {
       try {
         const results = await getCategories();
-        // if (!isCancelled) {
-        //   setCategories(results);
-        // }
         setCategories(results);
       } catch (error) {
         console.error(error);
@@ -56,7 +61,23 @@ export default function InputForm() {
     };
     allCategories();
   }, []);
-  console.log(categories);
+  // console.log(categories);
+
+  // Consider making one call to the database at the page level.
+  // This will mean that it will only be called once
+  // and refreshed once another subcategory is created.
+  useEffect(() => {
+    const getSubcategories = async () => {
+      try {
+        const subCategories = await getSubCategories();
+
+        setAllSubCategories(subCategories);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getSubcategories();
+  }, []);
   return (
     <>
       {/* --- ADD CATEGORIES AND MAP--- */}
@@ -77,7 +98,11 @@ export default function InputForm() {
                 <h2>{category.name}</h2>
 
                 {/* --- SUB CATEGORIES --- */}
-                <SubCategoryForm category={category} />
+                <SubCategoryForm
+                  category={category}
+                  subCategories={subCategories}
+                  setAllSubCategories={setAllSubCategories}
+                />
               </div>
             );
           })
