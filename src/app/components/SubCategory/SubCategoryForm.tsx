@@ -18,7 +18,7 @@ export default function SubCategoryForm({
   subCategories,
   setAllSubCategories,
 }: SubCategoryProps) {
-  let categoryId: number;
+  let categoryId: string;
   // Handle submit function to take in the subcat form element.
   const handleSubmit = async (e: any) => {
     e.preventDefault();

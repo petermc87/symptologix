@@ -7,15 +7,14 @@ export type User = {
 };
 
 export type Log = {
-  userId: integer;
+  userId: string;
   entries: Entry[];
-  userId: integer;
 };
 
 export type Entry = {
   entry: string;
-  logId: integer;
-  subCategoryId: integer;
+  logId: string;
+  subCategoryId: string;
 };
 
 export type Category = {
@@ -25,7 +24,7 @@ export type Category = {
 
 export type Subcategory = {
   name: string;
-  categoryId: integer;
+  categoryId: string;
   entries?: Entry[];
 };
 
