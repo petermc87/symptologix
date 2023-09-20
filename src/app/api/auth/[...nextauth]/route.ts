@@ -87,7 +87,7 @@ const authOptions: NextAuthOptions = {
       return token;
     },
   },
-  // Current page where signin is happening.
+  // // Current page where signin is happening.
   pages: {
     signIn: "/",
   },
@@ -100,4 +100,3 @@ const authOptions: NextAuthOptions = {
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
-//  sdfgsdfgsdf
