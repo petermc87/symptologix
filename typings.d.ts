@@ -26,7 +26,7 @@ export type Category = {
 export type Subcategory = {
   name: string;
   categoryId: integer;
-  entries: Entry[];
+  entries?: Entry[];
 };
 
 //--- Alternate type for storing an array of a specific object. ---//

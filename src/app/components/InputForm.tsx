@@ -5,6 +5,7 @@ import { Form } from "react-bootstrap";
 import getCategories from "../../../actions/categoryRequests/getCats";
 import submitForm from "../../../actions/categoryRequests/submitCat";
 import Button from "./Button";
+import SubCategoryForm from "./SubCategory/SubCategoryForm";
 //TODO: Create a state that will manage shich input is being created (i.e. category, subcategory, or entry.)
 
 export default function InputForm() {
@@ -52,6 +53,7 @@ export default function InputForm() {
   }, []);
   return (
     <>
+      {/* --- ADD CATEGORIES AND MAP--- */}
       <Form onSubmit={(e) => startTransition(() => handleSubmit(e))}>
         {isPending ? <div>Submitting...</div> : ""}
         <Form.Group className="mb-3">
@@ -64,7 +66,14 @@ export default function InputForm() {
       </Form>
       {categories
         ? categories?.map((category) => {
-            return <div>{category.name}</div>;
+            return (
+              <div key={category.id}>
+                <h2>{category.name}</h2>
+
+                {/* --- SUB CATEGORIES --- */}
+                <SubCategoryForm category={category} />
+              </div>
+            );
           })
         : ""}
     </>
