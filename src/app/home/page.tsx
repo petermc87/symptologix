@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 
 import { ReactNode } from "react";
 import InputForm from "../components/InputForm";
-
+import LogForm from "../components/LogForm/Logform";
 export default function Home() {
   const { data, status } = useSession();
   return (
@@ -15,6 +15,7 @@ export default function Home() {
             <h2>Welcome {data.user.username as ReactNode}</h2>
             <p>User ID: {data.user.id as ReactNode}</p>
             <InputForm />
+            <LogForm />
           </>
         )
       ) : (

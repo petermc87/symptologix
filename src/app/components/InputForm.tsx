@@ -24,6 +24,11 @@ export default function InputForm() {
     Subcategory | null | any
   >([]);
 
+  // Selected Subcat for Entry to a log.
+  const [selectedSubCat, setSelectedSubCat] = useState<
+    Subcategory | null | any
+  >();
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     // 'use server'
     e.preventDefault();
@@ -94,16 +99,30 @@ export default function InputForm() {
       {categories
         ? categories?.map((category) => {
             return (
-              <div key={category.id}>
-                <h2>{category.name}</h2>
+              <>
+                <div key={category.id}>
+                  <h2>{category.name}</h2>
 
-                {/* --- SUB CATEGORIES --- */}
-                <SubCategoryForm
-                  category={category}
-                  subCategories={subCategories}
-                  setAllSubCategories={setAllSubCategories}
-                />
-              </div>
+                  {/* --- SUB CATEGORIES --- */}
+                  <SubCategoryForm
+                    category={category}
+                    subCategories={subCategories}
+                    setAllSubCategories={setAllSubCategories}
+                    setSeletedSubCat={setSelectedSubCat}
+                  />
+                </div>
+
+                {/*  TODO: render the entry form here, only if the categorID in the Subcat
+               matches the category id. This means it will show the entry only in the Cat field
+               it falls under i.e. no duplicated entry fields. */}
+                {selectedSubCat && category.id === selectedSubCat.categoryId ? (
+                  <>
+                    <div key={selectedSubCat.id}>{selectedSubCat.name}</div>
+                  </>
+                ) : (
+                  ""
+                )}
+              </>
             );
           })
         : ""}
