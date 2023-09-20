@@ -1,21 +1,29 @@
 "use client";
 import { Category } from "@prisma/client";
 import { FormEvent, useEffect, useState, useTransition } from "react";
-import { Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import getCategories from "../../../actions/categoryRequests/getCats";
 import submitForm from "../../../actions/categoryRequests/submitCat";
+import submitNewLog from "../../../actions/logRequests/submitNewLog";
 import getSubCategories from "../../../actions/subCategoryRequests/getSubCats";
-import { Subcategory } from "../../../typings";
-import Button from "./Button";
+import { Subcategory, User } from "../../../typings";
+import EntryForm from "./EntryForm/EntryForm";
 import SubCategoryForm from "./SubCategory/SubCategoryForm";
 //TODO: Create a state that will manage shich input is being created (i.e. category, subcategory, or entry.)
 
-export default function InputForm() {
+// Types for the user object.
+type InputFormTypes = {
+  user: User;
+};
+
+export default function InputForm({ user }: InputFormTypes) {
+  // Declare the id here to make passing props to SubmitForm easier.
+  const userId = user.id;
   // Enable transition hook for transitioning phase.
   const [isPending, startTransition] = useTransition();
 
   // Categories taken from the database and stored in state.
-  // TODO: Create a serverside handler for getting cateogories list.
+  // Create a serverside handler for getting cateogories list.
   const [categories, setCategories] = useState<Category[] | null>([]);
 
   // Create state for storing all subCategories that were previously created
@@ -85,6 +93,13 @@ export default function InputForm() {
   }, []);
   return (
     <>
+      {/* --- CREATE NEW LOG --- */}
+      <>Create new log:</>
+      {/* TODO: We will create a new log that will got to the database. The log will be retrieved and  */}
+      {/* stored in state here. */}
+      <Button onClick={() => submitNewLog(userId)} variant="primary">
+        New Log
+      </Button>
       {/* --- ADD CATEGORIES AND MAP--- */}
       <Form onSubmit={(e) => startTransition(() => handleSubmit(e))}>
         {isPending ? <div>Submitting...</div> : ""}
@@ -112,12 +127,18 @@ export default function InputForm() {
                   />
                 </div>
 
-                {/*  TODO: render the entry form here, only if the categorID in the Subcat
-               matches the category id. This means it will show the entry only in the Cat field
-               it falls under i.e. no duplicated entry fields. */}
+                {/* NOTE: Render the entry form here, only if the categoryID in the Subcat
+               matches the category id. This means it will show the entry in the Cat field
+               it falls under only i.e. no duplicated entry fields. */}
                 {selectedSubCat && category.id === selectedSubCat.categoryId ? (
+                  //TODO: Create an Entry component.
                   <>
                     <div key={selectedSubCat.id}>{selectedSubCat.name}</div>
+                    {/* A new log is created when the first entry is created. This is based on 'create a new log' state/button */}
+                    {/* NOTE: This will change when auto schedule logging feature is created. 
+                    TODO: Create ternary that will block a new entry from being created until a New Log has been created.
+                    */}
+                    <EntryForm />
                   </>
                 ) : (
                   ""

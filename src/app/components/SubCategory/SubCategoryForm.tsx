@@ -66,7 +66,6 @@ export default function SubCategoryForm({
                             eventKey={i}
                             key={i}
                             onClick={() => {
-                              console.log("click");
                               setSeletedSubCat(subCategory);
                             }}
                           >
