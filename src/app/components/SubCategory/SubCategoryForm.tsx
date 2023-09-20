@@ -1,6 +1,6 @@
 import { Category, SubCategory } from "@prisma/client";
 import { useEffect, useState } from "react";
-import { Button, Dropdown, DropdownButton, Form } from "react-bootstrap";
+import { Button, ButtonGroup, Dropdown, Form } from "react-bootstrap";
 import getSubCategories from "../../../../actions/subCategoryRequests/getSubCats";
 import submitSubCat from "../../../../actions/subCategoryRequests/submitSubCat";
 
@@ -39,10 +39,13 @@ export default function SubCategoryForm({ category }: SubCategoryProps) {
     }
   };
 
+  // Consider making one call to the database at the page level. This will mean that it will only be called once
+  // and refreshed once another subcategory is created.
   useEffect(() => {
     const getSubcategories = async () => {
       try {
         const subCategories = await getSubCategories(categoryId);
+
         setAllSubCategories(subCategories);
       } catch (error) {
         console.error(error);
@@ -51,17 +54,25 @@ export default function SubCategoryForm({ category }: SubCategoryProps) {
     getSubcategories();
   }, []);
 
-  console.log(subCategories);
+  console.log(subCategories[1].name);
   return (
     <div>
-      {/* --- SUB CAT DROPDOWN FORM --- */}
-      <DropdownButton title="Subcategory">
-        {subCategories
-          ? subCategories?.map((subcategory: any, i: any) => {
-              <Dropdown.Item href={i}>{subcategory.name}</Dropdown.Item>;
-            })
-          : ""}
-      </DropdownButton>
+      {subCategories ? (
+        <Dropdown as={ButtonGroup}>
+          <Dropdown.Toggle id="dropdown-custom-1">Sub</Dropdown.Toggle>
+          <Dropdown.Menu className="super-colors">
+            {subCategories
+              ? subCategories.map((category: any, i: any) => {
+                  return (
+                    <Dropdown.Item eventKey={i}>{category.name}</Dropdown.Item>
+                  );
+                })
+              : ""}
+          </Dropdown.Menu>
+        </Dropdown>
+      ) : (
+        ""
+      )}
       {/* --- ADD SUB CAT --- */}
       <Form
         onSubmit={(e) => {

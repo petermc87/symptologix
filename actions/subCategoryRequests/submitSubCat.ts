@@ -14,7 +14,7 @@ export default async function submitSubCat({ name, categoryId }: Subcategory) {
   });
 
   // Fetching all categories from the database.
-  const subCategories = await getSubCategories();
+  const subCategories = await getSubCategories(categoryId);
 
   // Return the data posted.
   return subCategories;

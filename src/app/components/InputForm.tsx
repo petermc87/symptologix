@@ -39,11 +39,16 @@ export default function InputForm() {
     }
   };
 
-  // Call retrieve the
+  // Testing revalidation
+  // Call retrieve the categories everytime this page is visited.
   useEffect(() => {
+    // let isCancelled = false;
     const allCategories = async () => {
       try {
         const results = await getCategories();
+        // if (!isCancelled) {
+        //   setCategories(results);
+        // }
         setCategories(results);
       } catch (error) {
         console.error(error);
@@ -51,6 +56,7 @@ export default function InputForm() {
     };
     allCategories();
   }, []);
+  console.log(categories);
   return (
     <>
       {/* --- ADD CATEGORIES AND MAP--- */}
