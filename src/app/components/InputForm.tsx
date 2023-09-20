@@ -6,7 +6,7 @@ import getCategories from "../../../actions/categoryRequests/getCats";
 import submitForm from "../../../actions/categoryRequests/submitCat";
 import submitNewLog from "../../../actions/logRequests/submitNewLog";
 import getSubCategories from "../../../actions/subCategoryRequests/getSubCats";
-import { Subcategory, User } from "../../../typings";
+import { Log, Subcategory, User } from "../../../typings";
 import EntryForm from "./EntryForm/EntryForm";
 import SubCategoryForm from "./SubCategory/SubCategoryForm";
 //TODO: Create a state that will manage shich input is being created (i.e. category, subcategory, or entry.)
@@ -14,9 +14,15 @@ import SubCategoryForm from "./SubCategory/SubCategoryForm";
 // Types for the user object.
 type InputFormTypes = {
   user: User;
+  currentLogInProgress: Log | null;
+  setCurrentLogInProgress: any;
 };
 
-export default function InputForm({ user }: InputFormTypes) {
+export default function InputForm({
+  user,
+  currentLogInProgress,
+  setCurrentLogInProgress,
+}: InputFormTypes) {
   // Declare the id here to make passing props to SubmitForm easier.
   const userId = user.id;
   // Enable transition hook for transitioning phase.
@@ -36,6 +42,9 @@ export default function InputForm({ user }: InputFormTypes) {
   const [selectedSubCat, setSelectedSubCat] = useState<
     Subcategory | null | any
   >();
+
+  // NOTE: For a log thats in progress that hasnt been submitted after a user logs out,
+  // create another element in the schema to check if the log has been submitted or not
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     // 'use server'
@@ -60,6 +69,19 @@ export default function InputForm({ user }: InputFormTypes) {
     }
   };
 
+  const handleSubmitLog = async (e: any) => {
+    e.preventDefault();
+    try {
+      if (userId) {
+        const currentLog = await submitNewLog(userId);
+        setCurrentLogInProgress(currentLog);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  // console.log(currentLogInProgress);
+
   // Testing revalidation
   // Call retrieve the categories everytime this page is visited.
   useEffect(() => {
@@ -74,11 +96,7 @@ export default function InputForm({ user }: InputFormTypes) {
     };
     allCategories();
   }, []);
-  // console.log(categories);
-
   // Consider making one call to the database at the page level.
-  // This will mean that it will only be called once
-  // and refreshed once another subcategory is created.
   useEffect(() => {
     const getSubcategories = async () => {
       try {
@@ -91,15 +109,26 @@ export default function InputForm({ user }: InputFormTypes) {
     };
     getSubcategories();
   }, []);
+
   return (
     <>
       {/* --- CREATE NEW LOG --- */}
-      <>Create new log:</>
-      {/* TODO: We will create a new log that will got to the database. The log will be retrieved and  */}
+
+      {/* NOTE: We will create a new log that will got to the database. The log will be retrieved and  */}
       {/* stored in state here. */}
-      <Button onClick={() => submitNewLog(userId)} variant="primary">
-        New Log
-      </Button>
+
+      {currentLogInProgress === null ? (
+        <>
+          <>Create new log:</>
+          <Button onClick={(e) => handleSubmitLog(e)} variant="primary">
+            New Log
+          </Button>
+        </>
+      ) : (
+        ""
+      )}
+      <div>----------------------------------------------------</div>
+
       {/* --- ADD CATEGORIES AND MAP--- */}
       <Form onSubmit={(e) => startTransition(() => handleSubmit(e))}>
         {isPending ? <div>Submitting...</div> : ""}
@@ -111,6 +140,11 @@ export default function InputForm({ user }: InputFormTypes) {
           Submit
         </Button>
       </Form>
+      <div>______________________________________________________</div>
+      <div>
+        Select a subcategory below to log a new entry. You can also create your
+        own sub category
+      </div>
       {categories
         ? categories?.map((category) => {
             return (
@@ -134,10 +168,8 @@ export default function InputForm({ user }: InputFormTypes) {
                   //TODO: Create an Entry component.
                   <>
                     <div key={selectedSubCat.id}>{selectedSubCat.name}</div>
-                    {/* A new log is created when the first entry is created. This is based on 'create a new log' state/button */}
-                    {/* NOTE: This will change when auto schedule logging feature is created. 
-                    TODO: Create ternary that will block a new entry from being created until a New Log has been created.
-                    */}
+
+                    {/*---- Is this where the key props is showing a warning? ----*/}
                     <EntryForm />
                   </>
                 ) : (
@@ -147,6 +179,8 @@ export default function InputForm({ user }: InputFormTypes) {
             );
           })
         : ""}
+      {/* A new log is created when the first entry is created. This is based on 'create a new log' state/button 
+                    NOTE: This will change when auto schedule logging feature is created.  */}
     </>
   );
 }
