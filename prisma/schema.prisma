@@ -25,7 +25,7 @@ model Log {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   content   String
-  userId    String   @unique
+  userId    String
   user      User     @relation(fields: [userId], references: [id])
   entries   Entry[]
 }
@@ -34,9 +34,9 @@ model Entry {
   id            String      @id @default(cuid())
   date          DateTime    @default(now())
   entry         String?
-  logId         String      @unique
+  logId         String
   log           Log         @relation(fields: [logId], references: [id])
-  subCategoryId String      @unique
+  subCategoryId String
   subcategory   SubCategory @relation(fields: [subCategoryId], references: [id])
 }
 
@@ -45,7 +45,7 @@ model SubCategory {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   name       String   @unique
-  categoryId String   @unique
+  categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
   entries    Entry[]
 }

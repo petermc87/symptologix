@@ -48,10 +48,15 @@ export default function SubCategoryForm({
           <Dropdown.Toggle id="dropdown-custom-1">Sub</Dropdown.Toggle>
           <Dropdown.Menu className="super-colors">
             {subCategories
-              ? subCategories.map((category: any, i: any) => {
-                  return (
-                    <Dropdown.Item eventKey={i}>{category.name}</Dropdown.Item>
-                  );
+              ? subCategories.map((subCategory: any, i: any) => {
+                  // Add an if statement here to filter only by the sub categories that match the categories.
+                  if (category.id === subCategory.categoryId) {
+                    return (
+                      <Dropdown.Item eventKey={i} key={i}>
+                        {subCategory.name}
+                      </Dropdown.Item>
+                    );
+                  }
                 })
               : ""}
           </Dropdown.Menu>

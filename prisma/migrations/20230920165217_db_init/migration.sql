@@ -61,19 +61,7 @@ CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Log_userId_key" ON "Log"("userId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Entry_logId_key" ON "Entry"("logId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Entry_subCategoryId_key" ON "Entry"("subCategoryId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "SubCategory_name_key" ON "SubCategory"("name");
-
--- CreateIndex
-CREATE UNIQUE INDEX "SubCategory_categoryId_key" ON "SubCategory"("categoryId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
