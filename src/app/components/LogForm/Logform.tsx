@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import deleteEntryBackend from "../../../../actions/entryRequests/deleteEntry";
+import updateEntryBackend from "../../../../actions/entryRequests/updateEntry";
 import deleteLogBackend from "../../../../actions/logRequests/deleteLog";
 import getLog from "../../../../actions/logRequests/getLog";
-import { Log, Subcategory } from "../../../../typings";
+import { Entry, Log, Subcategory } from "../../../../typings";
 import DangerModal from "../modal/dangerModal";
 
 type LogFormTypes = {
@@ -29,6 +30,12 @@ export default function LogForm({
   // Handlers for the modal state
   const handleClose = () => setShow(false);
   const handleOpen = () => setShow(true);
+
+  // We handle the entry state by showing it in an input container and updating the state
+  const [currentEntry, setCurrentEntry] = useState<Entry | undefined | any>();
+
+  // We have an input form that will be shown on click.
+  const [showEditEntry, setShowEditEntry] = useState(false);
 
   // When the entry is submitted, we search the subCategories state array that are stored in cache so
   // the object can be searched here, matched with the id and the name displayed.
@@ -68,6 +75,20 @@ export default function LogForm({
     setCurrentLogInProgress(updatedLog);
   };
 
+  // Create an updater function that will take in the new data for entry and
+  // post it to the database. This will also get the log again.
+  const updateEntry = async (e: any, id: string) => {
+    e.preventDefault();
+    // // Test the function is working.
+    // console.log(id);
+    // Update with the new state.
+    await updateEntryBackend(id, currentEntry.entry);
+    // Retrieving the log from the updated log from the databse.
+    const updatedLog = await getLog(currentLogInProgress.id);
+    setCurrentLogInProgress(updatedLog);
+  };
+
+  // Add update entry by using the same methods from yum2me
   return (
     <>
       {currentLogInProgress ? (
@@ -109,8 +130,33 @@ export default function LogForm({
                     <div className="subcat" key={entry.id}>
                       {name}
                     </div>
+                    {/* This is where the edit entry will be shown and will replace the current text. */}
                     <div className="description" key={entry.id + 1}>
-                      {entry.entry}
+                      {showEditEntry ? (
+                        // This will be shown when the edit button is
+                        <Form
+                          onSubmit={(e) => {
+                            setShowEditEntry(false);
+                            updateEntry(e, entry.id);
+                          }}
+                        >
+                          {/* Edit in place field for the current entry. */}
+                          <Form.Group>
+                            <Form.Control
+                              value={currentEntry.entry}
+                              placeholder="entry"
+                              onChange={(e) => {
+                                setCurrentEntry({
+                                  ...currentEntry,
+                                  entry: e.target.value,
+                                });
+                              }}
+                            />
+                          </Form.Group>
+                        </Form>
+                      ) : (
+                        <>{entry.entry}</>
+                      )}
                     </div>
                     <div className="buttons" key={entry.id + 2}>
                       {/* Add a prompt window that will ask 'if your're sure'. Use  */}
@@ -128,7 +174,15 @@ export default function LogForm({
                       >
                         Del
                       </Button>
-                      <Button>Edit</Button>
+                      {/* Set the current entry here. */}
+                      <Button
+                        onClick={() => {
+                          setCurrentEntry(entry);
+                          setShowEditEntry(true);
+                        }}
+                      >
+                        Edit
+                      </Button>
                     </div>
                   </div>
                 );

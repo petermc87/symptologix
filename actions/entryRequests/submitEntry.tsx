@@ -4,7 +4,7 @@ import { Log, Subcategory } from "../../typings";
 import getLog from "../logRequests/getLog";
 
 type SubmitEntryProps = {
-  selectedSubCat: Subcategory;
+  selectedSubCat: Subcategory | any;
   inputQuery: string;
   currentLogInProgress: Log | null;
 };

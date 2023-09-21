@@ -29,7 +29,7 @@ export type Category = {
 };
 
 export type Subcategory = {
-  id: string;
+  id?: string;
   name: string;
   categoryId: string;
   entries?: Entry[];
