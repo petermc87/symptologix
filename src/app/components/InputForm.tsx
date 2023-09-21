@@ -167,10 +167,14 @@ export default function InputForm({
                 {selectedSubCat && category.id === selectedSubCat.categoryId ? (
                   //TODO: Create an Entry component.
                   <>
-                    <div key={selectedSubCat.id}>{selectedSubCat.name}</div>
-
                     {/*---- Is this where the key props is showing a warning? ----*/}
-                    <EntryForm />
+                    {/* EntryForm will take in the Log state object and setLog setter. This will get
+                    refreshed in the entry form with a get request for the log. The Subcategory State is also passed in.*/}
+                    <EntryForm
+                      currentLogInProgress={currentLogInProgress}
+                      setCurrentLoginProgress={setCurrentLogInProgress}
+                      selectedSubCat={selectedSubCat}
+                    />
                   </>
                 ) : (
                   ""
@@ -179,8 +183,6 @@ export default function InputForm({
             );
           })
         : ""}
-      {/* A new log is created when the first entry is created. This is based on 'create a new log' state/button 
-                    NOTE: This will change when auto schedule logging feature is created.  */}
     </>
   );
 }

@@ -5,6 +5,9 @@ export default async function getLog(id: string) {
     where: {
       id: id,
     },
+    include: {
+      entries: true,
+    },
   });
   return log;
 }

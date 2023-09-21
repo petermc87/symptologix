@@ -8,6 +8,7 @@ export type User = {
 };
 
 export type Log = {
+  id: string;
   createdAt: string;
   userId: string;
   content?: string;
@@ -15,6 +16,8 @@ export type Log = {
 };
 
 export type Entry = {
+  id: string;
+  date: any;
   entry: string;
   logId: string;
   subCategoryId: string;
@@ -26,6 +29,7 @@ export type Category = {
 };
 
 export type Subcategory = {
+  id: string;
   name: string;
   categoryId: string;
   entries?: Entry[];

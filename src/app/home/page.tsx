@@ -35,7 +35,9 @@ export default function Home() {
               currentLogInProgress={currentLogInProgress}
               setCurrentLogInProgress={setCurrentLogInProgress}
             />
-            <div>----------------------------------------------------</div>
+            <div>
+              _________________________________________________________________________________
+            </div>
             {/* Put the current log obejct state here and pass it down the InputForm and LogForm. */}
             <LogForm
               currentLogInProgress={currentLogInProgress}
