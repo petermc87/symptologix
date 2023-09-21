@@ -16,12 +16,16 @@ type InputFormTypes = {
   user: User;
   currentLogInProgress: Log | null;
   setCurrentLogInProgress: any;
+  subCategories: Subcategory[];
+  setAllSubCategories: any;
 };
 
 export default function InputForm({
   user,
   currentLogInProgress,
   setCurrentLogInProgress,
+  subCategories,
+  setAllSubCategories,
 }: InputFormTypes) {
   // Declare the id here to make passing props to SubmitForm easier.
   const userId = user.id;
@@ -31,12 +35,6 @@ export default function InputForm({
   // Categories taken from the database and stored in state.
   // Create a serverside handler for getting cateogories list.
   const [categories, setCategories] = useState<Category[] | null>([]);
-
-  // Create state for storing all subCategories that were previously created
-  // for that category.
-  const [subCategories, setAllSubCategories] = useState<
-    Subcategory | null | any
-  >([]);
 
   // Selected Subcat for Entry to a log.
   const [selectedSubCat, setSelectedSubCat] = useState<

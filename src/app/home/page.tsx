@@ -1,18 +1,24 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { ReactNode, useState } from "react";
-import { Log } from "../../../typings";
+import { Log, Subcategory } from "../../../typings";
 import InputForm from "../components/InputForm";
 import LogForm from "../components/LogForm/Logform";
 
 export default function Home() {
   const { data, status } = useSession();
 
-  // TODO: Create state for storing the log in progress. If there is a log in progress,
+  // State for storing the log in progress. If there is a log in progress,
   // the the New Log button will dissappear below.
   const [currentLogInProgress, setCurrentLogInProgress] = useState<Log | null>(
     null
   );
+
+  // State for storing all subCategories that were previously created
+  // for that category.
+  // NOTE: These props are at the top level so that they can be used in LogForm
+  // as well as the general input form.
+  const [subCategories, setAllSubCategories] = useState<Subcategory[]>([]);
 
   let userData: any;
   try {
@@ -34,6 +40,8 @@ export default function Home() {
               user={userData.user}
               currentLogInProgress={currentLogInProgress}
               setCurrentLogInProgress={setCurrentLogInProgress}
+              subCategories={subCategories}
+              setAllSubCategories={setAllSubCategories}
             />
             <div>
               _________________________________________________________________________________
@@ -42,6 +50,7 @@ export default function Home() {
             <LogForm
               currentLogInProgress={currentLogInProgress}
               setCurrentLogInProgress={setCurrentLogInProgress}
+              subCategories={subCategories}
             />
           </>
         )
