@@ -5,6 +5,7 @@ type DangerModalTypes = {
   handleClose: () => void;
   handleOpen: () => void;
   deleteEntry: (id: string) => void;
+  deleteLog: (id: string) => void;
   elementName: string;
   id: string;
 };
@@ -15,6 +16,7 @@ export default function DangerModal({
   show,
   handleClose,
   deleteEntry,
+  deleteLog,
   id,
 }: DangerModalTypes) {
   //Pass down a variable to be changed here.Looks like this option doesnt make much sense.
@@ -36,7 +38,7 @@ export default function DangerModal({
         </Modal.Header>
         <Modal.Body>
           You are about to delete this {elementName} forever, do you really want
-          that do this?
+          to do this?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -45,7 +47,12 @@ export default function DangerModal({
           <Button
             variant="primary"
             onClick={() => {
-              deleteEntry(id);
+              if (elementName === "entry") {
+                deleteEntry(id);
+              } else {
+                // Add deleteLog function here.
+                deleteLog(id);
+              }
               handleClose();
             }}
           >
