@@ -28,6 +28,11 @@ export default function Home() {
   } catch (error: any) {
     console.error(error);
   }
+
+  // Get the current log refreshed. Use a handler function.
+  // will get passed down to the log form. We dont need the setCurrentLogInProgress setter
+  // because we are setting it here.
+
   return (
     <>
       {status ? (

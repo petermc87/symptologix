@@ -45,7 +45,6 @@ export default function InputForm({
   // create another element in the schema to check if the log has been submitted or not
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    // 'use server'
     e.preventDefault();
 
     // Creating a new FormData instance from react and createing the event as
@@ -78,7 +77,6 @@ export default function InputForm({
       console.error(error);
     }
   };
-  // console.log(currentLogInProgress);
 
   // Testing revalidation
   // Call retrieve the categories everytime this page is visited.
@@ -118,7 +116,11 @@ export default function InputForm({
       {currentLogInProgress === null ? (
         <>
           <>Create new log:</>
-          <Button onClick={(e) => handleSubmitLog(e)} variant="primary">
+          <Button
+            key={123}
+            onClick={(e) => handleSubmitLog(e)}
+            variant="primary"
+          >
             New Log
           </Button>
         </>
@@ -148,7 +150,7 @@ export default function InputForm({
             return (
               <>
                 <div key={category.id}>
-                  <h2>{category.name}</h2>
+                  <h2 key={category.id + 1}>{category.name}</h2>
 
                   {/* --- SUB CATEGORIES --- */}
                   <SubCategoryForm

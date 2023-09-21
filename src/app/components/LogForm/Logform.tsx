@@ -1,7 +1,12 @@
+import { useState } from "react";
+import { Button } from "react-bootstrap";
+import deleteEntryBackend from "../../../../actions/entryRequests/deleteEntry";
+import getLog from "../../../../actions/logRequests/getLog";
 import { Log, Subcategory } from "../../../../typings";
+import DangerModal from "../modal/dangerModal";
 
 type LogFormTypes = {
-  currentLogInProgress: Log | null;
+  currentLogInProgress: Log | null | any;
   setCurrentLogInProgress: any;
   subCategories: Subcategory[];
 };
@@ -11,6 +16,16 @@ export default function LogForm({
   setCurrentLogInProgress,
   subCategories,
 }: LogFormTypes) {
+  //Show state for modal
+  const [show, setShow] = useState(false);
+
+  // ID for delete
+  const [id, setId] = useState("");
+
+  // Handlers for the modal state
+  const handleClose = () => setShow(false);
+  const handleOpen = () => setShow(true);
+
   // When the entry is submitted, we search the subCategories state array that are stored in cache so
   // the object can be searched here, matched with the id and the name displayed.
   // This avoids another database query.
@@ -31,6 +46,16 @@ export default function LogForm({
     return name;
   };
 
+  // Add a delete method for an entry.
+  const deleteEntry = async (id: string) => {
+    // Call the backend request.
+    await deleteEntryBackend(id);
+
+    // Retrieving the log from the updated log from the databse.
+    const updatedLog = await getLog(currentLogInProgress.id);
+    setCurrentLogInProgress(updatedLog);
+  };
+
   return (
     <>
       {currentLogInProgress ? (
@@ -38,7 +63,9 @@ export default function LogForm({
           <div className="log" key={currentLogInProgress.id}>
             {" "}
             <strong>New Log:</strong>{" "}
-            {currentLogInProgress?.createdAt.toString()}
+            {currentLogInProgress
+              ? currentLogInProgress?.createdAt.toString()
+              : ""}
             <div className="entries" key={currentLogInProgress.id}>
               <div className="headings" key={currentLogInProgress.id + 1}>
                 <h4>SubCat</h4>
@@ -47,7 +74,7 @@ export default function LogForm({
               </div>
 
               {/* Add in the map here for the rest of the entry components. */}
-              {currentLogInProgress.entries?.map((entry) => {
+              {currentLogInProgress.entries?.map((entry: any) => {
                 // Run a mapping function here that will match the subcat id with
                 // the id of the subcat in the entry object.
 
@@ -63,14 +90,38 @@ export default function LogForm({
                       {entry.entry}
                     </div>
                     <div className="buttons" key={entry.id + 2}>
-                      <button>Del</button>
-                      <button>Edit</button>
+                      {/* Add a prompt window that will ask 'if your're sure'. Use  */}
+                      {/* a statement to check if ok, the instigate the delete method.  */}
+                      <Button
+                        onClick={() => {
+                          // Use modal window from react bootstrap. Call a seperate component with
+                          // text passed in.
+                          // Set the id state and open the modal. The delete button in the modal will
+                          // call the delete function, which will take in the current id state
+                          setId(entry.id);
+                          setShow(true);
+                        }}
+                      >
+                        Del
+                      </Button>
+                      <Button>Edit</Button>
                     </div>
                   </div>
                 );
               })}
             </div>
           </div>
+          {/* Need to ceate another state variable store the id to be passed into the delete function.
+          This needs to be stored on click of the delete button on the log form.
+          */}
+          <DangerModal
+            show={show}
+            handleClose={handleClose}
+            handleOpen={handleOpen}
+            elementName="entry"
+            deleteEntry={deleteEntry}
+            id={id}
+          />
         </>
       ) : (
         ""
