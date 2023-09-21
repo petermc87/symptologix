@@ -83,6 +83,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  padding: 1rem;
 }
 
 body {
@@ -128,4 +129,7 @@ a {
 .entry > div {
   /* max-width: 5rem; */
   text-align: center;
+}
+.headings > h4 {
+  text-decoration: underline;
 }
