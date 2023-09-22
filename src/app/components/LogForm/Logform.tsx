@@ -2,7 +2,10 @@ import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import deleteEntryBackend from "../../../../actions/entryRequests/deleteEntry";
 import updateEntryBackend from "../../../../actions/entryRequests/updateEntry";
-import deleteLogBackend from "../../../../actions/logRequests/deleteLog";
+import {
+  deleteLogBackend,
+  deleteLogWithEntries,
+} from "../../../../actions/logRequests/deleteLog";
 import getLog from "../../../../actions/logRequests/getLog";
 import { Entry, Log, Subcategory } from "../../../../typings";
 import DangerModal from "../modal/dangerModal";
@@ -69,7 +72,11 @@ export default function LogForm({
 
   // Delete method for log.
   const deleteLog = async (id: string) => {
-    await deleteLogBackend(id);
+    if (currentLogInProgress.entries) {
+      await deleteLogWithEntries(id);
+    } else {
+      await deleteLogBackend(id);
+    }
 
     const updatedLog = await getLog(currentLogInProgress.id);
     setCurrentLogInProgress(updatedLog);
@@ -97,13 +104,20 @@ export default function LogForm({
             {" "}
             <strong>New Log:</strong>{" "}
             <header className="log-header">
+              {/* Making the createdAt date a string outputted to the screen. */}
               {currentLogInProgress
                 ? currentLogInProgress?.createdAt.toString()
                 : ""}{" "}
               <Button
                 onClick={() => {
                   setId(currentLogInProgress.id);
-                  setDeleteElement("log");
+                  // Set a conditional to show whether its an empty log or a log
+                  // with entries being deleted.
+                  if (currentLogInProgress.entries) {
+                    setDeleteElement("log and its associated entries");
+                  } else {
+                    setDeleteElement("log");
+                  }
                   setShow(true);
                 }}
               >
