@@ -32,6 +32,7 @@ export default function DangerModal({
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        key={id}
       >
         <Modal.Header closeButton>
           <Modal.Title>Danger!</Modal.Title>

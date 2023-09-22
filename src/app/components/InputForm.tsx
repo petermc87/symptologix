@@ -130,7 +130,7 @@ export default function InputForm({
       <div>----------------------------------------------------</div>
 
       {/* --- ADD CATEGORIES AND MAP--- */}
-      <Form onSubmit={(e) => startTransition(() => handleSubmit(e))}>
+      <Form onSubmit={(e) => startTransition(() => handleSubmit(e))} key={321}>
         {isPending ? <div>Submitting...</div> : ""}
         <Form.Group className="mb-3">
           <Form.Label>Create Category</Form.Label>

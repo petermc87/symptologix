@@ -72,6 +72,7 @@ export default function LogForm({
 
   // Delete method for log.
   const deleteLog = async (id: string) => {
+    // Performing delete action on whether there are entries or not.
     if (currentLogInProgress.entries) {
       await deleteLogWithEntries(id);
     } else {
@@ -153,6 +154,7 @@ export default function LogForm({
                             setShowEditEntry(false);
                             updateEntry(e, entry.id);
                           }}
+                          key={currentLogInProgress.id + 5}
                         >
                           {/* Edit in place field for the current entry. */}
                           <Form.Group>
