@@ -52,8 +52,10 @@ export default function Home() {
       )}
       <div className={styles.heroContainer}>
         <div className={styles.heroContainer}>
-          <h1>Be In Control Of You Symptoms</h1>
-          <Button>Sign Up</Button>
+          <div className={styles.heroContents}>
+            <h1 className={styles.heroText}>Be In Control Of You Symptoms</h1>
+            <Button>Sign Up</Button>
+          </div>
         </div>
       </div>
     </main>
