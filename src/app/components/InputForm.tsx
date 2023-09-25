@@ -14,7 +14,7 @@ import SubCategoryForm from "./SubCategory/SubCategoryForm";
 // Types for the user object.
 type InputFormTypes = {
   user: User;
-  currentLogInProgress: Log | null;
+  currentLogInProgress: Log;
   setCurrentLogInProgress: any;
   subCategories: Subcategory[];
   setAllSubCategories: any;

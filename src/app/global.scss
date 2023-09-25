@@ -14,6 +14,9 @@ $gold: #ffe342;
 $light-red: #ff9595;
 $light-green: #00c2a8;
 
+// Font
+$font: "Lineration Sans", sans-serif;
+
 // Variables
 :root {
   // Color Vars.
@@ -37,4 +40,8 @@ $light-green: #00c2a8;
   --table-background: #{$lightest-purple};
   --bar-chart-light: #{$light-hazy-purple};
   --bar-chart-dark: #{$dark-blue};
+}
+
+* {
+  font-family: $font;
 }

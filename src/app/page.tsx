@@ -4,7 +4,7 @@ import {
   default as LoginForm,
   default as SingnUpForm,
 } from "./components/LoginSignupForm";
-import styles from "./page.module.css";
+import "./global.scss";
 
 // Create interface for both signup and login forms
 interface LoginForm {
@@ -26,7 +26,7 @@ export default function Home() {
   const [formState, setFormState] = useState<FormTypes>(false);
 
   return (
-    <main className={styles.main}>
+    <main>
       <div>
         {/* Set the state to usertype. NOTE: we dont need to set complex types. */}
         {/* We could use a boolean here. */}
