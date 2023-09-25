@@ -1,0 +1,12 @@
+@use "./variables" as var;
+
+%smallBoldText {
+  color: var.$dark-blue;
+  font-size: var.$small-bold-text;
+  font-weight: var.$bold-text;
+}
+
+%smallHeadingText {
+  color: var.$light-hazy-purple;
+  font-weight: var.$bold-text;
+}

@@ -3,7 +3,7 @@ import { SyntheticEvent, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import registerUser from "../../../actions/singupForm";
 import { FormTypes } from "../page";
-
+import styles from "./LoginSingupForm.module.scss";
 // Desctructure the props in the state variable being passed down.
 // This variable has been named state from page.tsx props being passed.
 type FormPropsType = {
@@ -90,58 +90,83 @@ export default function LoginSingupForm({ state }: FormPropsType) {
 
   return (
     <>
-      <Form
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
-      >
-        <Form.Group className="mb-2">
-          {/* Name and username only show up as an option at signup. */}
-          {state ? (
-            <>
-              <Form.Control name="name" placeholder="Name" className="mb-2" />
+      <div className={styles.fullWrapper}>
+        SymptologiX
+        <div className={styles.loginWrapper}>
+          {state ? <p> Sign Up</p> : <p>Log In</p>}
+          <Form
+            onSubmit={(e) => {
+              handleSubmit(e);
+            }}
+            id={styles.formContainer}
+          >
+            <Form.Group className="mb-3">
+              {/* Name and username only show up as an option at signup. */}
+              {state ? (
+                <>
+                  <Form.Control
+                    name="name"
+                    placeholder="Name"
+                    className="mb-3"
+                  />
+                  <Form.Control
+                    name="username"
+                    placeholder="Username"
+                    className="mb-3"
+                  />
+                </>
+              ) : (
+                ""
+              )}
+
+              <Form.Control name="email" placeholder="Email" className="mb-3" />
               <Form.Control
-                name="username"
-                placeholder="Username"
-                className="mb-2"
+                name="password"
+                placeholder="Password"
+                className="mb-3"
               />
-            </>
+            </Form.Group>
+
+            {state ? (
+              <Button
+                onClick={() => {
+                  setButtonState(false);
+                }}
+                className="mb-1"
+                type="submit"
+              >
+                Sign Up
+              </Button>
+            ) : (
+              <Button
+                onClick={() => {
+                  setButtonState(true);
+                }}
+                className="mb-1"
+                type="submit"
+              >
+                Log In
+              </Button>
+            )}
+            {/* Ouput email already exists here. */}
+            {emailExists ? <div>{emailExists}</div> : ""}
+          </Form>
+          <p id={styles.boldText}>
+            <span>OR</span>
+          </p>
+          <div className={styles.googleSignup}>Sign in with google</div>
+          {/* Text at the bottom of the form. */}
+          {state ? (
+            <p id={styles.boldText}>
+              Dont have an account? <span>Log In</span>
+            </p>
           ) : (
-            ""
+            <p id={styles.boldText}>
+              Already have an account? <span>Sign up</span>
+            </p>
           )}
-
-          <Form.Control name="email" placeholder="Email" className="mb-2" />
-          <Form.Control
-            name="password"
-            placeholder="Password"
-            className="mb-2"
-          />
-        </Form.Group>
-
-        {state ? (
-          <Button
-            onClick={() => {
-              setButtonState(false);
-            }}
-            className="mb-1"
-            type="submit"
-          >
-            SIGNUP
-          </Button>
-        ) : (
-          <Button
-            onClick={() => {
-              setButtonState(true);
-            }}
-            className="mb-1"
-            type="submit"
-          >
-            LOGIN
-          </Button>
-        )}
-        {/* Ouput email already exists here. */}
-        {emailExists ? <div>{emailExists}</div> : ""}
-      </Form>
+        </div>
+      </div>
     </>
   );
 }

@@ -1,47 +1,13 @@
 // Imports
+@use "./utilties/variables" as var;
 @import url("https://fonts.cdnfonts.com/css/liberation-sans");
-
-// Colors
-$darkest-blue: #000759;
-$dark-blue: #1022e5;
-$light-blue: #1071e5;
-$hazy-purple: #635dff;
-$light-hazy-purple: #9391ff;
-$very-light-purple: #dedeff;
-$lightest-purple: #f2f2ff;
-$white: #ffff;
-$gold: #ffe342;
-$light-red: #ff9595;
-$light-green: #00c2a8;
 
 // Font
 $font: "Lineration Sans", sans-serif;
 
-// Variables
-:root {
-  // Color Vars.
-  --footer-background: #{darkest-blue};
-  --log-background: #{$lightest-purple};
-  --regular-background: #{$white};
-  --underline-text: #{$dark-blue};
-  --regular-text: #{$light-hazy-purple};
-  --accent-text: #{$gold};
-  --outline: #{$dark-blue};
-  --regular-button: #{$light-hazy-purple};
-  --delete-button: #{$light-red};
-  --add-button: #{$light-green};
-  --edit-button: #{$light-blue};
-  --input-field: #{$very-light-purple};
-  --drop-down: #{$light-hazy-purple};
-  --pie-chart-light: #{$light-hazy-purple};
-  --pie-chart-medium: #{$hazy-purple};
-  --pie-chart-dark: #{$darkest-blue};
-  --table-outline: #{$dark-blue};
-  --table-background: #{$lightest-purple};
-  --bar-chart-light: #{$light-hazy-purple};
-  --bar-chart-dark: #{$dark-blue};
-}
-
 * {
   font-family: $font;
+  input {
+    background-color: var.$input-field;
+  }
 }

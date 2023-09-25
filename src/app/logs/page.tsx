@@ -2,6 +2,7 @@
 
 import InputForm from "@/app/components/InputForm";
 import { Log, Subcategory, User } from "../../../typings";
+import "../global.scss";
 
 type PropTypes = {
   user: User;

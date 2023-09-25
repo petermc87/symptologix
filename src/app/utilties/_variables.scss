@@ -1,0 +1,56 @@
+// Colors
+$darkest-blue: #000759;
+$dark-blue: #1022e5;
+$light-blue: #1071e5;
+$hazy-purple: #635dff;
+$light-hazy-purple: #9391ff;
+$very-light-purple: #dedeff;
+$lightest-purple: #f2f2ff;
+$white: #ffff;
+$gold: #ffe342;
+$light-red: #ff9595;
+$light-green: #00c2a8;
+
+// Color Vars.
+$footer-background: #{darkest-blue};
+$log-background: #{$lightest-purple};
+$login-form-background: #{$lightest-purple};
+$regular-background: #{$white};
+$underline-text: #{$dark-blue};
+$regular-text: #{$light-hazy-purple};
+$accent-text: #{$gold};
+$outline: #{$dark-blue};
+$regular-button: #{$light-hazy-purple};
+$delete-button: #{$light-red};
+$add-button: #{$light-green};
+$edit-button: #{$light-blue};
+$input-field: #{$very-light-purple};
+$drop-down: #{$light-hazy-purple};
+$pie-chart-light: #{$light-hazy-purple};
+$pie-chart-medium: #{$hazy-purple};
+$pie-chart-dark: #{$darkest-blue};
+$table-outline: #{$dark-blue};
+$table-background: #{$lightest-purple};
+$bar-chart-light: #{$light-hazy-purple};
+$bar-chart-dark: #{$dark-blue};
+
+// Line weights
+$soft-border-width: 0.05rem;
+$medium-border-width: 0.07rem;
+
+// Widths
+$login-form-width: 25rem;
+
+// Heights
+$google-login-height: 3rem;
+
+// Radii
+$form-border-radius: 8px;
+$form-element-radius: 6px;
+
+// Font size
+$info-text: 2rem;
+$small-bold-text: 1.3rem;
+
+// Font weights
+$bold-text: 800;

@@ -7,6 +7,7 @@ import submitForm from "../../../actions/categoryRequests/submitCat";
 import submitNewLog from "../../../actions/logRequests/submitNewLog";
 import getSubCategories from "../../../actions/subCategoryRequests/getSubCats";
 import { Log, Subcategory, User } from "../../../typings";
+import "../global.scss";
 import EntryForm from "./EntryForm/EntryForm";
 import SubCategoryForm from "./SubCategory/SubCategoryForm";
 //TODO: Create a state that will manage shich input is being created (i.e. category, subcategory, or entry.)

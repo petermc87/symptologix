@@ -1,0 +1,55 @@
+// Importing variables for all styles from the
+// variables partial file. Give a name so it can be
+// called in the file.
+@use "../utilties/variables" as var;
+// For decalrations containing a few different styles,
+// we import the whole module and extend to access
+// all the properties defined in there.
+@use "../utilties/font";
+
+.fullWrapper {
+  border: solid var.$outline;
+  background-color: var.$login-form-background;
+  max-width: var.$login-form-width;
+  padding: 0.5rem;
+  border-radius: var.$form-border-radius;
+  border-width: var.$soft-border-width;
+  text-align: center;
+}
+
+.loginWrapper {
+  padding: 3rem;
+  align-items: center;
+  p {
+    font-size: var.$info-text;
+    @extend %smallHeadingText;
+  }
+}
+
+#formContainer {
+  input {
+    background-color: var.$input-field;
+    border: solid var.$outline;
+    border-width: var.$soft-border-width;
+  }
+  button {
+    background-color: var.$regular-button;
+    width: -webkit-fill-available;
+    padding: 0.7rem;
+  }
+}
+
+.googleSignup {
+  border: solid black;
+  padding: 0.5rem;
+  border-width: var.$soft-border-width;
+  border-radius: var.$form-element-radius;
+  margin-bottom: 0.5rem;
+}
+
+#boldText {
+  @extend %smallBoldText;
+  span {
+    text-decoration: underline;
+  }
+}
