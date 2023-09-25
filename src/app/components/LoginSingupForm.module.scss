@@ -7,6 +7,8 @@
 // all the properties defined in there.
 @use "../utilties/font";
 
+@use "../utilties/elements";
+
 .fullWrapper {
   border: solid var.$outline;
   background-color: var.$login-form-background;
@@ -27,15 +29,16 @@
 }
 
 #formContainer {
+  ::placeholder {
+    color: var.$light-hazy-purple;
+  }
   input {
     background-color: var.$input-field;
     border: solid var.$outline;
     border-width: var.$soft-border-width;
   }
   button {
-    background-color: var.$regular-button;
-    width: -webkit-fill-available;
-    padding: 0.7rem;
+    @extend %formButton;
   }
 }
 

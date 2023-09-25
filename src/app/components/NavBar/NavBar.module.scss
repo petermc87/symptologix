@@ -1,0 +1,19 @@
+@use "../../utilties/elements";
+.navbarWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: solid red;
+  background-color: transparent;
+  //   position: relative;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 20rem;
+  button {
+    @extend %formButton;
+    width: auto;
+  }
+}

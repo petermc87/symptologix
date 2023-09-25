@@ -90,83 +90,103 @@ export default function LoginSingupForm({ state }: FormPropsType) {
 
   return (
     <>
-      <div className={styles.fullWrapper}>
-        SymptologiX
-        <div className={styles.loginWrapper}>
-          {state ? <p> Sign Up</p> : <p>Log In</p>}
-          <Form
-            onSubmit={(e) => {
-              handleSubmit(e);
-            }}
-            id={styles.formContainer}
-          >
-            <Form.Group className="mb-3">
-              {/* Name and username only show up as an option at signup. */}
-              {state ? (
-                <>
-                  <Form.Control
-                    name="name"
-                    placeholder="Name"
-                    className="mb-3"
-                  />
-                  <Form.Control
-                    name="username"
-                    placeholder="Username"
-                    className="mb-3"
-                  />
-                </>
+      {state === "signup" || state === "login" ? (
+        <>
+          <div className={styles.fullWrapper}>
+            SymptologiX
+            <div className={styles.loginWrapper}>
+              {state === "signup" ? (
+                <p> Sign Up</p>
+              ) : state === "login" ? (
+                <p>Log In</p>
               ) : (
                 ""
               )}
-
-              <Form.Control name="email" placeholder="Email" className="mb-3" />
-              <Form.Control
-                name="password"
-                placeholder="Password"
-                className="mb-3"
-              />
-            </Form.Group>
-
-            {state ? (
-              <Button
-                onClick={() => {
-                  setButtonState(false);
+              <Form
+                onSubmit={(e) => {
+                  handleSubmit(e);
                 }}
-                className="mb-1"
-                type="submit"
+                id={styles.formContainer}
               >
-                Sign Up
-              </Button>
-            ) : (
-              <Button
-                onClick={() => {
-                  setButtonState(true);
-                }}
-                className="mb-1"
-                type="submit"
-              >
-                Log In
-              </Button>
-            )}
-            {/* Ouput email already exists here. */}
-            {emailExists ? <div>{emailExists}</div> : ""}
-          </Form>
-          <p id={styles.boldText}>
-            <span>OR</span>
-          </p>
-          <div className={styles.googleSignup}>Sign in with google</div>
-          {/* Text at the bottom of the form. */}
-          {state ? (
-            <p id={styles.boldText}>
-              Dont have an account? <span>Log In</span>
-            </p>
-          ) : (
-            <p id={styles.boldText}>
-              Already have an account? <span>Sign up</span>
-            </p>
-          )}
-        </div>
-      </div>
+                <Form.Group className="mb-3">
+                  {/* Name and username only show up as an option at signup. */}
+                  {state === "signup" ? (
+                    <>
+                      <Form.Control
+                        name="name"
+                        placeholder="Name"
+                        className="mb-3"
+                      />
+                      <Form.Control
+                        name="username"
+                        placeholder="Username"
+                        className="mb-3"
+                      />
+                    </>
+                  ) : (
+                    ""
+                  )}
+
+                  <Form.Control
+                    name="email"
+                    placeholder="Email"
+                    className="mb-3"
+                  />
+                  <Form.Control
+                    name="password"
+                    placeholder="Password"
+                    className="mb-3"
+                  />
+                </Form.Group>
+
+                {state === "signup" ? (
+                  <Button
+                    onClick={() => {
+                      setButtonState(false);
+                    }}
+                    className="mb-1"
+                    type="submit"
+                  >
+                    Sign Up
+                  </Button>
+                ) : state === "login" ? (
+                  <Button
+                    onClick={() => {
+                      setButtonState(true);
+                    }}
+                    className="mb-1"
+                    type="submit"
+                  >
+                    Log In
+                  </Button>
+                ) : (
+                  ""
+                )}
+                {/* Ouput email already exists here. */}
+                {emailExists ? <div>{emailExists}</div> : ""}
+              </Form>
+              <p id={styles.boldText}>
+                <span>OR</span>
+              </p>
+              <div className={styles.googleSignup}>Sign in with google</div>
+              {/* Text at the bottom of the form. */}
+              {state === "signup" ? (
+                <p id={styles.boldText}>
+                  Dont have an account? <span>Log In</span>
+                </p>
+              ) : state === "login" ? (
+                <p id={styles.boldText}>
+                  Already have an account? <span>Sign up</span>
+                </p>
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        </>
+      ) : (
+        ""
+      )}
     </>
   );
 }
