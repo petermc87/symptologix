@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { Button } from "react-bootstrap";
 import {
   default as LoginForm,
   default as SingnUpForm,
@@ -31,21 +32,30 @@ export default function Home() {
   return (
     <main>
       <NavBar setFormState={setFormState} formState={formState} />
+      {/* TODO: Add animation for container reveal */}
       <></>
-      {/* If our form is true, then we pass in props for login (part of user types), */}
-      {/* and if its false, we pass in Signup form props (most of singup.) */}
-      {formState ? (
+      {/* Using a string to determine whether the login or singup container is present. */}
+      {/* If either one is present, it will appear with background blur! */}
+      {formState === "login" ? (
         // Make one of these true on click. But, will otherwise be nothing. Create an
         // animation where the container slides down.
         // NOTE: we only need to update the state variable called 'state' above.
         <div className={styles.formWrapper}>
           <LoginForm state={formState} />
         </div>
-      ) : (
+      ) : formState === "signup" ? (
         <div className={styles.formWrapper}>
           <SingnUpForm state={formState} />
         </div>
+      ) : (
+        ""
       )}
+      <div className={styles.heroContainer}>
+        <div className={styles.heroContainer}>
+          <h1>Be In Control Of You Symptoms</h1>
+          <Button>Sign Up</Button>
+        </div>
+      </div>
     </main>
   );
 }

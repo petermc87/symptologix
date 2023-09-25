@@ -11,3 +11,10 @@
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(5px);
 }
+
+.heroContainer {
+  background-color: var.$hero-background;
+  height: 50rem;
+  align-items: center;
+  display: flex;
+}
