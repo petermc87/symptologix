@@ -1,0 +1,44 @@
+@use "../../utilties/font";
+@use "../../utilties/variables" as var;
+
+.perkContainer {
+  border: solid black;
+  height: 50rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.headingText {
+  @extend %largeHeroText;
+}
+
+// Logs container.
+#logsText {
+  color: var.$light-hazy-purple;
+}
+
+// Metrics container.
+#metrics {
+  background-color: var.$hero-background;
+}
+
+.chartContainer {
+  border: solid black;
+  display: flex;
+  flex-direction: row;
+  .pie,
+  .bar {
+    padding: 5rem;
+  }
+}
+
+.pie {
+  border: solid green;
+}
+
+.bar {
+  border: solid red;
+}

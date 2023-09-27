@@ -8,6 +8,7 @@ import {
 import NavBar from "./components/NavBar/NavBar";
 import "./global.scss";
 
+import Perks from "./components/Perks/Perks";
 import styles from "./landing.module.scss";
 
 // Create interface for both signup and login forms
@@ -53,11 +54,12 @@ export default function Home() {
       <div className={styles.heroContainer}>
         <div className={styles.heroContainer}>
           <div className={styles.heroContents}>
-            <h1 className={styles.heroText}>Be In Control Of You Symptoms</h1>
+            <h1 className={styles.heroText}>Be In Control Of Your Symptoms</h1>
             <Button>Sign Up</Button>
           </div>
         </div>
       </div>
+      <Perks />
     </main>
   );
 }
