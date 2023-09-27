@@ -41,11 +41,11 @@ export default function Home() {
         // animation where the container slides down.
         // NOTE: we only need to update the state variable called 'state' above.
         <div className={styles.formWrapper}>
-          <LoginForm state={formState} />
+          <LoginForm state={formState} setState={setFormState} />
         </div>
       ) : formState === "signup" ? (
         <div className={styles.formWrapper}>
-          <SingnUpForm state={formState} />
+          <SingnUpForm state={formState} setState={setFormState} />
         </div>
       ) : (
         ""

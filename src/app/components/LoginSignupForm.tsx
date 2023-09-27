@@ -1,5 +1,12 @@
 import { signIn } from "next-auth/react";
-import { SyntheticEvent, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  SyntheticEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Button, Form } from "react-bootstrap";
 import registerUser from "../../../actions/singupForm";
 import { FormTypes } from "../page";
@@ -8,9 +15,10 @@ import styles from "./LoginSingupForm.module.scss";
 // This variable has been named state from page.tsx props being passed.
 type FormPropsType = {
   state: FormTypes;
+  setState: Dispatch<SetStateAction<string>>;
 };
 
-export default function LoginSingupForm({ state }: FormPropsType) {
+export default function LoginSingupForm({ state, setState }: FormPropsType) {
   // Create state to manage whether the button click was signup or login.
   const [buttonState, setButtonState] = useState<Boolean>(false);
 
@@ -88,11 +96,47 @@ export default function LoginSingupForm({ state }: FormPropsType) {
     }
   };
 
+  // Add in a function call to close the signup/login modal when clicked
+  // anywhere outside the modal. --> THIS DIDNT WORK AFTER TESTING!!!
+  // const ref: any = useRef();
+
+  // useOutsideClick(ref.current, () => {
+  //   console.log("click");
+  //   setState("");
+  // });
+
+  // Calling an event listener inside the dom element (the div below) --> THIS
+  // DIDNT WORK AFTER TESTING!!!
+  // const onClickOutsideListener = () => {
+  //   alert("click outside!!");
+  //   setState("");
+  //   document.removeEventListener("click", onClickOutsideListener);
+  // };
+
+  // NOTE: To handle a click to close outside of the form:
+  // Create a use ref instance.
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Use a side effect to call the handle click outside.
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent): void {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setState("");
+      }
+    }
+    // Bind to event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  });
+
   return (
     <>
       {state === "signup" || state === "login" ? (
         <>
-          <div className={styles.fullWrapper}>
+          <div ref={ref} className={styles.fullWrapper}>
             SymptologiX
             <div className={styles.loginWrapper}>
               {state === "signup" ? (
