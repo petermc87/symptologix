@@ -1,5 +1,6 @@
 @use "./utilties/variables" as var;
 @use "./utilties/font";
+@use "./utilties/elements";
 
 .formWrapper {
   position: fixed;
@@ -15,7 +16,8 @@
 
 .heroContainer {
   background-color: var.$hero-background;
-  height: 50rem;
+  // height: 50rem;
+  @extend %landingPageContainer;
   align-items: center;
   display: flex;
 }

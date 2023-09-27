@@ -7,6 +7,10 @@ export default function Perks() {
         <h1 className={styles.headingText} id={styles.logsText}>
           Log your symptoms with ease
         </h1>
+        <div className={styles.chartContainer}>
+          <div className={styles.inputField}>INPUT</div>
+          <div className={styles.currentLog}>LOG</div>
+        </div>
       </div>
       <div className={styles.perkContainer} id={styles.metrics}>
         <h1 className={styles.headingText}>Look at metrics over time</h1>
