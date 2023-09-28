@@ -8,6 +8,7 @@ import {
 import NavBar from "./components/NavBar/NavBar";
 import "./global.scss";
 
+import Footer from "./components/Footer/Footer";
 import Perks from "./components/Perks/Perks";
 import styles from "./landing.module.scss";
 
@@ -60,6 +61,7 @@ export default function Home() {
         </div>
       </div>
       <Perks />
+      <Footer />
     </main>
   );
 }

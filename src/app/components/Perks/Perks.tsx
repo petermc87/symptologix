@@ -28,7 +28,17 @@ export default function Perks() {
         </div>
       </div>
       <div className={styles.perkContainer}>
-        <h1 className={styles.headingText}>Perks</h1>
+        <h1 className={styles.headingText} id={styles.logsText}>
+          Pinpoint your issue
+        </h1>
+        <div className={styles.chartContainer}>
+          <div id={styles.pie} className={styles.chartType}>
+            PIE
+          </div>
+          <div id={styles.bar} className={styles.chartType}>
+            BAR
+          </div>
+        </div>
       </div>
     </>
   );
