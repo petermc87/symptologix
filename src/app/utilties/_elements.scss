@@ -9,7 +9,12 @@
 }
 
 %landingPageContainer {
-  // min-height: 50vw;
   width: 100vw;
-  // max-height: 80vw;
+  height: 100vw;
+}
+
+%landingPageContainerMobile {
+  width: 100vw;
+  height: 150vw;
+  // margin-bottom: 2rem;
 }

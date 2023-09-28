@@ -3,13 +3,19 @@
 @use "../../utilties/elements";
 
 .perkContainer {
-  border: solid black;
   @extend %landingPageContainer;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   text-align: center;
+  justify-content: space-around;
+  padding: 1rem;
+}
+
+@media only screen and (max-width: 700px) {
+  .perkContainer {
+    height: 150vw;
+  }
 }
 
 .headingText {
@@ -27,30 +33,20 @@
 }
 
 .chartContainer {
-  height: 33%;
-  width: 100vw;
-  margin-top: 5rem;
-  border: solid black;
-  display: flex;
-  flex-direction: row;
-  .pie,
-  .bar {
-    display: flex;
-    height: 70%;
-    width: 40vw;
-  }
-  .inputField,
-  .currentLog {
-    display: flex;
-    height: 70%;
-    width: 40vw;
-  }
-}
-
-.pie {
   border: solid green;
+  display: flex;
+  .chartType {
+    height: 40vw;
+    width: 40vw;
+  }
 }
 
-.bar {
-  border: solid red;
+#pie {
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    var.$pie-chart-light 0deg calc(3.6deg * 60),
+    var.$pie-chart-medium calc(3.6deg * 60) calc(3.6deg * 75),
+    var.$pie-chart-dark calc(3.6deg * 75) calc(3.6deg * 100)
+  );
 }
