@@ -12,10 +12,44 @@
   padding: 1rem;
 }
 
+.chartContainer {
+  display: flex;
+}
+
+// For mobile and tablet display
 @media only screen and (max-width: 700px) {
   .perkContainer {
     height: 150vw;
   }
+  .chartType {
+    height: 50vw;
+    width: 50vw;
+  }
+  #lineChart {
+    height: 70vw;
+    width: 100vw;
+  }
+  .issuesCharts {
+    flex-direction: column;
+  }
+}
+
+// Desktop display
+@media only screen and (min-width: 700px) {
+  .chartType {
+    height: 40vw;
+    width: 40vw;
+  }
+  #lineChart {
+    height: 60vw;
+    width: 80vw;
+  }
+}
+
+#bar {
+  height: 60vw;
+  width: 50vw;
+  align-items: center;
 }
 
 .headingText {
@@ -30,23 +64,4 @@
 // Metrics container.
 #metrics {
   background-color: var.$hero-background;
-}
-
-.chartContainer {
-  border: solid green;
-  display: flex;
-  .chartType {
-    height: 40vw;
-    width: 40vw;
-  }
-}
-
-#pie {
-  border-radius: 50%;
-  background: repeating-conic-gradient(
-    from 0deg,
-    var.$pie-chart-light 0deg calc(3.6deg * 60),
-    var.$pie-chart-medium calc(3.6deg * 60) calc(3.6deg * 75),
-    var.$pie-chart-dark calc(3.6deg * 75) calc(3.6deg * 100)
-  );
 }
