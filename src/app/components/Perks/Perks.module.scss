@@ -16,21 +16,27 @@
   display: flex;
 }
 
+#bar {
+  height: 60vw;
+  width: 50vw;
+  align-items: center;
+}
+
 // For mobile and tablet display
 @media only screen and (max-width: 700px) {
   .perkContainer {
-    height: 150vw;
-  }
-  .chartType {
-    height: 50vw;
-    width: 50vw;
+    height: 200vw;
   }
   #lineChart {
     height: 70vw;
-    width: 100vw;
+    width: 90vw;
   }
-  .issuesCharts {
+  #issuesCharts {
     flex-direction: column;
+    align-items: center;
+  }
+  #bar {
+    width: 90vw;
   }
 }
 
@@ -44,12 +50,6 @@
     height: 60vw;
     width: 80vw;
   }
-}
-
-#bar {
-  height: 60vw;
-  width: 50vw;
-  align-items: center;
 }
 
 .headingText {
