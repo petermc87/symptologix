@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { Button } from "react-bootstrap";
+import Hamburger from "../Hamburger/Hamburger";
 import styles from "./NavBar.module.scss";
 type NavBarTypes = {
   // Declaring the type for a setter function here
@@ -14,6 +15,9 @@ export default function NavBar({ setFormState, formState }: NavBarTypes) {
       {/* We could use a boolean here. */}
       <div className={styles.logo}>
         <span>S</span>ymptologi<span id={styles.x}>X</span>
+      </div>
+      <div className={styles.hamburgerVisible}>
+        <Hamburger />
       </div>
       <div className={styles.buttonWrapper}>
         <Button

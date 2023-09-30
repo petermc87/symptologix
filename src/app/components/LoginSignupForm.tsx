@@ -206,7 +206,7 @@ export default function LoginSingupForm({ state, setState }: FormPropsType) {
                 ) : (
                   ""
                 )}
-                {/* Ouput email already exists here. */}
+                {/* Output email already exists here. */}
                 {emailExists ? <div>{emailExists}</div> : ""}
               </Form>
               <p id={styles.boldText}>

@@ -1,5 +1,6 @@
 @use "../../utilties/elements";
 @use "../../utilties/font";
+@use "../../utilties/variables" as var;
 
 .navbarWrapper {
   display: flex;
@@ -7,16 +8,29 @@
   align-items: center;
   position: fixed;
   width: 100%;
-  padding: 1rem 3rem 0.5rem 3rem;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(6px);
 }
 
 .buttonWrapper {
-  display: flex;
+  display: none;
   justify-content: space-between;
   width: 20rem;
   button {
     @extend %formButton;
     width: auto;
+  }
+}
+
+// Buttons will show when the screen is 700px wide, and hide
+// the hamburger menu.
+@media only screen and (min-width: "700px") {
+  .buttonWrapper {
+    display: flex;
+  }
+  .hamburgerVisible {
+    display: none;
   }
 }
 
@@ -28,4 +42,5 @@
   #x {
     @extend %logo-X;
   }
+  text-shadow: 1px 1px 0px var.$hazy-purple;
 }
