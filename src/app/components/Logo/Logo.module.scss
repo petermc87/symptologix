@@ -1,0 +1,14 @@
+@use "../../utilties/variables" as var;
+@use "../../utilties/elements";
+@use "../../utilties/font";
+
+.logo {
+  @extend %logoText;
+  span {
+    @extend %logo-S;
+  }
+  #x {
+    @extend %logo-X;
+  }
+  text-shadow: 1px 1px 0px var.$hazy-purple;
+}

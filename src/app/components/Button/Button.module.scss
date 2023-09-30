@@ -1,0 +1,8 @@
+@use "../../utilties/elements";
+
+.button {
+  button {
+    @extend %formButton;
+    width: auto;
+  }
+}
