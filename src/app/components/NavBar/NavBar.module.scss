@@ -1,14 +1,15 @@
 @use "../../utilties/elements";
+@use "../../utilties/font";
+
 .navbarWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: solid red;
-  //   opacity: ;
   position: fixed;
   width: 100%;
-  //   z-index: +5;
+  padding: 1rem 3rem 0.5rem 3rem;
 }
+
 .buttonWrapper {
   display: flex;
   justify-content: space-between;
@@ -16,5 +17,15 @@
   button {
     @extend %formButton;
     width: auto;
+  }
+}
+
+.logo {
+  @extend %logoText;
+  span {
+    @extend %logo-S;
+  }
+  #x {
+    @extend %logo-X;
   }
 }

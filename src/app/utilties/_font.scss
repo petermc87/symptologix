@@ -1,5 +1,23 @@
 @use "./variables" as var;
 
+// General logo
+%logoText {
+  color: var.$white;
+  font-size: var.$small-bold-text;
+  font-weight: var.$bold-text;
+}
+
+// Logo accent
+%logo-S {
+  color: var.$light-hazy-purple;
+  font-size: var.$logo-accent;
+}
+
+%logo-X {
+  color: var.$gold;
+  font-size: var.$logo-accent;
+}
+
 %smallBoldText {
   color: var.$dark-blue;
   font-size: var.$small-bold-text;

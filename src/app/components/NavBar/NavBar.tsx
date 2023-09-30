@@ -12,7 +12,9 @@ export default function NavBar({ setFormState, formState }: NavBarTypes) {
     <div className={styles.navbarWrapper}>
       {/* Set the state to usertype. NOTE: we dont need to set complex types. */}
       {/* We could use a boolean here. */}
-      <div>SimptologiX</div>
+      <div className={styles.logo}>
+        <span>S</span>ymptologi<span id={styles.x}>X</span>
+      </div>
       <div className={styles.buttonWrapper}>
         <Button
           onClick={() => {
@@ -25,7 +27,7 @@ export default function NavBar({ setFormState, formState }: NavBarTypes) {
             }
           }}
         >
-          Login
+          Log In
         </Button>
         <Button
           onClick={() => {
@@ -38,7 +40,7 @@ export default function NavBar({ setFormState, formState }: NavBarTypes) {
             }
           }}
         >
-          signup
+          Sign Up
         </Button>
       </div>
     </div>
