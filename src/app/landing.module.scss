@@ -26,3 +26,22 @@
 .heroText {
   @extend %largeHeroText;
 }
+
+// For mobile view
+@media only screen and (max-width: 700px) {
+  .heroContainer {
+    height: 200vw;
+  }
+}
+
+// For desktop view
+@media only screen and (min-width: 700px) {
+  // @use "./utilties/font";
+
+  .heroContainer {
+    height: 150vw;
+  }
+  .heroText {
+    font-size: 6rem;
+  }
+}

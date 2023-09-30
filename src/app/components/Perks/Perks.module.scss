@@ -22,6 +22,10 @@
   align-items: center;
 }
 
+.headingText {
+  @extend %largeHeroText;
+}
+
 // For mobile and tablet display
 @media only screen and (max-width: 700px) {
   .perkContainer {
@@ -50,6 +54,9 @@
     height: 60vw;
     width: 80vw;
   }
+  .headingText {
+    font-size: 6rem;
+  }
 }
 
 // Log and input
@@ -59,9 +66,6 @@
     width: 100%;
     height: 100%;
   }
-}
-.headingText {
-  @extend %largeHeroText;
 }
 
 // Logs container text.
