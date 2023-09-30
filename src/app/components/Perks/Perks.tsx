@@ -12,6 +12,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
+import { Image } from "react-bootstrap";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
 import styles from "./Perks.module.scss";
 
@@ -120,12 +121,12 @@ export default function Perks() {
         <h1 className={styles.headingText} id={styles.logsText}>
           Log your symptoms with ease
         </h1>
-        <div className={styles.chartContainer}>
+        <div className={styles.chartContainer} id={styles.logsChartsContainer}>
           <div id={styles.inputField} className={styles.chartType}>
-            INPUT
+            <Image src="https://symptologix.s3.amazonaws.com/Screenshot+from+2023-09-29+19-54-26.png" />
           </div>
           <div id={styles.currentLog} className={styles.chartType}>
-            LOG
+            <Image src="https://symptologix.s3.amazonaws.com/Screenshot+from+2023-09-29+18-52-20.png" />
           </div>
         </div>
       </div>

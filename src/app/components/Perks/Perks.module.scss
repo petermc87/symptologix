@@ -31,7 +31,7 @@
     height: 70vw;
     width: 90vw;
   }
-  #issuesCharts {
+  .chartContainer {
     flex-direction: column;
     align-items: center;
   }
@@ -52,15 +52,29 @@
   }
 }
 
+// Log and input
+.chartType {
+  img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+  }
+}
 .headingText {
   @extend %largeHeroText;
 }
 
-// Logs container.
+// Logs container text.
 #logsText {
   color: var.$light-hazy-purple;
 }
 
+// Logs charts container
+#logsChartsContainer {
+  background-color: var.$log-background;
+  border-radius: 0.3rem;
+  padding: 0.2rem;
+}
 // Metrics container.
 #metrics {
   background-color: var.$hero-background;
