@@ -9,7 +9,7 @@ type buttonTypes = {
 };
 
 export default function GeneralButton({ name, setState, state }: buttonTypes) {
-  // In order to make the conditional for the form to work,
+  // In order to make the conditional for the form  work,
   // concat the string and make sure its all lowercase.
   const convertedName = name.split(" ").join("").toLocaleLowerCase();
   return (

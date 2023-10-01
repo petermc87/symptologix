@@ -132,7 +132,6 @@ export default function LoginSingupForm({ state, setState }: FormPropsType) {
     };
   });
 
-  console.log(state);
   return (
     <>
       {state === "signup" || state === "login" ? (
