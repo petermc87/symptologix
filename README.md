@@ -31,7 +31,7 @@ Below shows a typical logging step using a wireflow. It shows steps to create a 
 
 ![Wireflow](public/images/Wireflow.png)
 
-## Wireflow
+## High Fidelity Wireframes
 
 ![Wireframing](public/images/wireframes.png)
 
