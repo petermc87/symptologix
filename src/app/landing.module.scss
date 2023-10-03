@@ -25,6 +25,9 @@
 
 .heroText {
   @extend %largeHeroText;
+  span {
+    color: var.$accent-text;
+  }
 }
 
 // For mobile view

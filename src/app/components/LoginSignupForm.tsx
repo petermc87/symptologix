@@ -11,6 +11,7 @@ import { Button, Form } from "react-bootstrap";
 import registerUser from "../../../actions/singupForm";
 import { FormTypes } from "../page";
 import styles from "./LoginSingupForm.module.scss";
+import Logo from "./Logo/Logo";
 // Desctructure the props in the state variable being passed down.
 // This variable has been named state from page.tsx props being passed.
 type FormPropsType = {
@@ -137,7 +138,7 @@ export default function LoginSingupForm({ state, setState }: FormPropsType) {
       {state === "signup" || state === "login" ? (
         <>
           <div ref={ref} className={styles.fullWrapper}>
-            SymptologiX
+            <Logo />
             <div className={styles.loginWrapper}>
               {state === "signup" ? (
                 <p> Sign Up</p>

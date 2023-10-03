@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Button } from "react-bootstrap";
+import GeneralButton from "./components/Button/Button";
 import {
   default as LoginForm,
   default as SingnUpForm,
@@ -55,8 +55,14 @@ export default function Home() {
       <div className={styles.heroContainer}>
         <div className={styles.heroContainer}>
           <div className={styles.heroContents}>
-            <h1 className={styles.heroText}>Be In Control Of Your Symptoms</h1>
-            <Button>Sign Up</Button>
+            <h1 className={styles.heroText}>
+              Be in <span>Control</span> of your <span>Symptoms</span>
+            </h1>
+            <GeneralButton
+              name="Sign Up"
+              setState={setFormState}
+              state={formState}
+            />
           </div>
         </div>
       </div>
