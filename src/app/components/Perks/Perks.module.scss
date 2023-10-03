@@ -24,6 +24,9 @@
 
 .headingText {
   @extend %largeHeroText;
+  span {
+    color: var.$accent-text;
+  }
 }
 
 // For mobile and tablet display

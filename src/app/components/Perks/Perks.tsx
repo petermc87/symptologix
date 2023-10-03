@@ -32,10 +32,7 @@ ChartJS.register(
 Chart.overrides.doughnut.color = "#000";
 Chart.overrides.bar.color = "#000";
 Chart.defaults.color = "#000";
-// Chart.defaults.borderColor = "rgba(239, 239, 240, 1)";
-// Chart.overrides.line.borderColor = "rgba(239, 239, 240, 1)";
 Chart.overrides.bar.borderColor = "rgba(239, 239, 240, 1)";
-// Chart.defaults.bor = "0.4";
 
 export default function Perks() {
   // Options for line chart.
@@ -119,7 +116,7 @@ export default function Perks() {
     <>
       <div className={styles.perkContainer}>
         <h1 className={styles.headingText} id={styles.logsText}>
-          Log your symptoms with ease
+          Log your symptoms with <span>ease</span>
         </h1>
         <div className={styles.chartContainer} id={styles.logsChartsContainer}>
           <div id={styles.inputField} className={styles.chartType}>
