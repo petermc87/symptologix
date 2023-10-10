@@ -67,7 +67,7 @@ export default function Home() {
         </div>
       </div>
       <Perks />
-      <Footer />
+      <Footer setState={setFormState} state={formState} />
     </main>
   );
 }

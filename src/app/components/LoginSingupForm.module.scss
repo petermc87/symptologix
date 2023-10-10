@@ -10,7 +10,6 @@
 @use "../utilties/elements";
 
 .fullWrapper {
-  border: solid var.$outline;
   background-color: var.$login-form-background;
   max-width: var.$login-form-width;
   padding: 0.5rem;

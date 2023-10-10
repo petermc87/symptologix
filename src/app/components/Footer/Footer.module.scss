@@ -5,6 +5,39 @@
   @extend %landingPageContainer;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
   background-color: var.$darkest-blue;
+  padding: 2rem 2rem 0 2rem;
+  justify-content: space-between;
+}
+.wrapper {
+  margin-top: 2rem;
+}
+.header {
+  // border: solid blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 18%;
+  padding-bottom: 3rem;
+}
+
+.footerHeading {
+  @extend %footerHeading;
+  margin-bottom: 0.5rem;
+}
+
+.links {
+  // border: solid red;
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 2rem;
+}
+
+.subList {
+  // border: solid green;
+  p {
+    margin: 0;
+    @extend %footerLinks;
+  }
 }

@@ -6,6 +6,10 @@
   padding: 0.7rem;
   min-width: 8rem;
   border-radius: var.$form-element-radius;
+  border: 0;
+  :hover {
+    opacity: 0.5;
+  }
 }
 
 %landingPageContainer {
@@ -16,4 +20,14 @@
 %landingPageContainerMobile {
   width: 100vw;
   height: 150vw;
+}
+
+%footerHeading {
+  color: var.$lightest-purple;
+  font-weight: var.$bold-text;
+}
+
+%footerLinks {
+  color: var.$lightest-purple;
+  font-weight: var.$regular-text;
 }
