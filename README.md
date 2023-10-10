@@ -64,3 +64,5 @@ Below shows a typical logging step using a wireflow. It shows steps to create a 
 
 7.  [Click to close outside of an element](https://stackoverflow.com/questions/32553158/detect-click-outside-react-component/71868126#71868126?newreg=2dbe8e52b1714b2e9bf1d78defa263f0)
     `NOTE`: Used the 'with typescript' answer about half way down.
+
+8.  [MDB Boostrap Icons](https://mdbootstrap.com/docs/react/content-styles/icons/)
