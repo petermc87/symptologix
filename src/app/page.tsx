@@ -18,9 +18,6 @@ interface LoginForm {
   password: string;
 }
 
-// Declare prop types for passing useState variable as a prop.
-export type FormTypes = string;
-
 // NOTE: the landing page will have a login/signup button in the middle
 // or in the nav bar to make one of those appear
 
@@ -29,7 +26,10 @@ export type FormTypes = string;
 export default function Home() {
   // Create state that will deteremine whether its a login or signup form.
   // true = Login, false = Signup.
-  const [formState, setFormState] = useState<FormTypes>("");
+  const [formState, setFormState] = useState<string>("");
+
+  // State to determine whether it is a footer in logs or in landing page.
+  const [footerState, setFooterState] = useState(false);
 
   return (
     <main>
@@ -43,11 +43,23 @@ export default function Home() {
         // animation where the container slides down.
         // NOTE: we only need to update the state variable called 'state' above.
         <div className={styles.formWrapper}>
-          <LoginForm state={formState} setState={setFormState} />
+          {/* State may need to be passed into the login where it will be  */}
+          {/* then passed into the logs home page. */}
+          <LoginForm
+            state={formState}
+            setState={setFormState}
+            footerState={footerState}
+            setFooterState={setFooterState}
+          />
         </div>
       ) : formState === "signup" ? (
         <div className={styles.formWrapper}>
-          <SingnUpForm state={formState} setState={setFormState} />
+          <SingnUpForm
+            state={formState}
+            setState={setFormState}
+            footerState={footerState}
+            setFooterState={setFooterState}
+          />
         </div>
       ) : (
         ""
@@ -67,6 +79,9 @@ export default function Home() {
         </div>
       </div>
       <Perks />
+      {/* If this is a landing page footer, then accept types. Otherwise, do not. */}
+
+      {}
       <Footer setState={setFormState} state={formState} />
     </main>
   );

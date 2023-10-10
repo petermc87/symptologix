@@ -9,14 +9,15 @@ import {
 } from "react";
 import { Button, Form } from "react-bootstrap";
 import registerUser from "../../../actions/singupForm";
-import { FormTypes } from "../page";
 import styles from "./LoginSingupForm.module.scss";
 import Logo from "./Logo/Logo";
 // Desctructure the props in the state variable being passed down.
 // This variable has been named state from page.tsx props being passed.
 type FormPropsType = {
-  state: FormTypes;
+  state: string;
   setState: Dispatch<SetStateAction<string>>;
+  footerState: boolean;
+  setFooterState: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function LoginSingupForm({ state, setState }: FormPropsType) {

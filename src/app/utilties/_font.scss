@@ -28,6 +28,11 @@
   color: var.$light-hazy-purple;
   font-weight: var.$bold-text;
 }
+%mediumHeadingText {
+  color: var.$light-hazy-purple;
+  font-weight: var.$bold-text;
+  font-size: var.$medium-heading-text;
+}
 
 %largeHeroText {
   color: var.$white;

@@ -1,9 +1,12 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { ReactNode, useState } from "react";
+import { Button } from "react-bootstrap";
+import submitNewLog from "../../../actions/logRequests/submitNewLog";
 import { Log, Subcategory } from "../../../typings";
 import InputForm from "../components/InputForm";
 import LogForm from "../components/LogForm/Logform";
+import styles from "./page.module.scss";
 
 export default function Home() {
   const { data, status } = useSession();
@@ -20,6 +23,9 @@ export default function Home() {
   // as well as the general input form.
   const [subCategories, setAllSubCategories] = useState<Subcategory[]>([]);
 
+  // Create state for managing viewing the create category list items.
+  const [viewEntryForm, setViewEntryForm] = useState(false);
+
   let userData: any;
   try {
     if (data && data !== undefined) {
@@ -29,35 +35,94 @@ export default function Home() {
     console.error(error);
   }
 
+  //Creating a readable variable for ssubmittign the new log.
+  let userId: string;
+  if (userData) {
+    userId = userData.user.id;
+  }
+
+  // Submitting  new log to the database.
+  const handleSubmitLog = async (e: any) => {
+    e.preventDefault();
+    try {
+      if (userId) {
+        const currentLog: Log = await submitNewLog(userId);
+        setCurrentLogInProgress(currentLog);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   // Get the current log refreshed. Use a handler function.
   // will get passed down to the log form. We dont need the setCurrentLogInProgress setter
   // because we are setting it here.
-
   return (
     <>
       {status ? (
         status === "authenticated" &&
         data !== null && (
-          <>
-            <h2>Welcome {userData.user.username as ReactNode}</h2>
-            <p>User ID: {userData.user.id as ReactNode}</p>
-            <InputForm
-              user={userData.user}
-              currentLogInProgress={currentLogInProgress}
-              setCurrentLogInProgress={setCurrentLogInProgress}
-              subCategories={subCategories}
-              setAllSubCategories={setAllSubCategories}
-            />
-            <div>
-              _________________________________________________________________________________
+          <div className={styles.homePageContainer}>
+            {/* WELCOME HEADER */}
+
+            <div className={styles.welcomeHeader}>
+              <h2 className={styles.intro}>
+                Welcome <span>{userData.user.username as ReactNode}!</span>
+              </h2>
+              {/* Heading text will not be visible when the entryform is active */}
+              {!viewEntryForm ? (
+                <div className={styles.heading}>
+                  Create new {/* Add state here to show the whole entry form */}
+                  <span key={123} onClick={() => setViewEntryForm(true)}>
+                    entry form
+                  </span>
+                  , look at <span>metrics</span>, or <span>previous logs</span>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
-            {/* Put the current log obejct state here and pass it down the InputForm and LogForm. */}
-            <LogForm
-              currentLogInProgress={currentLogInProgress}
-              setCurrentLogInProgress={setCurrentLogInProgress}
-              subCategories={subCategories}
-            />
-          </>
+
+            {/* ENTRY FORM */}
+            {/* viewEntryForm when true will show all the components below whne the entry form hyperlink is clicked.
+             */}
+
+            {viewEntryForm ? (
+              <>
+                {currentLogInProgress === null ? (
+                  <>
+                    <>Create new Log:</>
+                    <Button
+                      key={123}
+                      onClick={(e: any) => handleSubmitLog(e)}
+                      variant="primary"
+                    >
+                      Create Log
+                    </Button>
+                  </>
+                ) : (
+                  ""
+                )}
+                <InputForm
+                  user={userData.user}
+                  currentLogInProgress={currentLogInProgress}
+                  setCurrentLogInProgress={setCurrentLogInProgress}
+                  subCategories={subCategories}
+                  setAllSubCategories={setAllSubCategories}
+                />
+                <div>
+                  _________________________________________________________________________________
+                </div>
+                {/* Put the current log obejct state here and pass it down the InputForm and LogForm. */}
+                <LogForm
+                  currentLogInProgress={currentLogInProgress}
+                  setCurrentLogInProgress={setCurrentLogInProgress}
+                  subCategories={subCategories}
+                />
+              </>
+            ) : (
+              ""
+            )}
+          </div>
         )
       ) : (
         <div>Authentification Failed. Please try logging in again.</div>

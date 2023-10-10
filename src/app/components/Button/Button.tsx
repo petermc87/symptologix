@@ -11,7 +11,9 @@ type buttonTypes = {
 export default function GeneralButton({ name, setState, state }: buttonTypes) {
   // In order to make the conditional for the form  work,
   // concat the string and make sure its all lowercase.
+
   const convertedName = name.split(" ").join("").toLocaleLowerCase();
+
   return (
     <div className={styles.button}>
       <Button
@@ -19,7 +21,8 @@ export default function GeneralButton({ name, setState, state }: buttonTypes) {
           // Create a conditinional to check if the form is present already. If it
           // is, then hide the form with the next click.
           if (state === name) {
-            setState("");
+            if (name) {
+            }
           } else {
             setState(convertedName);
           }

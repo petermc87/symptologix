@@ -4,7 +4,6 @@ import { FormEvent, useEffect, useState, useTransition } from "react";
 import { Button, Form } from "react-bootstrap";
 import getCategories from "../../../actions/categoryRequests/getCats";
 import submitForm from "../../../actions/categoryRequests/submitCat";
-import submitNewLog from "../../../actions/logRequests/submitNewLog";
 import getSubCategories from "../../../actions/subCategoryRequests/getSubCats";
 import { Log, Subcategory, User } from "../../../typings";
 import "../global.scss";
@@ -28,11 +27,10 @@ export default function InputForm({
   subCategories,
   setAllSubCategories,
 }: InputFormTypes) {
-  // Declare the id here to make passing props to SubmitForm easier.
-  const userId = user.id;
   // Enable transition hook for transitioning phase.
   const [isPending, startTransition] = useTransition();
 
+  // Add another state variable to
   // Categories taken from the database and stored in state.
   // Create a serverside handler for getting cateogories list.
   const [categories, setCategories] = useState<Category[] | null>([]);
@@ -64,18 +62,6 @@ export default function InputForm({
       } catch (error) {
         console.error(error);
       }
-    }
-  };
-
-  const handleSubmitLog = async (e: any) => {
-    e.preventDefault();
-    try {
-      if (userId) {
-        const currentLog = await submitNewLog(userId);
-        setCurrentLogInProgress(currentLog);
-      }
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -114,21 +100,7 @@ export default function InputForm({
       {/* NOTE: We will create a new log that will got to the database. The log will be retrieved and  */}
       {/* stored in state here. */}
 
-      {currentLogInProgress === null ? (
-        <>
-          <>Create new log:</>
-          <Button
-            key={123}
-            onClick={(e) => handleSubmitLog(e)}
-            variant="primary"
-          >
-            New Log
-          </Button>
-        </>
-      ) : (
-        ""
-      )}
-      <div>----------------------------------------------------</div>
+      <div>-----------------------------------------</div>
 
       {/* --- ADD CATEGORIES AND MAP--- */}
       <Form onSubmit={(e) => startTransition(() => handleSubmit(e))} key={321}>

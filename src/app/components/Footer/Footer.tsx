@@ -14,7 +14,8 @@ type FooterTypes = {
   setState: Dispatch<SetStateAction<string>>;
   state: string;
 };
-
+// To distinguish between a footer rendering in the logged in section, and
+// the landing page, create a state variable
 function Footer({ setState, state }: FooterTypes) {
   return (
     <div className={styles.footerContainer}>

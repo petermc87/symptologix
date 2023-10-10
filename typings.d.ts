@@ -1,7 +1,7 @@
 export type User = {
   id?: string | unknown;
   name: string;
-  username: string | unknown;
+  username?: string | unknown;
   email: string;
   password: string;
   logs?: Log[];
@@ -9,7 +9,7 @@ export type User = {
 
 export type Log = {
   id: string;
-  createdAt: string;
+  createdAt?: Date;
   userId: string;
   content?: string;
   entries?: Entry[];

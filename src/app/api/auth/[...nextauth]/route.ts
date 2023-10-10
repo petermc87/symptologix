@@ -82,7 +82,7 @@ const authOptions: NextAuthOptions = {
       if (account) {
         token.accessToken = account.access_token;
         token.id = user.id;
-        token.username = (user as User).username;
+        token.username = (user as User | any).username;
       }
       return token;
     },

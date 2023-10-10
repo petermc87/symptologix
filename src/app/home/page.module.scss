@@ -1,0 +1,34 @@
+@use "../utilties/font";
+@use "../utilties/variables" as var;
+
+$line: none;
+
+.homePageContainer {
+  padding: 3rem;
+}
+
+.welcomeHeader {
+  border: $line red;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10rem;
+}
+
+.intro {
+  @extend %largeHeroText;
+  color: var.$light-hazy-purple;
+  border: $line green;
+  span {
+    color: var.$gold;
+  }
+}
+.heading {
+  @extend %mediumHeadingText;
+  border: $line green;
+  margin-top: 5rem;
+  span {
+    color: var.$hazy-purple;
+    font-style: italic;
+    text-decoration: underline;
+  }
+}

@@ -6,7 +6,7 @@ import styles from "./NavBar.module.scss";
 type NavBarTypes = {
   // Declaring the type for a setter function here
   setFormState: Dispatch<SetStateAction<string>>;
-  formState: string;
+  formState: string | null;
 };
 
 export default function NavBar({ setFormState, formState }: NavBarTypes) {
