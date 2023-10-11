@@ -65,11 +65,7 @@ export default function SubCategoryForm({
               Create Subcategory
             </Form.Label>
             <Form.Group id={styles.inputControls}>
-              <Form.Control
-                name="inputquery"
-                placeholder="Create a sub category"
-                id={styles.input}
-              />
+              <Form.Control name="inputquery" id={styles.input} />
               <Button type="submit">Create</Button>
             </Form.Group>
           </Form>
@@ -129,6 +125,11 @@ export default function SubCategoryForm({
       ) : (
         ""
       )}
+
+      {/* TASK: Make sure the line in the last subcat. does not appear. This will allow
+      for a solid line separation between this and the current log. 
+      NOTE: Make sure to conside General Notes.
+      */}
       <div className={styles.lineWrapper}>
         <DottedLine />
       </div>

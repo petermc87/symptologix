@@ -114,11 +114,7 @@ export default function InputForm({
           Create Category
         </Form.Label>
         <Form.Group className={styles.inputControls}>
-          <Form.Control
-            name="inputquery"
-            placeholder="Create a category"
-            className={styles.input}
-          />
+          <Form.Control name="inputquery" className={styles.input} />
           <Button type="submit">Submit</Button>
         </Form.Group>
       </Form>

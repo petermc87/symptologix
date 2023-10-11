@@ -9,6 +9,7 @@ import {
 import getLog from "../../../../actions/logRequests/getLog";
 import { Entry, Log, Subcategory } from "../../../../typings";
 import DangerModal from "../modal/dangerModal";
+import styles from "./LogForm.module.scss";
 
 type LogFormTypes = {
   currentLogInProgress: Log | null | any;
@@ -100,10 +101,10 @@ export default function LogForm({
   return (
     <>
       {currentLogInProgress ? (
-        <>
+        <div className={styles.logForm}>
           <div className="log" key={currentLogInProgress.id}>
             {" "}
-            <strong>New Log:</strong>{" "}
+            <h2 className={styles.logHeading}>Current Log</h2>{" "}
             <header className="log-header">
               {/* Making the createdAt date a string outputted to the screen. */}
               {currentLogInProgress
@@ -133,7 +134,7 @@ export default function LogForm({
               </div>
 
               {/* Add in the map here for the rest of the entry components. */}
-              {currentLogInProgress.entries?.map((entry: any) => {
+              {currentLogInProgress.entries?.map((entry: Entry) => {
                 // Run a mapping function here that will match the subcat id with
                 // the id of the subcat in the entry object.
 
@@ -217,7 +218,7 @@ export default function LogForm({
             deleteLog={deleteLog}
             id={id}
           />
-        </>
+        </div>
       ) : (
         ""
       )}

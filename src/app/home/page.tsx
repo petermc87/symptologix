@@ -128,9 +128,7 @@ export default function Home() {
                     setAllSubCategories={setAllSubCategories}
                   />
                 </div>
-                <div>
-                  _________________________________________________________________________________
-                </div>
+
                 {/* Put the current log obejct state here and pass it down the InputForm and LogForm. */}
                 <LogForm
                   key={userData.user.id + 1}

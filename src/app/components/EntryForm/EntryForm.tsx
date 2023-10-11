@@ -61,11 +61,7 @@ export default function EntryForm({
                 {selectedSubCat.name}
               </Form.Label>
               <Form.Group className={styles.inputControls}>
-                <Form.Control
-                  name="inputquery"
-                  placeholder="Enter your log entry..."
-                  className={styles.input}
-                />
+                <Form.Control name="inputquery" className={styles.input} />
                 <Button type="submit">+</Button>
               </Form.Group>
             </Form>
