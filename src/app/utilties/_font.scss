@@ -18,17 +18,19 @@
   font-size: var.$logo-accent;
 }
 
+// Bold text in landing and input form.
 %smallBoldText {
   color: var.$dark-blue;
   font-size: var.$small-bold-text;
   font-weight: var.$bold-text;
 }
 
-// Heading text.
+// Heading & info text.
 %smallHeadingText {
   color: var.$light-hazy-purple;
   font-weight: var.$bold-text;
 }
+
 %mediumHeadingText {
   color: var.$light-hazy-purple;
   font-weight: var.$bold-text;

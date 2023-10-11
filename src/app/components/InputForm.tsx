@@ -1,13 +1,14 @@
 "use client";
 import { Category } from "@prisma/client";
 import { FormEvent, useEffect, useState, useTransition } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Dropdown, Form } from "react-bootstrap";
 import getCategories from "../../../actions/categoryRequests/getCats";
 import submitForm from "../../../actions/categoryRequests/submitCat";
 import getSubCategories from "../../../actions/subCategoryRequests/getSubCats";
 import { Log, Subcategory, User } from "../../../typings";
 import "../global.scss";
 import EntryForm from "./EntryForm/EntryForm";
+import styles from "./InputForm.module.scss";
 import SubCategoryForm from "./SubCategory/SubCategoryForm";
 //TODO: Create a state that will manage which input is being created (i.e. category, subcategory, or entry.)
 
@@ -100,21 +101,38 @@ export default function InputForm({
       {/* NOTE: We will create a new log that will got to the database. The log will be retrieved and  */}
       {/* stored in state here. */}
 
-      <div>-----------------------------------------</div>
-
       {/* --- ADD CATEGORIES AND MAP--- */}
-      <Form onSubmit={(e) => startTransition(() => handleSubmit(e))} key={321}>
+      <Form
+        onSubmit={(e) => startTransition(() => handleSubmit(e))}
+        key={321}
+        id={styles.createCat}
+      >
         {isPending ? <div>Submitting...</div> : ""}
-        <Form.Group className="mb-3">
-          <Form.Label>Create Category</Form.Label>
-          <Form.Control name="inputquery" placeholder="Enter any text" />
+
+        <Form.Label style={{ margin: "0" }} id={styles.label}>
+          Create Category
+        </Form.Label>
+        <Form.Group id={styles.inputButton}>
+          <Form.Control
+            name="inputquery"
+            placeholder="Create a category"
+            id={styles.input}
+          />
+          <Button type="submit">Submit</Button>
         </Form.Group>
-        <Button type="submit" className="mb-3">
-          Submit
-        </Button>
       </Form>
-      <div>______________________________________________________</div>
-      <div>
+      <div className={styles.textWrapper}>
+        <span>OR</span>
+        <div className={styles.selectPrevCat}>
+          <p>Select From Previous</p>
+          <div className={styles.dropdownWrapper}>
+            <Dropdown className={styles.dropdown}>
+              <Dropdown.Toggle>Categrory</Dropdown.Toggle>
+            </Dropdown>
+          </div>
+        </div>
+      </div>
+      <div className={styles.instruction}>
         Select a subcategory below to log a new entry. You can also create your
         own sub category
       </div>

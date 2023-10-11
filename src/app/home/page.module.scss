@@ -1,7 +1,8 @@
 @use "../utilties/font";
+@use "../utilties/elements";
 @use "../utilties/variables" as var;
 
-$line: solid;
+$line: none;
 
 .homePageContainer {
   padding: 3rem;
@@ -44,6 +45,8 @@ $line: solid;
   border: $line gray;
   display: flex;
   flex-direction: column;
+  border-bottom: solid var.$light-hazy-purple;
+  border-width: 0.8px;
 }
 
 .textWrapper {
@@ -72,6 +75,10 @@ $line: solid;
   p {
     margin: 0;
   }
+}
+
+#openPrevious {
+  margin-bottom: 2rem;
 }
 
 #button {

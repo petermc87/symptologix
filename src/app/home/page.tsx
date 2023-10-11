@@ -106,7 +106,10 @@ export default function Home() {
                         <span>OR </span>
                         <div></div>
                       </div>
-                      <div className={styles.createWrapper}>
+                      <div
+                        className={styles.createWrapper}
+                        id={styles.openPrevious}
+                      >
                         <p>Open Previous</p>
                         <span>
                           <p>12/10/2023</p>

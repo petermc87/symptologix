@@ -31,3 +31,14 @@
   color: var.$lightest-purple;
   font-weight: var.$regular-text;
 }
+
+%solidLine {
+  border-bottom: solid var.$light-hazy-purple;
+  border-width: 1px;
+}
+
+%inputField {
+  border: solid var.$light-hazy-purple;
+  border-radius: var.$form-element-radius;
+  background-color: var.$very-light-purple;
+}
