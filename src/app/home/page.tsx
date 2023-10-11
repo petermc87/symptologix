@@ -63,7 +63,6 @@ export default function Home() {
         data !== null && (
           <div className={styles.homePageContainer}>
             {/* WELCOME HEADER */}
-
             <div className={styles.welcomeHeader}>
               <h2 className={styles.intro}>
                 Welcome <span>{userData.user.username as ReactNode}!</span>
@@ -88,32 +87,50 @@ export default function Home() {
 
             {viewEntryForm ? (
               <>
-                {currentLogInProgress === null ? (
-                  <>
-                    <>Create new Log:</>
-                    <Button
-                      key={123}
-                      onClick={(e: any) => handleSubmitLog(e)}
-                      variant="primary"
-                    >
-                      Create Log
-                    </Button>
-                  </>
-                ) : (
-                  ""
-                )}
-                <InputForm
-                  user={userData.user}
-                  currentLogInProgress={currentLogInProgress}
-                  setCurrentLogInProgress={setCurrentLogInProgress}
-                  subCategories={subCategories}
-                  setAllSubCategories={setAllSubCategories}
-                />
+                <div className={styles.entryForm}>
+                  {currentLogInProgress === null ? (
+                    <div className={styles.selection}>
+                      <div className={styles.createWrapper}>
+                        <p>Create new Log:</p>
+                        <Button
+                          key={123}
+                          onClick={(e: any) => handleSubmitLog(e)}
+                          variant="primary"
+                          id={styles.button}
+                        >
+                          Create Log
+                        </Button>
+                      </div>
+
+                      <div className={styles.textWrapper}>
+                        <span>OR </span>
+                        <div></div>
+                      </div>
+                      <div className={styles.createWrapper}>
+                        <p>Open Previous</p>
+                        <span>
+                          <p>12/10/2023</p>
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  <InputForm
+                    key={userData.user.id}
+                    user={userData.user}
+                    currentLogInProgress={currentLogInProgress}
+                    setCurrentLogInProgress={setCurrentLogInProgress}
+                    subCategories={subCategories}
+                    setAllSubCategories={setAllSubCategories}
+                  />
+                </div>
                 <div>
                   _________________________________________________________________________________
                 </div>
                 {/* Put the current log obejct state here and pass it down the InputForm and LogForm. */}
                 <LogForm
+                  key={userData.user.id + 1}
                   currentLogInProgress={currentLogInProgress}
                   setCurrentLogInProgress={setCurrentLogInProgress}
                   subCategories={subCategories}

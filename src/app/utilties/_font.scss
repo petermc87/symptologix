@@ -24,6 +24,7 @@
   font-weight: var.$bold-text;
 }
 
+// Heading text.
 %smallHeadingText {
   color: var.$light-hazy-purple;
   font-weight: var.$bold-text;
@@ -34,6 +35,7 @@
   font-size: var.$medium-heading-text;
 }
 
+// Hero/large text
 %largeHeroText {
   color: var.$white;
   font-weight: var.$bold-text;
@@ -42,4 +44,11 @@
 
 %veryLargeHeroText {
   font-size: var.$very-large-hero-text;
+}
+
+//Underlined Text
+%boldBlueUnderlined {
+  text-decoration: underline;
+  @extend %smallBoldText;
+  font-style: italic;
 }

@@ -1,7 +1,7 @@
 @use "../utilties/font";
 @use "../utilties/variables" as var;
 
-$line: none;
+$line: solid;
 
 .homePageContainer {
   padding: 3rem;
@@ -12,6 +12,7 @@ $line: none;
   display: flex;
   flex-direction: column;
   margin-top: 10rem;
+  margin-bottom: 5rem;
 }
 
 .intro {
@@ -25,10 +26,54 @@ $line: none;
 .heading {
   @extend %mediumHeadingText;
   border: $line green;
-  margin-top: 5rem;
   span {
     color: var.$hazy-purple;
     font-style: italic;
     text-decoration: underline;
   }
+}
+
+.entryForm {
+  border: $line blue;
+  p {
+    @extend %smallHeadingText;
+  }
+}
+
+.selection {
+  border: $line gray;
+  display: flex;
+  flex-direction: column;
+}
+
+.textWrapper {
+  display: flex;
+  justify-content: space-around;
+  span,
+  div {
+    border: $line orange;
+    padding: 0.5rem 5rem 0.5rem 0;
+  }
+  span {
+    @extend %boldBlueUnderlined;
+  }
+}
+.createWrapper {
+  border: $line black;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  span {
+    margin-left: 2.5rem;
+    text-decoration: underline;
+    color: var.$light-hazy-purple;
+    font-style: italic;
+  }
+  p {
+    margin: 0;
+  }
+}
+
+#button {
+  margin-left: 2rem;
 }
