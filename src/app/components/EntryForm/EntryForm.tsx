@@ -2,6 +2,8 @@ import { FormEvent } from "react";
 import { Button, Form } from "react-bootstrap";
 import submitEntry from "../../../../actions/entryRequests/submitEntry";
 import { Log } from "../../../../typings";
+import DottedLine from "../DottedLine/DottedLine";
+import styles from "./EntryForm.module.scss";
 
 // Types for the user object.
 type EntryFormTypes = {
@@ -45,25 +47,31 @@ export default function EntryForm({
   return (
     <>
       {currentLogInProgress ? (
-        <>
-          New Log Entry:
-          <Form
-            onSubmit={(e) => {
-              handleSubmit(e);
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center" }}>
-              {selectedSubCat.name}:
-              <Form.Control
-                name="inputquery"
-                placeholder="Enter your log entry..."
-              />
-              <Button type="submit" className="mb-3">
-                +
-              </Button>
-            </div>
-          </Form>
-        </>
+        <div className={styles.entryFormWrapper}>
+          {/* Create a separate componnet for these headings. */}
+          <div className={styles.background}>
+            <h2 className={styles.entryHeading}>New Log Entry</h2>
+            <Form
+              onSubmit={(e) => {
+                handleSubmit(e);
+              }}
+              className={styles.form}
+            >
+              <Form.Label style={{ margin: "0" }} className={styles.label}>
+                {selectedSubCat.name}
+              </Form.Label>
+              <Form.Group className={styles.inputControls}>
+                <Form.Control
+                  name="inputquery"
+                  placeholder="Enter your log entry..."
+                  className={styles.input}
+                />
+                <Button type="submit">+</Button>
+              </Form.Group>
+            </Form>
+          </div>
+          <DottedLine />
+        </div>
       ) : (
         "Please create a log first (at the top of the page) before creating an entry."
       )}

@@ -66,3 +66,5 @@ Below shows a typical logging step using a wireflow. It shows steps to create a 
     `NOTE`: Used the 'with typescript' answer about half way down.
 
 8.  [MDB Boostrap Icons](https://mdbootstrap.com/docs/react/content-styles/icons/)
+
+9.  [Detailed Dotted Line](https://kovart.github.io/dashed-border-generator/)

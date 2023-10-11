@@ -7,6 +7,7 @@ import submitForm from "../../../actions/categoryRequests/submitCat";
 import getSubCategories from "../../../actions/subCategoryRequests/getSubCats";
 import { Log, Subcategory, User } from "../../../typings";
 import "../global.scss";
+import DottedLine from "./DottedLine/DottedLine";
 import EntryForm from "./EntryForm/EntryForm";
 import styles from "./InputForm.module.scss";
 import SubCategoryForm from "./SubCategory/SubCategoryForm";
@@ -109,14 +110,14 @@ export default function InputForm({
       >
         {isPending ? <div>Submitting...</div> : ""}
 
-        <Form.Label style={{ margin: "0" }} id={styles.label}>
+        <Form.Label style={{ margin: "0" }} className={styles.label}>
           Create Category
         </Form.Label>
-        <Form.Group id={styles.inputButton}>
+        <Form.Group className={styles.inputControls}>
           <Form.Control
             name="inputquery"
             placeholder="Create a category"
-            id={styles.input}
+            className={styles.input}
           />
           <Button type="submit">Submit</Button>
         </Form.Group>
@@ -132,17 +133,15 @@ export default function InputForm({
           </div>
         </div>
       </div>
-      <div className={styles.instruction}>
-        Select a subcategory below to log a new entry. You can also create your
-        own sub category
-      </div>
+      <DottedLine />
       {categories
         ? categories?.map((category) => {
             return (
               <>
-                <div key={category.id}>
-                  <h2 key={category.id + 1}>{category.name}</h2>
-
+                <div key={category.id} className={styles.catContainer}>
+                  <h2 key={category.id + 1} className={styles.catHeading}>
+                    {category.name}
+                  </h2>
                   {/* --- SUB CATEGORIES --- */}
                   <SubCategoryForm
                     category={category}

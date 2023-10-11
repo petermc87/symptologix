@@ -4,7 +4,8 @@ import { Button, ButtonGroup, Dropdown, Form } from "react-bootstrap";
 import getSubCategories from "../../../../actions/subCategoryRequests/getSubCats";
 import submitSubCat from "../../../../actions/subCategoryRequests/submitSubCat";
 import { Subcategory } from "../../../../typings";
-
+import DottedLine from "../DottedLine/DottedLine";
+import styles from "./SubCategory.module.scss";
 // Desctructure props passed down.
 //TODO: Update Restructure for state subCategories and setter SetAllSubcategories
 type SubCategoryProps = {
@@ -45,14 +46,60 @@ export default function SubCategoryForm({
   };
 
   return (
-    <>
+    <div className={styles.subcatWrapper}>
       {/* Creating a condition that will check it the cat is General Notes or not. */}
       {/* We dont want to render a subcat dropdown for General Notes. */}
 
-      {/* --- SUBCAT DROPDOWN --- */}
       {category.name !== "General Notes" ? (
         <div>
-          {subCategories ? (
+          {/* --- ADD SUB CAT --- */}
+
+          <Form
+            onSubmit={(e) => {
+              handleSubmit(e);
+            }}
+            className={styles.form}
+          >
+            <div className={styles.spacer}></div>
+            <Form.Label style={{ margin: "0" }} className={styles.label}>
+              Create Subcategory
+            </Form.Label>
+            <Form.Group id={styles.inputControls}>
+              <Form.Control
+                name="inputquery"
+                placeholder="Create a sub category"
+                id={styles.input}
+              />
+              <Button type="submit">Create</Button>
+            </Form.Group>
+          </Form>
+        </div>
+      ) : (
+        <>
+          {/* NOTE: Placeholder for General Notes Entry field. Add this to the 'log' component later.*/}
+          <Form>
+            <Form.Control
+              as="textarea"
+              placeholder="Enter your record here.."
+            />
+            <Button>Add</Button>
+          </Form>
+        </>
+      )}
+
+      {/* --- SUBCAT DROPDOWN --- */}
+      {subCategories ? (
+        // A wrapper for all the text, input fields, buttons and dropdowns.
+        <div className={styles.textWrapper}>
+          <span>AND/OR</span>
+          {/* Create a wrapper for the select from previous and the button */}
+          <div className={styles.selectPreviousWrapper}>
+            <div className={styles.label} id={styles.dropLabel}>
+              <div className={styles.spacer}></div>
+              <div className={styles.previous}>
+                Select From Previous for Entry (Below)
+              </div>
+            </div>
             <Dropdown as={ButtonGroup}>
               <Dropdown.Toggle id="dropdown-custom-1">Sub</Dropdown.Toggle>
               <Dropdown.Menu className="super-colors">
@@ -77,38 +124,14 @@ export default function SubCategoryForm({
                   : ""}
               </Dropdown.Menu>
             </Dropdown>
-          ) : (
-            ""
-          )}
-          {/* --- ADD SUB CAT --- */}
-          <Form
-            onSubmit={(e) => {
-              handleSubmit(e);
-            }}
-          >
-            <Form.Group>
-              <Form.Control
-                name="inputquery"
-                placeholder="Create a new category"
-              />
-              <Button type="submit" className="mb-3">
-                Create
-              </Button>
-            </Form.Group>
-          </Form>
+          </div>
         </div>
       ) : (
-        <>
-          {/* NOTE: Placeholder for General Notes Entry field. Add this to the 'log' component later.*/}
-          <Form>
-            <Form.Control
-              as="textarea"
-              placeholder="Enter your record here.."
-            />
-            <Button>Add</Button>
-          </Form>
-        </>
+        ""
       )}
-    </>
+      <div className={styles.lineWrapper}>
+        <DottedLine />
+      </div>
+    </div>
   );
 }

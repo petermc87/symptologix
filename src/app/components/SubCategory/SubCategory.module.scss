@@ -1,0 +1,65 @@
+@use "../../utilties/font";
+@use "../../utilties/elements";
+@use "../../utilties/variables" as var;
+
+$line: none;
+.textWrapper {
+  border: $line green;
+  span {
+    border: $line orange;
+    padding: 1rem 0 1rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    @extend %boldBlueUnderlined;
+  }
+}
+
+.spacer {
+  border: $line black;
+  padding: 1rem;
+}
+.form {
+  display: flex;
+  margin-top: 2rem;
+  border: $line brown;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#inputControls {
+  display: flex;
+  justify-content: space-between;
+  border: $line red;
+  width: 70%;
+  align-items: center;
+  #input {
+    width: 70%;
+    @extend %inputField;
+  }
+}
+
+.selectPreviousWrapper {
+  border: $line pink;
+  display: flex;
+  justify-content: space-between;
+}
+
+.label {
+  @extend %smallHeadingText;
+}
+
+#dropLabel {
+  border: $line brown;
+  justify-content: space-between;
+  display: flex;
+}
+
+.previous {
+  margin: 0;
+  margin-left: 0.6rem;
+}
+.lineWrapper {
+  border: $line gray;
+  margin-left: 2.7rem;
+}

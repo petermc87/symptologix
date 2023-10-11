@@ -1,0 +1,44 @@
+@use "../../utilties/font";
+@use "../../utilties/elements";
+$line: none;
+
+.entryFormWrapper {
+  border: $line red;
+  margin-left: 2.8rem;
+  padding-left: 2rem;
+}
+.entryHeading {
+  @extend %boldBlueUnderlined;
+}
+.label {
+  @extend %smallHeadingText;
+}
+
+.form {
+  display: flex;
+  margin-top: 2rem;
+  border: $line brown;
+
+  padding: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inputControls {
+  display: flex;
+  justify-content: space-between;
+  border: $line greenyellow;
+
+  width: 70%;
+  align-items: center;
+  .input {
+    width: 70%;
+    @extend %inputField;
+  }
+}
+
+.background {
+  background-color: rgb(173, 255, 47, 0.26);
+  border-radius: 3px;
+  padding: 0.2rem 0 0.2rem 0.2rem;
+}
