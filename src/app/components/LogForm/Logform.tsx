@@ -119,6 +119,7 @@ export default function LogForm({
   };
 
   // Add update entry by using the same methods from yum2me
+
   return (
     <>
       {currentLogInProgress ? (
@@ -126,12 +127,13 @@ export default function LogForm({
           <div className={styles.logForm} key={currentLogInProgress.id}>
             {" "}
             <h2 className={styles.logHeading}>Current Log</h2>{" "}
-            <header className="log-header">
+            <header className={styles.logHeader}>
               {/* Making the createdAt date a string outputted to the screen. */}
               {currentLogInProgress
                 ? // Taking the createAd string and splitting it into different sections.
                   getDateTime()
                 : ""}{" "}
+              {/* DELETE LOG BUTTON */}
               <Button
                 onClick={() => {
                   setId(currentLogInProgress.id);
@@ -148,11 +150,18 @@ export default function LogForm({
                 Delete Log
               </Button>
             </header>
-            <div className="entries" key={currentLogInProgress.id}>
-              <div className="headings" key={currentLogInProgress.id + 1}>
-                <h4>SubCat</h4>
-                <h4>Description</h4>
-                <h4></h4>
+            <div className={styles.entries} key={currentLogInProgress.id}>
+              {/* SUB HEADINGS */}
+              <div
+                className={styles.headings}
+                key={currentLogInProgress.id + 1}
+              >
+                <div className={styles.subcatHeading}>
+                  <h4>Sub-Category</h4>
+                </div>
+                <div className={styles.descriptionHeading}>
+                  <h4>Description</h4>
+                </div>
               </div>
 
               {/* Add in the map here for the rest of the entry components. */}
@@ -162,15 +171,19 @@ export default function LogForm({
 
                 // Pass entry.subCategoryId to the function and store the name here.
                 const name = getSubcat(entry.subCategoryId);
+
                 return (
-                  <div className="entry">
+                  <div className={styles.entry}>
                     {" "}
-                    <div className="subcat" key={entry.id}>
-                      {name}
-                    </div>
-                    {/* This is where the edit entry will be shown and will replace the current text. */}
-                    <div className="description" key={entry.id + 1}>
-                      {showEditEntry ? (
+                    {/* ENTRY SUBCAT AND DESCRIPTION. */}
+                    <div className={styles.entriesWrapper}>
+                      <div className={styles.loggedSubcat} key={entry.id}>
+                        {name}
+                      </div>
+                      {/* This is where the edit entry will be shown and will replace the current text. */}
+                      {/* NOTE: So that only the entry field for that specific entry opens, we have to check  */}
+                      {/* the current entry matches one of the entries in the list. */}
+                      {showEditEntry && entry.id === currentEntry.id ? (
                         // This will be shown when the edit button is
                         <Form
                           onSubmit={(e) => {
@@ -180,7 +193,7 @@ export default function LogForm({
                           key={currentLogInProgress.id + 5}
                         >
                           {/* Edit in place field for the current entry. */}
-                          <Form.Group>
+                          <Form.Group className={styles.editEntry}>
                             <Form.Control
                               value={currentEntry.entry}
                               placeholder="entry"
@@ -191,13 +204,15 @@ export default function LogForm({
                                 });
                               }}
                             />
+                            <div onClick={() => setShowEditEntry(false)}>X</div>
                           </Form.Group>
                         </Form>
                       ) : (
-                        <>{entry.entry}</>
+                        <div className={styles.description}>{entry.entry}</div>
                       )}
                     </div>
-                    <div className="buttons" key={entry.id + 2}>
+                    {/* BUTTONS. */}
+                    <div className={styles.buttons} key={entry.id + 2}>
                       {/* Add a prompt window that will ask 'if your're sure'. Use  */}
                       {/* a statement to check if ok, the instigate the delete method.  */}
                       <Button
@@ -218,6 +233,7 @@ export default function LogForm({
                         onClick={() => {
                           setCurrentEntry(entry);
                           setShowEditEntry(true);
+                          // Set id for the selected entry.
                         }}
                       >
                         Edit

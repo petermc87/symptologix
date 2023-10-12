@@ -1,8 +1,9 @@
 @use "../../utilties/font";
 @use "../../utilties/elements";
 @use "../../utilties/variables" as var;
-$line: solid;
+$line: none;
 
+// General Form for stlying.
 .logWrapper {
   border: $line red;
   padding: 1rem;
@@ -12,9 +13,80 @@ $line: solid;
   border-radius: 8px;
 }
 
+// The top level heading and everything underneath
 .logForm {
   border: $line gray;
 }
+
 .logHeading {
   @extend %boldBlueUnderlined;
+}
+
+// Datetime and delete button
+.logHeader {
+  border: $line blue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// The entered logs and the sub headings.
+.entries {
+  border: $line green;
+}
+
+// Headings container
+.headings {
+  border: $line pink;
+  display: flex;
+  justify-content: space-between;
+  width: 62%;
+}
+
+.subcatHeading {
+  border: $line gray;
+}
+
+.descriptionHeading {
+  border: $line gray;
+  width: 50%;
+}
+
+// Individual entry with buttons.
+.entry {
+  border: $line purple;
+  display: flex;
+  justify-content: space-between;
+}
+
+// Entry subcat and descriptions
+.entriesWrapper {
+  border: $line yellow;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 62%;
+}
+
+.description {
+  border: $line gray;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 50%;
+}
+
+// Edit Entry container
+.editEntry {
+  border: $line black;
+  display: flex;
+  align-items: center;
+}
+
+// Buttons
+.buttons {
+  border: $line orange;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
