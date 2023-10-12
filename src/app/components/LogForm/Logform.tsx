@@ -118,8 +118,6 @@ export default function LogForm({
     }
   };
 
-  // Add update entry by using the same methods from yum2me
-
   return (
     <>
       {currentLogInProgress ? (
@@ -156,12 +154,8 @@ export default function LogForm({
                 className={styles.headings}
                 key={currentLogInProgress.id + 1}
               >
-                <div className={styles.subcatHeading}>
-                  <h4>Sub-Category</h4>
-                </div>
-                <div className={styles.descriptionHeading}>
-                  <h4>Description</h4>
-                </div>
+                <div className={styles.subcatHeading}>Sub-Category</div>
+                <div className={styles.descriptionHeading}>Description</div>
               </div>
 
               {/* Add in the map here for the rest of the entry components. */}
@@ -242,6 +236,22 @@ export default function LogForm({
                   </div>
                 );
               })}
+            </div>
+            {/* Create a button that will set the current log in progess to null. */}
+            <div className={styles.finishButton}>
+              {/* TASK: Add a feature that will set a text state to show 'success!' when a log  */}
+              {/* is submitted. */}
+              {currentLogInProgress.entries ? (
+                <Button
+                  onClick={() => {
+                    setCurrentLogInProgress(null);
+                  }}
+                >
+                  Finish
+                </Button>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           {/* Need to ceate another state variable store the id to be passed into the delete function.

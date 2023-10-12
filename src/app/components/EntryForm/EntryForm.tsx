@@ -27,7 +27,7 @@ export default function EntryForm({
     // Creating a new FormData instance from react and createing the event as
     // a html type
     const formData = new FormData(e.target as HTMLFormElement);
-    const inputQuery = formData.get("inputquery")?.toString();
+    let inputQuery = formData.get("inputquery")?.toString();
 
     // We then create a new entry which will need to SetLog, the Entry String and the SubCat to be passed in.
     if (inputQuery) {
@@ -39,6 +39,7 @@ export default function EntryForm({
         });
         // Add the setter function here. The returned value will be the Log object which can be set here.
         setCurrentLoginProgress(log);
+        formData.set("inputquery", "");
       } catch (error) {
         console.error(error);
       }

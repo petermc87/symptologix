@@ -28,11 +28,13 @@ $line: none;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @extend %smallHeadingText;
 }
 
 // The entered logs and the sub headings.
 .entries {
   border: $line green;
+  margin-top: 2rem;
 }
 
 // Headings container
@@ -40,7 +42,10 @@ $line: none;
   border: $line pink;
   display: flex;
   justify-content: space-between;
-  width: 62%;
+  width: 80%;
+  @extend %boldBlueUnderlined;
+  text-decoration: none;
+  font-style: normal;
 }
 
 .subcatHeading {
@@ -57,6 +62,7 @@ $line: none;
   border: $line purple;
   display: flex;
   justify-content: space-between;
+  @extend %smallHeadingText;
 }
 
 // Entry subcat and descriptions
@@ -65,7 +71,7 @@ $line: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 62%;
+  width: 80%;
 }
 
 .description {
@@ -90,3 +96,12 @@ $line: none;
   flex-direction: column;
   justify-content: center;
 }
+
+.finishButton {
+  border: $line blue;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0 0 0;
+}
+
+// Set log header,  text
