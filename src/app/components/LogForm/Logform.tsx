@@ -97,18 +97,40 @@ export default function LogForm({
     setCurrentLogInProgress(updatedLog);
   };
 
+  // If there is a current log in progress, breakdown the date/time string and
+  // only output the data, month, year, time, etc.
+  const getDateTime = () => {
+    if (currentLogInProgress) {
+      const splitDateTime = currentLogInProgress.createdAt
+        .toString()
+        .split(" ");
+      const logDateTime =
+        splitDateTime[0] +
+        " " +
+        splitDateTime[1] +
+        " " +
+        splitDateTime[2] +
+        " " +
+        splitDateTime[3] +
+        ", " +
+        splitDateTime[4];
+      return logDateTime;
+    }
+  };
+
   // Add update entry by using the same methods from yum2me
   return (
     <>
       {currentLogInProgress ? (
-        <div className={styles.logForm}>
-          <div className="log" key={currentLogInProgress.id}>
+        <div className={styles.logWrapper}>
+          <div className={styles.logForm} key={currentLogInProgress.id}>
             {" "}
             <h2 className={styles.logHeading}>Current Log</h2>{" "}
             <header className="log-header">
               {/* Making the createdAt date a string outputted to the screen. */}
               {currentLogInProgress
-                ? currentLogInProgress?.createdAt.toString()
+                ? // Taking the createAd string and splitting it into different sections.
+                  getDateTime()
                 : ""}{" "}
               <Button
                 onClick={() => {

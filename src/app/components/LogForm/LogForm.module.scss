@@ -1,15 +1,19 @@
 @use "../../utilties/font";
 @use "../../utilties/elements";
 @use "../../utilties/variables" as var;
-$line: none;
+$line: solid;
 
-.logForm {
+.logWrapper {
   border: $line red;
   padding: 1rem;
   background-color: var.$log-background;
   border: solid var.$hazy-purple;
   border-width: 1px;
   border-radius: 8px;
+}
+
+.logForm {
+  border: $line gray;
 }
 .logHeading {
   @extend %boldBlueUnderlined;
