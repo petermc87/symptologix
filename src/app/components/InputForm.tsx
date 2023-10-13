@@ -81,6 +81,7 @@ export default function InputForm({
     };
     allCategories();
   }, []);
+
   // Consider making one call to the database at the page level.
   useEffect(() => {
     const getSubcategories = async () => {

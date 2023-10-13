@@ -3,24 +3,37 @@ import {
   Dispatch,
   SetStateAction,
   SyntheticEvent,
+  useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
 import { Button, Form } from "react-bootstrap";
 import registerUser from "../../../actions/singupForm";
+import { NavBarContext } from "./ContextNavBar/ContextNavBar";
 import styles from "./LoginSingupForm.module.scss";
 import Logo from "./Logo/Logo";
-// Desctructure the props in the state variable being passed down.
-// This variable has been named state from page.tsx props being passed.
-type FormPropsType = {
-  state: string;
-  setState: Dispatch<SetStateAction<string>>;
-  footerState: boolean;
-  setFooterState: Dispatch<SetStateAction<boolean>>;
-};
 
-export default function LoginSingupForm({ state, setState }: FormPropsType) {
+// // Desctructure the props in the state variable being passed down.
+// // This variable has been named state from page.tsx props being passed.
+// type FormPropsType = {
+//   state: string;
+//   setState: Dispatch<SetStateAction<string>>;
+
+// };
+
+export default function LoginSingupForm() {
+  // Instantiate an useContext object here,
+  const newContext: any = useContext(NavBarContext);
+
+  let state: string | undefined;
+  let setState: Dispatch<SetStateAction<string>>;
+
+  if (newContext) {
+    state = newContext.state;
+    setState = newContext.setState;
+  }
+
   // Create state to manage whether the button click was signup or login.
   const [buttonState, setButtonState] = useState<Boolean>(false);
 

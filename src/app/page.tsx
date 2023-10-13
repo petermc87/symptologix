@@ -8,6 +8,7 @@ import {
 import NavBar from "./components/NavBar/NavBar";
 import "./global.scss";
 
+import { NavbarProvider } from "./components/ContextNavBar/ContextNavBar";
 import Footer from "./components/Footer/Footer";
 import Perks from "./components/Perks/Perks";
 import styles from "./landing.module.scss";
@@ -33,7 +34,9 @@ export default function Home() {
 
   return (
     <main>
-      <NavBar setFormState={setFormState} formState={formState} />
+      <NavbarProvider>
+        <NavBar />
+      </NavbarProvider>
       {/* TODO: Add animation for container reveal */}
       <></>
       {/* Using a string to determine whether the login or singup container is present. */}
@@ -45,21 +48,16 @@ export default function Home() {
         <div className={styles.formWrapper}>
           {/* State may need to be passed into the login where it will be  */}
           {/* then passed into the logs home page. */}
-          <LoginForm
-            state={formState}
-            setState={setFormState}
-            footerState={footerState}
-            setFooterState={setFooterState}
-          />
+          <NavbarProvider>
+            <LoginForm />
+          </NavbarProvider>
         </div>
       ) : formState === "signup" ? (
         <div className={styles.formWrapper}>
-          <SingnUpForm
-            state={formState}
-            setState={setFormState}
-            footerState={footerState}
-            setFooterState={setFooterState}
-          />
+          {/* Wrap this in the navbar provider. */}
+          <NavbarProvider>
+            <SingnUpForm />
+          </NavbarProvider>
         </div>
       ) : (
         ""
@@ -70,11 +68,15 @@ export default function Home() {
             <h1 className={styles.heroText}>
               Be in <span>Control</span> of your <span>Symptoms</span>
             </h1>
-            <GeneralButton
-              name="Sign Up"
-              setState={setFormState}
-              state={formState}
-            />
+            {/* Replace this with the NavbarProvider. */}
+            {/* Make sure the state for name and set state is changed here in the */}
+            {/* context. */}
+            {/* NOTE: We might not need to use name. Although, thinking about it more, you  */}
+            {/* would still need to distinguish between this and the login. The only way i  */}
+            {/* can think of separating them is by using a prop. */}
+            <NavbarProvider>
+              <GeneralButton name="Sign Up" />
+            </NavbarProvider>
           </div>
         </div>
       </div>
