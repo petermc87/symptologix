@@ -1,33 +1,18 @@
 import { signIn } from "next-auth/react";
-import {
-  Dispatch,
-  SetStateAction,
-  SyntheticEvent,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { SyntheticEvent, useContext, useEffect, useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import registerUser from "../../../actions/singupForm";
 import formStyles from "../../app/landing.module.scss";
-import { FormTypes } from "../page";
 import { NavBarContext } from "./ContextNavBar/ContextNavBar";
 import styles from "./LoginSingupForm.module.scss";
 import Logo from "./Logo/Logo";
-// Desctructure the props in the state variable being passed down.
-// This variable has been named state from page.tsx props being passed.
-type FormPropsType = {
-  state: FormTypes;
-  setState: Dispatch<SetStateAction<string>>;
-};
 
-export default function LoginSingupForm({ state, setState }: FormPropsType) {
+export default function LoginSingupForm() {
   // Create state to manage whether the button click was signup or login.
   const [buttonState, setButtonState] = useState<Boolean>(false);
 
   // Consume Context
-  const { show } = useContext<any>(NavBarContext);
+  const { show, setShow, state, setState } = useContext<any>(NavBarContext);
 
   // Create state for outputting exisiting Email.
   const [emailExists, setEmailExists] = useState<string>("");
@@ -129,6 +114,7 @@ export default function LoginSingupForm({ state, setState }: FormPropsType) {
     function handleClickOutside(event: MouseEvent): void {
       if (ref.current && !ref.current.contains(event.target as Node)) {
         setState("");
+        setShow(false);
       }
     }
     // Bind to event listener
@@ -139,11 +125,10 @@ export default function LoginSingupForm({ state, setState }: FormPropsType) {
     };
   });
 
-  console.log(show);
   return (
     <>
       {/* Add show form context in here. */}
-      {(state === "signup" || state === "login") && show ? (
+      {show ? (
         // Import the styles from the pages module for the form Wrapper.
         <div className={formStyles.formWrapper}>
           <div ref={ref} className={styles.fullWrapper}>

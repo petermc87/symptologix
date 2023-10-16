@@ -11,7 +11,6 @@ import "./global.scss";
 import NavBarProvider from "./components/ContextNavBar/ContextNavBar";
 import Footer from "./components/Footer/Footer";
 import Perks from "./components/Perks/Perks";
-import ButtonTest from "./components/Test/ButtonTest";
 import styles from "./landing.module.scss";
 
 // Create interface for both signup and login forms
@@ -37,11 +36,11 @@ export default function Home() {
     <>
       <main>
         <NavBarProvider>
-          <NavBar setFormState={setFormState} formState={formState} />
+          <NavBar />
           {/* TODO: Add animation for container reveal */}
           <></>
 
-          <SingnUpForm state={formState} setState={setFormState} />
+          <SingnUpForm />
 
           <div className={styles.heroContainer}>
             <div className={styles.heroContainer}>
@@ -49,17 +48,14 @@ export default function Home() {
                 <h1 className={styles.heroText}>
                   Be in <span>Control</span> of your <span>Symptoms</span>
                 </h1>
-                <GeneralButton
-                  name="Sign Up"
-                  setState={setFormState}
-                  state={formState}
-                />
+                {/* Buttons will set the state to a string based on whether it is login
+                or signup. */}
+                <GeneralButton name="Sign Up" />
               </div>
             </div>
           </div>
           <Perks />
           <Footer setState={setFormState} state={formState} />
-          <ButtonTest />
         </NavBarProvider>
       </main>
     </>

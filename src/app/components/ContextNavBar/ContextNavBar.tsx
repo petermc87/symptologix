@@ -8,15 +8,18 @@ import { Dispatch, SetStateAction, createContext, useState } from "react";
 export type NavBarContextTypes = {
   show: boolean | null | undefined;
   setShow: Dispatch<SetStateAction<boolean | undefined>>;
+  state: string | null | undefined;
+  setState: Dispatch<SetStateAction<string | undefined>>;
 };
 
 export const NavBarContext = createContext<NavBarContextTypes | false>(false);
 
 export default function NavBarProvider(props: any) {
-  const [show, setShow] = useState<boolean | undefined>();
+  const [show, setShow] = useState<boolean | undefined>(false);
+  const [state, setState] = useState<string | undefined>("");
 
   return (
-    <NavBarContext.Provider value={{ show, setShow }}>
+    <NavBarContext.Provider value={{ show, setShow, state, setState }}>
       {props.children}
     </NavBarContext.Provider>
   );
