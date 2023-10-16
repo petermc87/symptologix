@@ -8,6 +8,8 @@ import { Dispatch, SetStateAction, createContext, useState } from "react";
 export type NavBarContextTypes = {
   show: boolean | null | undefined;
   setShow: Dispatch<SetStateAction<boolean | undefined>>;
+  footerNavBarState: boolean | null | undefined;
+  setFooterNavBarState: Dispatch<SetStateAction<boolean | undefined>>;
   state: string | null | undefined;
   setState: Dispatch<SetStateAction<string | undefined>>;
 };
@@ -15,48 +17,29 @@ export type NavBarContextTypes = {
 export const NavBarContext = createContext<NavBarContextTypes | false>(false);
 
 export default function NavBarProvider(props: any) {
+  // Showing the login or signup modal.
   const [show, setShow] = useState<boolean | undefined>(false);
+  // Setting the modal type (either login or signup)
   const [state, setState] = useState<string | undefined>("");
 
+  // Boolean to determine whether the navbar is being rendered in
+  // the landing page or the other pages.
+  const [footerNavBarState, setFooterNavBarState] = useState<
+    boolean | undefined
+  >(false);
+
   return (
-    <NavBarContext.Provider value={{ show, setShow, state, setState }}>
+    <NavBarContext.Provider
+      value={{
+        show,
+        setShow,
+        state,
+        setState,
+        footerNavBarState,
+        setFooterNavBarState,
+      }}
+    >
       {props.children}
     </NavBarContext.Provider>
   );
 }
-// // EXAMPLE ONE - DOESNT WORK!!
-// import {
-//   Dispatch,
-//   ReactNode,
-//   SetStateAction,
-//   createContext,
-//   useState,
-// } from "react";
-
-// // Create type interface for the context.
-// export type NavBarContextTypes = {
-//   state: string | null;
-//   setState: Dispatch<SetStateAction<string>>;
-// };
-
-// // Define a new type for the React node i.e the children being
-// // passed down.
-// type NavBarProviderProps = {
-//   children: ReactNode;
-// };
-
-// // Pass the state vars into the create Context.
-// export const NavBarContext = createContext<NavBarContextTypes | null>(null);
-
-// export const NavbarProvider = ({ children }: NavBarProviderProps) => {
-//   // Create state for Login
-
-//   const [state, setState] = useState<string>("");
-
-//   // Return the context provider component.
-//   return (
-//     <NavBarContext.Provider value={{ state, setState }}>
-//       {children}
-//     </NavBarContext.Provider>
-//   );
-// };

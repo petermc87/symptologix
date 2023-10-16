@@ -5,27 +5,38 @@ import {
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Dispatch, SetStateAction } from "react";
+import { useSession } from "next-auth/react";
 import GeneralButton from "../Button/Button";
 import Logo from "../Logo/Logo";
 import styles from "./Footer.module.scss";
 
-type FooterTypes = {
-  setState: Dispatch<SetStateAction<string>>;
-  state: string;
-};
 // To distinguish between a footer rendering in the logged in section, and
 // the landing page, create a state variable
-function Footer({ setState, state }: FooterTypes) {
+function Footer() {
+  // Checking if there is a user object created. If there is, it should affect the
+  // what is being rendered.
+  const { data } = useSession();
+
   return (
     <div className={styles.footerContainer}>
       <div className={styles.paddingWrapper}>
         <div className={styles.header}>
           <Logo />
-          <div className={styles.wrapper}>
-            <h2 className={styles.footerHeading}>Sign Up to Learn More!</h2>
-            <GeneralButton name="Sign Up" state={state} setState={setState} />
-          </div>
+
+          {!data ? (
+            <>
+              <div className={styles.wrapper}>
+                <h2 className={styles.footerHeading}>Sign Up to Learn More!</h2>
+                <GeneralButton name="Sign Up" />
+              </div>
+            </>
+          ) : (
+            <div className={styles.wrapper}>
+              <h2 className={styles.footerHeading}>
+                Please check out our links below
+              </h2>
+            </div>
+          )}
         </div>
         <div className={styles.links}>
           <div className={styles.subList} id={styles.contact}>

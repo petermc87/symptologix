@@ -4,11 +4,16 @@ import { ReactNode, useState } from "react";
 import { Button } from "react-bootstrap";
 import submitNewLog from "../../../actions/logRequests/submitNewLog";
 import { Log, Subcategory } from "../../../typings";
+import NavBarProvider from "../components/ContextNavBar/ContextNavBar";
+import Footer from "../components/Footer/Footer";
 import InputForm from "../components/InputForm";
 import LogForm from "../components/LogForm/Logform";
+import NavBar from "../components/NavBar/NavBar";
+import "../global.scss";
 import styles from "./page.module.scss";
 
 export default function Home() {
+  // Passing in the session data for the user logged in or signed up.
   const { data, status } = useSession();
 
   // State for storing the log in progress. If there is a log in progress,
@@ -53,11 +58,13 @@ export default function Home() {
       console.error(error);
     }
   };
+
   // Get the current log refreshed. Use a handler function.
   // will get passed down to the log form. We dont need the setCurrentLogInProgress setter
   // because we are setting it here.
   return (
-    <>
+    <NavBarProvider>
+      <NavBar />
       {status ? (
         status === "authenticated" &&
         data !== null && (
@@ -71,7 +78,12 @@ export default function Home() {
               {!viewEntryForm ? (
                 <div className={styles.heading}>
                   Create new {/* Add state here to show the whole entry form */}
-                  <span key={123} onClick={() => setViewEntryForm(true)}>
+                  <span
+                    key={123}
+                    onClick={() => {
+                      setViewEntryForm(true);
+                    }}
+                  >
                     entry form
                   </span>
                   , look at <span>metrics</span>, or <span>previous logs</span>
@@ -145,6 +157,8 @@ export default function Home() {
       ) : (
         <div>Authentification Failed. Please try logging in again.</div>
       )}
-    </>
+
+      <Footer />
+    </NavBarProvider>
   );
 }

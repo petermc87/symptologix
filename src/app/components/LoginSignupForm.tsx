@@ -12,7 +12,8 @@ export default function LoginSingupForm() {
   const [buttonState, setButtonState] = useState<Boolean>(false);
 
   // Consume Context
-  const { show, setShow, state, setState } = useContext<any>(NavBarContext);
+  const { show, setShow, state, setState, setFooterNavBarState } =
+    useContext<any>(NavBarContext);
 
   // Create state for outputting exisiting Email.
   const [emailExists, setEmailExists] = useState<string>("");
@@ -46,20 +47,12 @@ export default function LoginSingupForm() {
     // Button for checking whether the client chooses login or signup on the landing page.
     if (buttonState) {
       // --> Login state <-- //
-      // // Check if there is a user matching the email in the database.
-      // const userReturn = loginForm(email);
-      // if (!userReturn) {
-      //   return setEmailExists(userReturn);
-      // }
       // Sigin with the credentials provided.
       const user = await signIn("credentials", {
         email: email,
         password: password,
         callbackUrl: "/home",
       });
-      if (!user) {
-        return setEmailExists("Invalid username or password");
-      }
     } else {
       // --> Signup State <-- //
       // Register the user first.
@@ -76,16 +69,18 @@ export default function LoginSingupForm() {
         setEmailExists(user);
       } else if (!user) {
         setEmailExists("Sorry, the user wasnt created. Please try again.");
+      } else {
+        setEmailExists("");
       }
       // --> Logging in to the NextAuth session if the user was created. <-- //
       // Log them in if there are no errors.
       await signIn("credentials", {
         email: email,
         password: password,
-
         callbackUrl: "/home",
       });
     }
+    setFooterNavBarState(true);
   };
 
   // Add in a function call to close the signup/login modal when clicked
@@ -189,6 +184,8 @@ export default function LoginSingupForm() {
                     Sign Up
                   </Button>
                 ) : state === "login" ? (
+                  // To determine the difference between submitting a login or signup form.
+                  // This is used in the handle submit function above.
                   <Button
                     onClick={() => {
                       setButtonState(true);
