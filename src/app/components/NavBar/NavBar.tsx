@@ -1,15 +1,15 @@
+import { Dispatch, SetStateAction } from "react";
 import GeneralButton from "../Button/Button";
-import { NavbarProvider } from "../ContextNavBar/ContextNavBar";
 import Hamburger from "../Hamburger/Hamburger";
 import Logo from "../Logo/Logo";
 import styles from "./NavBar.module.scss";
-// type NavBarTypes = {
-//   // Declaring the type for a setter function here
-//   setFormState: Dispatch<SetStateAction<string>>;
-//   formState: string | null;
-// };
+type NavBarTypes = {
+  // Declaring the type for a setter function here
+  setFormState: Dispatch<SetStateAction<string>>;
+  formState: string;
+};
 
-export default function NavBar() {
+export default function NavBar({ setFormState, formState }: NavBarTypes) {
   return (
     <div className={styles.navbarWrapper}>
       {/* Set the state to usertype. NOTE: we dont need to set complex types. */}
@@ -19,10 +19,16 @@ export default function NavBar() {
         <Hamburger />
       </div>
       <div className={styles.buttonWrapper}>
-        <NavbarProvider>
-          <GeneralButton name="Log In" />
-          <GeneralButton name="Sign Up" />
-        </NavbarProvider>
+        <GeneralButton
+          name="Log In"
+          setState={setFormState}
+          state={formState}
+        />
+        <GeneralButton
+          name="Sign Up"
+          setState={setFormState}
+          state={formState}
+        />
       </div>
     </div>
   );

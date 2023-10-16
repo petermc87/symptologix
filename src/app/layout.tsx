@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.css";
 import type { Metadata } from "next";
-import AuthProvider from "./components/authprovider/AuthProvider";
+import { Providers } from "./components/Providers/Providers";
 
 export const metadata: Metadata = {
   title: "Smyptologix",
@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
