@@ -3,6 +3,7 @@ import {
   Dispatch,
   SetStateAction,
   SyntheticEvent,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -11,6 +12,7 @@ import { Button, Form } from "react-bootstrap";
 import registerUser from "../../../actions/singupForm";
 import formStyles from "../../app/landing.module.scss";
 import { FormTypes } from "../page";
+import { NavBarContext } from "./ContextNavBar/ContextNavBar";
 import styles from "./LoginSingupForm.module.scss";
 import Logo from "./Logo/Logo";
 // Desctructure the props in the state variable being passed down.
@@ -23,6 +25,9 @@ type FormPropsType = {
 export default function LoginSingupForm({ state, setState }: FormPropsType) {
   // Create state to manage whether the button click was signup or login.
   const [buttonState, setButtonState] = useState<Boolean>(false);
+
+  // Consume Context
+  const { show } = useContext<any>(NavBarContext);
 
   // Create state for outputting exisiting Email.
   const [emailExists, setEmailExists] = useState<string>("");
@@ -134,10 +139,11 @@ export default function LoginSingupForm({ state, setState }: FormPropsType) {
     };
   });
 
+  console.log(show);
   return (
     <>
       {/* Add show form context in here. */}
-      {state === "signup" || state === "login" ? (
+      {(state === "signup" || state === "login") && show ? (
         // Import the styles from the pages module for the form Wrapper.
         <div className={formStyles.formWrapper}>
           <div ref={ref} className={styles.fullWrapper}>

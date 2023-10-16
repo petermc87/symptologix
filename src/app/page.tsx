@@ -36,33 +36,32 @@ export default function Home() {
   return (
     <>
       <main>
-        <NavBar setFormState={setFormState} formState={formState} />
-        {/* TODO: Add animation for container reveal */}
-        <></>
         <NavBarProvider>
-          <SingnUpForm state={formState} setState={setFormState} />
-        </NavBarProvider>
+          <NavBar setFormState={setFormState} formState={formState} />
+          {/* TODO: Add animation for container reveal */}
+          <></>
 
-        <div className={styles.heroContainer}>
+          <SingnUpForm state={formState} setState={setFormState} />
+
           <div className={styles.heroContainer}>
-            <div className={styles.heroContents}>
-              <h1 className={styles.heroText}>
-                Be in <span>Control</span> of your <span>Symptoms</span>
-              </h1>
-              <GeneralButton
-                name="Sign Up"
-                setState={setFormState}
-                state={formState}
-              />
+            <div className={styles.heroContainer}>
+              <div className={styles.heroContents}>
+                <h1 className={styles.heroText}>
+                  Be in <span>Control</span> of your <span>Symptoms</span>
+                </h1>
+                <GeneralButton
+                  name="Sign Up"
+                  setState={setFormState}
+                  state={formState}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <Perks />
-        <Footer setState={setFormState} state={formState} />
+          <Perks />
+          <Footer setState={setFormState} state={formState} />
+          <ButtonTest />
+        </NavBarProvider>
       </main>
-      <NavBarProvider>
-        <ButtonTest />
-      </NavBarProvider>
     </>
   );
 }

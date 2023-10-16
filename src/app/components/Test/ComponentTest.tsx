@@ -2,7 +2,8 @@ import { useContext } from "react";
 import { NavBarContext } from "../ContextNavBar/ContextNavBar";
 
 export default function ComponentTest() {
-  const { state } = useContext<any>(NavBarContext);
+  const { show } = useContext<any>(NavBarContext);
 
-  return <div>{state}</div>;
+  console.log(show);
+  return <div>{show}</div>;
 }
