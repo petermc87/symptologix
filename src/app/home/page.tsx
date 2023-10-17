@@ -16,6 +16,9 @@ export default function Home() {
   // Passing in the session data for the user logged in or signed up.
   const { data, status } = useSession();
 
+  // TASK: Change this to a useContext state so that it can be used in other
+  // pages
+
   // State for storing the log in progress. If there is a log in progress,
   // the the New Log button will dissappear below.
   const [currentLogInProgress, setCurrentLogInProgress] = useState<Log | null>(

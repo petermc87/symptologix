@@ -1,7 +1,7 @@
 @use "../utilties/font";
 @use "../utilties/variables" as var;
 
-$line: snone;
+$line: none;
 
 .previousPageContainer {
   border: $line green;
@@ -9,7 +9,9 @@ $line: snone;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10rem;
 }
+
 .headingText {
   @extend %largeHeroText;
   color: var.$light-hazy-purple;
@@ -21,19 +23,56 @@ $line: snone;
   text-align: center;
 }
 
-.previousLogWrapper {
-  border: $line gray;
+.previousLogContainer {
+  border: solid var.$dark-blue;
   display: flex;
+  justify-content: space-around;
+  border-radius: 10px;
+  background-color: var.$lightest-purple;
   width: 70%;
   max-width: 60rem;
-  justify-content: space-between;
+  padding: 2rem;
   margin-bottom: 1rem;
 }
 
-.previousLogContainer {
-  border: solid var.$dark-blue;
-  border-radius: 10px;
-  background-color: var.$lightest-purple;
-  width: 95%;
-  padding: 2rem;
+// Text on hover.
+.overlay {
+  position: absolute;
+  background-color: var.$hazy-purple;
+  text-align: center;
+  color: var.$white;
+  padding: 1rem;
+  font-size: large;
+  border-radius: 2rem;
+  display: none;
+  width: 50%;
+}
+
+.previousLogContainer:hover {
+  opacity: 0.5;
+  cursor: pointer;
+  .overlay {
+    display: block;
+  }
+}
+
+// Log view
+.logView {
+  border: $line purple;
+  background-color: var.$login-form-background;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.logContainer {
+  border: $line yellow;
+  padding: 5rem;
+  background-color: white;
 }

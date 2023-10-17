@@ -226,17 +226,3 @@ export default function LoginSingupForm() {
     </>
   );
 }
-
-// //TODO: THIS DIDNT WORK: Persist the message component using localStorage. -> Add underneath state declaration.
-// useEffect(() => {
-//   if (emailExists) {
-//     // @ts-ignore
-//     setEmailExists(JSON.parse(window.localStorage.getItem("emailExists")));
-//   }
-// }, []);
-
-// useEffect(() => {
-//   window.localStorage.setItem("emailExists", emailExists);
-// }, [emailExists]);
-//   window.localStorage.setItem("emailExists", emailExists);
-// }, [emailExists]);
