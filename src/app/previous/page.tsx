@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import getLogs from "../../../actions/logRequests/getLogs";
-import { Log } from "../../../typings";
+import { Entry, Log } from "../../../typings";
 import NavBarProvider from "../components/ContextNavBar/ContextNavBar";
 import Footer from "../components/Footer/Footer";
 import NavBar from "../components/NavBar/NavBar";
@@ -30,10 +30,6 @@ export default function PreviousLogsPage() {
     };
   }, []);
 
-  if (selectedLog) {
-    console.log(selectedLog);
-  }
-
   // Create reference to the element that will close
   //   when clicked outside of it.
   const ref = useRef<HTMLDivElement>(null);
@@ -51,6 +47,8 @@ export default function PreviousLogsPage() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   });
+
+  //   if (selectedLog) console.log(selectedLog);
 
   return (
     <>
@@ -86,9 +84,21 @@ export default function PreviousLogsPage() {
         {/* Add the ref to the html element so that it can be closed when clicking  */}
         {/* outside of the log. */}
         {selectedLog ? (
+          // TASK: Make this a separate component.
           <div className={styles.logView} ref={ref} key={selectedLog.id + 10}>
             <div className={styles.logContainer}>
+              <h1>Log View</h1>
               {selectedLog.createdAt?.toLocaleTimeString()}
+              <>
+                <h2>Previous Entries</h2>
+                {selectedLog.entries?.map((entry: Entry) => {
+                  return (
+                    <ul>
+                      <li>{entry.entry}</li>
+                    </ul>
+                  );
+                })}
+              </>
             </div>
           </div>
         ) : (
