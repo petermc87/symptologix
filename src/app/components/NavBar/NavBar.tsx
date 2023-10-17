@@ -8,6 +8,7 @@ export default function NavBar() {
   // Check the user session data for a login object coming back.
   // If it does, then show the logout and other links
   const { data } = useSession();
+
   return (
     <div className={styles.navbarWrapper}>
       {/* Set the state to usertype. NOTE: we dont need to set complex types. */}
@@ -19,10 +20,21 @@ export default function NavBar() {
       {/* A boolean will determine whether its going to be a the landing page 
       buttons or if its going to be the pages redirects and a login. */}
 
-      <div className={styles.buttonWrapper}>
-        <GeneralButton name="Log In" />
-        <GeneralButton name="Sign Up" />
-      </div>
+      {data ? (
+        <>
+          <div className={styles.buttonWrapper}>
+            <div>Mertrics</div>
+            <div>Previous Logs</div>
+          </div>
+
+          <GeneralButton name="Log Out" />
+        </>
+      ) : (
+        <div className={styles.buttonWrapper}>
+          <GeneralButton name="Log In" />
+          <GeneralButton name="Sign Up" />
+        </div>
+      )}
     </div>
   );
 }
