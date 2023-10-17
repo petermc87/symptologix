@@ -3,7 +3,7 @@
 import db from "@/app/modules/db";
 
 export default async function getLog(id: string) {
-  const log = db.log.findUnique({
+  const log = await db.log.findUnique({
     where: {
       id: id,
     },

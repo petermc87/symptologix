@@ -1,0 +1,39 @@
+@use "../utilties/font";
+@use "../utilties/variables" as var;
+
+$line: snone;
+
+.previousPageContainer {
+  border: $line green;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.headingText {
+  @extend %largeHeroText;
+  color: var.$light-hazy-purple;
+  border: $line red;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10rem;
+  margin-bottom: 5rem;
+  text-align: center;
+}
+
+.previousLogWrapper {
+  border: $line gray;
+  display: flex;
+  width: 70%;
+  max-width: 60rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.previousLogContainer {
+  border: solid var.$dark-blue;
+  border-radius: 10px;
+  background-color: var.$lightest-purple;
+  width: 95%;
+  padding: 2rem;
+}

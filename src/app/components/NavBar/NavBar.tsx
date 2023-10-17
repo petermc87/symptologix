@@ -22,11 +22,9 @@ export default function NavBar() {
 
       {data ? (
         <>
-          <div className={styles.buttonWrapper}>
-            <div>Mertrics</div>
-            <div>Previous Logs</div>
-          </div>
-
+          <div>New Logs</div>
+          <div>Previous Logs</div>
+          <div>Metrics</div>
           <GeneralButton name="Log Out" />
         </>
       ) : (
