@@ -2,7 +2,7 @@
 // 2. Create context using state for Logout, CreateLogPage, PreviousLogsPage, and MetricsPage.
 
 import { Dispatch, SetStateAction, createContext, useState } from "react";
-import { Subcategory } from "../../../../typings";
+import { Log, Subcategory } from "../../../../typings";
 
 // Export the counter context.
 
@@ -15,6 +15,8 @@ export type NavBarContextTypes = {
   setState: Dispatch<SetStateAction<string | undefined>>;
   subCategories: Subcategory[] | null | undefined;
   setSubCategories: Dispatch<SetStateAction<Subcategory[] | null | undefined>>;
+  currentLog: Log | null | undefined;
+  setCurrentLog: Dispatch<SetStateAction<Log | null | undefined>>;
 };
 
 export const NavBarContext = createContext<NavBarContextTypes | false>(false);
@@ -29,6 +31,9 @@ export default function NavBarProvider(props: any) {
   const [footerNavBarState, setFooterNavBarState] = useState<
     boolean | undefined
   >(false);
+
+  // State for holding the current log.
+  const [currentLog, setCurrentLog] = useState<Log | null | undefined>(null);
 
   // State for holding the subcategories
   const [subCategories, setSubCategories] = useState<
@@ -46,6 +51,8 @@ export default function NavBarProvider(props: any) {
         setFooterNavBarState,
         subCategories,
         setSubCategories,
+        currentLog,
+        setCurrentLog,
       }}
     >
       {props.children}

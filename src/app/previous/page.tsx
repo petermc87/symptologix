@@ -49,6 +49,13 @@ export default function PreviousLogsPage() {
         <div className={styles.previousPageContainer} key={889}>
           <div className={styles.headingText}>Select from Previous Logs</div>
           <>
+            {/* TASK: 
+              1. Create a separate component for this 
+              2. Set the context for currentLog.
+              3. This can then be used on the LogVew componenet.
+              4. Delete selectedLog. Also, make sure to change the selected
+              log references in LogView to currentLog.
+            */}
             {logsState?.map((log: Log) => {
               return (
                 <>

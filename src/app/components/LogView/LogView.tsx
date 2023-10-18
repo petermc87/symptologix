@@ -95,6 +95,9 @@ export default function LogView({ selectedLog, setSelectedLog }: LogViewTypes) {
                 </div>
               );
             })}
+            {/* // Clicking this will pass the current log into context to be used */}
+            {/* in the home page for editing. */}
+
             <Button>Edit</Button>
           </div>
         </div>
