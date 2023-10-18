@@ -1,5 +1,6 @@
 @use "../../utilties/variables" as var;
 @use "../../utilties/elements";
+@use "../../utilties/font";
 
 $line: none;
 
@@ -16,10 +17,37 @@ $line: none;
   align-items: center;
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(5px);
+  z-index: +1;
+}
+
+// Heading
+.headingText {
+  @extend %boldBlueUnderlined;
 }
 
 .logContainer {
   border: $line yellow;
   padding: 5rem;
   background-color: white;
+}
+
+.entryContainer {
+  border: $line red;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  .entry {
+    border: $line gold;
+    width: 40%;
+  }
+  .subcat {
+    border: $line green;
+    display: flex;
+    width: 60%;
+  }
+  #subHeading {
+    @extend %boldBlueUnderlined;
+    text-decoration: none;
+    font-style: normal;
+  }
 }

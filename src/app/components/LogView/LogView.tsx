@@ -2,6 +2,7 @@
 import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
 import { Entry, Log, Subcategory } from "../../../../typings";
 
+import { Button } from "react-bootstrap";
 import getSubCategories from "../../../../actions/subCategoryRequests/getSubCats";
 import { NavBarContext } from "../ContextNavBar/ContextNavBar";
 import styles from "./LogView.module.scss";
@@ -22,7 +23,6 @@ export default function LogView({ selectedLog, setSelectedLog }: LogViewTypes) {
     subCategories.map((category: Subcategory) => {
       //   console.log(category, id);
       if (category.id === id) {
-        console.log(category.name);
         subCat = category.name;
       }
     });
@@ -67,21 +67,32 @@ export default function LogView({ selectedLog, setSelectedLog }: LogViewTypes) {
       {selectedLog ? (
         <div className={styles.logView} ref={ref} key={selectedLog.id}>
           <div className={styles.logContainer}>
-            <h1>Log View</h1>
-            {selectedLog.createdAt?.toLocaleTimeString()}
             <>
-              <h2>Previous Entries</h2>
+              <h2 className={styles.headingText}>Log View</h2>
+              {selectedLog.createdAt?.toLocaleDateString()}
+              {", "}
+              {selectedLog.createdAt?.toLocaleTimeString()}
+              <br />
+              <br />
+              <div className={styles.entryContainer}>
+                <div className={styles.subcat} id={styles.subHeading}>
+                  SubCategory
+                </div>
+                <div className={styles.entry} id={styles.subHeading}>
+                  Entry
+                </div>
+              </div>
               {selectedLog.entries?.map((entry: Entry) => {
+                // Finding the matching subcat.
                 handleMatchingSubCat(entry.subCategoryId);
                 return (
-                  <ul>
-                    <li>
-                      <div>{entry.entry}</div>
-                      <div>{subCat}</div>
-                    </li>
-                  </ul>
+                  <div className={styles.entryContainer}>
+                    <div className={styles.subcat}>{subCat}</div>
+                    <div className={styles.entry}>{entry.entry}</div>
+                  </div>
                 );
               })}
+              <Button>Edit</Button>
             </>
           </div>
         </div>
