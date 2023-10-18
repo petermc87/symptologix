@@ -7,10 +7,7 @@ $line: none;
 .logWrapper {
   border: $line red;
   padding: 1rem;
-  background-color: var.$log-background;
-  border: solid var.$hazy-purple;
-  border-width: 1px;
-  border-radius: 8px;
+  @extend %logContainerStyles;
 }
 
 // The top level heading and everything underneath
@@ -103,5 +100,3 @@ $line: none;
   justify-content: center;
   padding: 2rem 0 0 0;
 }
-
-// Set log header,  text

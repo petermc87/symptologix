@@ -20,30 +20,44 @@ $line: none;
   z-index: +1;
 }
 
+.logContainer {
+  //   border: $line yellow;
+  padding: 5rem;
+  //   background-color: white;
+  justify-content: center;
+  @extend %logContainerStyles;
+  button {
+    margin-top: 1rem;
+    width: 100%;
+    border: $line gray;
+  }
+}
+
 // Heading
 .headingText {
   @extend %boldBlueUnderlined;
 }
 
-.logContainer {
-  border: $line yellow;
-  padding: 5rem;
-  background-color: white;
+.dateTime {
+  @extend %smallHeadingText;
 }
-
 .entryContainer {
   border: $line red;
   margin-bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
+  @extend %smallHeadingText;
   .entry {
     border: $line gold;
-    width: 40%;
+    width: 30%;
+    margin-left: 0.5rem;
+    align-items: center;
   }
   .subcat {
     border: $line green;
     display: flex;
-    width: 60%;
+    width: 70%;
+    align-items: center;
   }
   #subHeading {
     @extend %boldBlueUnderlined;

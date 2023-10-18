@@ -67,33 +67,35 @@ export default function LogView({ selectedLog, setSelectedLog }: LogViewTypes) {
       {selectedLog ? (
         <div className={styles.logView} ref={ref} key={selectedLog.id}>
           <div className={styles.logContainer}>
-            <>
-              <h2 className={styles.headingText}>Log View</h2>
+            <h2 className={styles.headingText}>Log View</h2>
+            <p className={styles.dateTime}>
+              {" "}
               {selectedLog.createdAt?.toLocaleDateString()}
               {", "}
               {selectedLog.createdAt?.toLocaleTimeString()}
-              <br />
-              <br />
-              <div className={styles.entryContainer}>
-                <div className={styles.subcat} id={styles.subHeading}>
-                  SubCategory
-                </div>
-                <div className={styles.entry} id={styles.subHeading}>
-                  Entry
-                </div>
+            </p>
+
+            <br />
+            <br />
+            <div className={styles.entryContainer}>
+              <div className={styles.subcat} id={styles.subHeading}>
+                SubCategory
               </div>
-              {selectedLog.entries?.map((entry: Entry) => {
-                // Finding the matching subcat.
-                handleMatchingSubCat(entry.subCategoryId);
-                return (
-                  <div className={styles.entryContainer}>
-                    <div className={styles.subcat}>{subCat}</div>
-                    <div className={styles.entry}>{entry.entry}</div>
-                  </div>
-                );
-              })}
-              <Button>Edit</Button>
-            </>
+              <div className={styles.entry} id={styles.subHeading}>
+                Entry
+              </div>
+            </div>
+            {selectedLog.entries?.map((entry: Entry) => {
+              // Finding the matching subcat.
+              handleMatchingSubCat(entry.subCategoryId);
+              return (
+                <div className={styles.entryContainer}>
+                  <div className={styles.subcat}>{subCat}</div>
+                  <div className={styles.entry}>{entry.entry}</div>
+                </div>
+              );
+            })}
+            <Button>Edit</Button>
           </div>
         </div>
       ) : (
