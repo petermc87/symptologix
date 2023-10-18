@@ -8,9 +8,9 @@ export type User = {
 };
 
 export type Log = {
-  id: string;
+  id?: string;
   createdAt?: Date;
-  userId: string;
+  userId?: string;
   content?: string;
   entries?: Entry[];
 };

@@ -1,22 +1,25 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import getLogs from "../../../actions/logRequests/getLogs";
-import { Entry, Log } from "../../../typings";
+import { Log } from "../../../typings";
 import NavBarProvider from "../components/ContextNavBar/ContextNavBar";
 import Footer from "../components/Footer/Footer";
+import LogView from "../components/LogView/LogView";
 import NavBar from "../components/NavBar/NavBar";
 import styles from "./page.module.scss";
 export default function PreviousLogsPage() {
   // State for holding all the logs previously submitted.
-  const [logsState, setLogsState] = useState<Log[] | null | void>(null);
+  const [logsState, setLogsState] = useState<Log[] | null | void | undefined>(
+    null
+  );
 
   //   State for holding the selected log.
-  const [selectedLog, setSelectedLog] = useState<Log | null>(null);
+  const [selectedLog, setSelectedLog] = useState<Log | null | undefined>(null);
 
   useEffect(() => {
     const fetchLogs = async () => {
       try {
-        const fetchedLogs: Log[] | void = await getLogs(); // Assuming getLogs is defined elsewhere
+        const fetchedLogs: Log[] | void | null = await getLogs(); // Assuming getLogs is defined elsewhere
         setLogsState(fetchedLogs);
       } catch (error) {
         console.error("Error fetching logs:", error);
@@ -57,15 +60,17 @@ export default function PreviousLogsPage() {
         <div className={styles.previousPageContainer} key={889}>
           <div className={styles.headingText}>Select from Previous Logs</div>
           <>
-            {logsState?.map((log) => {
+            {logsState?.map((log: Log) => {
               return (
                 <>
                   <div
                     className={styles.previousLogContainer}
-                    onClick={() => setSelectedLog(log)}
+                    onClick={() => {
+                      if (log) setSelectedLog(log);
+                    }}
                     key={log.id}
                   >
-                    <div className={styles.overlay} key={log.id + 1}>
+                    <div className={styles.overlay} key={log.id}>
                       Click to view
                     </div>
                     <h2>{log.createdAt?.toDateString()}</h2>
@@ -84,23 +89,13 @@ export default function PreviousLogsPage() {
         {/* Add the ref to the html element so that it can be closed when clicking  */}
         {/* outside of the log. */}
         {selectedLog ? (
-          // TASK: Make this a separate component.
-          <div className={styles.logView} ref={ref} key={selectedLog.id + 10}>
-            <div className={styles.logContainer}>
-              <h1>Log View</h1>
-              {selectedLog.createdAt?.toLocaleTimeString()}
-              <>
-                <h2>Previous Entries</h2>
-                {selectedLog.entries?.map((entry: Entry) => {
-                  return (
-                    <ul>
-                      <li>{entry.entry}</li>
-                    </ul>
-                  );
-                })}
-              </>
-            </div>
-          </div>
+          <>
+            {/* TASK: Create a useContext hook that will store state globally. */}
+            <LogView
+              selectedLog={selectedLog}
+              setSelectedLog={setSelectedLog}
+            />
+          </>
         ) : (
           ""
         )}
