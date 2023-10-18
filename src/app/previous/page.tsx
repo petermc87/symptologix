@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import getLogs from "../../../actions/logRequests/getLogs";
 import { Log } from "../../../typings";
 import NavBarProvider from "../components/ContextNavBar/ContextNavBar";
@@ -13,9 +13,10 @@ export default function PreviousLogsPage() {
     null
   );
 
-  //   State for holding the selected log.
+  // State for holding the selected log.
   const [selectedLog, setSelectedLog] = useState<Log | null | undefined>(null);
 
+  // Fetch logs and subcategories.
   useEffect(() => {
     const fetchLogs = async () => {
       try {
@@ -33,30 +34,18 @@ export default function PreviousLogsPage() {
     };
   }, []);
 
-  // Create reference to the element that will close
-  //   when clicked outside of it.
-  const ref = useRef<HTMLDivElement>(null);
-
-  //Create click outside functionality
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent): void {
-      if (ref.current && ref.current.contains(event.target as Node)) {
-        setSelectedLog(null);
-      }
-    }
-    // Bind to event listener
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  });
-
-  //   if (selectedLog) console.log(selectedLog);
-
+  // console.log(subCategories);
   return (
     <>
+      {/*  We add the subCategory global availability in the use context provider. */}
       <NavBarProvider>
         <NavBar />
+        {/* We open the log here and view what was previously submitted.
+            This can then be edited via a redirect to the home page. The current log
+            in progress will be replaced by the log selected for editing. */}
+        {/* Add the ref to the html element so that it can be closed when clicking  */}
+        {/* outside of the log. */}
+        <LogView selectedLog={selectedLog} setSelectedLog={setSelectedLog} />
         <div className={styles.previousPageContainer} key={889}>
           <div className={styles.headingText}>Select from Previous Logs</div>
           <>
@@ -81,24 +70,7 @@ export default function PreviousLogsPage() {
             })}
           </>
         </div>
-
         <Footer />
-        {/* We open the log here and view what was previously submitted.
-            This can then be edited via a redirect to the home page. The current log
-            in progress will be replaced by the log selected for editing. */}
-        {/* Add the ref to the html element so that it can be closed when clicking  */}
-        {/* outside of the log. */}
-        {selectedLog ? (
-          <>
-            {/* TASK: Create a useContext hook that will store state globally. */}
-            <LogView
-              selectedLog={selectedLog}
-              setSelectedLog={setSelectedLog}
-            />
-          </>
-        ) : (
-          ""
-        )}
       </NavBarProvider>
     </>
   );

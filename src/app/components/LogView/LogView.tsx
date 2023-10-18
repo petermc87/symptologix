@@ -1,7 +1,9 @@
 // Imports
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
-import { Entry, Log } from "../../../../typings";
+import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
+import { Entry, Log, Subcategory } from "../../../../typings";
 
+import getSubCategories from "../../../../actions/subCategoryRequests/getSubCats";
+import { NavBarContext } from "../ContextNavBar/ContextNavBar";
 import styles from "./LogView.module.scss";
 
 type LogViewTypes = {
@@ -10,10 +12,41 @@ type LogViewTypes = {
 };
 
 export default function LogView({ selectedLog, setSelectedLog }: LogViewTypes) {
+  // Consume the context for subcategories so it can be viewed for each entry.
+  const { subCategories, setSubCategories } = useContext<any>(NavBarContext);
+
+  // Create a function that will cycle through the subcats and match with the
+  // current entry.
+  let subCat: string;
+  const handleMatchingSubCat = (id: string) => {
+    subCategories.map((category: Subcategory) => {
+      //   console.log(category, id);
+      if (category.id === id) {
+        console.log(category.name);
+        subCat = category.name;
+      }
+    });
+  };
+
   // Add in the code for the ref handler for clicking outside to close.
   // Create reference to the element that will close
   // when clicked outside of it.
   const ref = useRef<HTMLDivElement>(null);
+
+  // Retrieve subcategories on view.
+  useEffect(() => {
+    const fetchSubcats = async () => {
+      try {
+        const fetchSubcats: Subcategory[] | null | void =
+          await getSubCategories();
+        setSubCategories(fetchSubcats);
+      } catch (error) {
+        console.error("Error fetching sub categories", error);
+      }
+    };
+    fetchSubcats();
+    return () => {};
+  }, []);
 
   //Create click outside functionality
   useEffect(() => {
@@ -28,22 +61,33 @@ export default function LogView({ selectedLog, setSelectedLog }: LogViewTypes) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   });
+
   return (
-    <div className={styles.logView} ref={ref} key={selectedLog.id}>
-      <div className={styles.logContainer}>
-        <h1>Log View</h1>
-        {selectedLog.createdAt?.toLocaleTimeString()}
-        <>
-          <h2>Previous Entries</h2>
-          {selectedLog.entries?.map((entry: Entry) => {
-            return (
-              <ul>
-                <li>{entry.entry}</li>
-              </ul>
-            );
-          })}
-        </>
-      </div>
-    </div>
+    <>
+      {selectedLog ? (
+        <div className={styles.logView} ref={ref} key={selectedLog.id}>
+          <div className={styles.logContainer}>
+            <h1>Log View</h1>
+            {selectedLog.createdAt?.toLocaleTimeString()}
+            <>
+              <h2>Previous Entries</h2>
+              {selectedLog.entries?.map((entry: Entry) => {
+                handleMatchingSubCat(entry.subCategoryId);
+                return (
+                  <ul>
+                    <li>
+                      <div>{entry.entry}</div>
+                      <div>{subCat}</div>
+                    </li>
+                  </ul>
+                );
+              })}
+            </>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+    </>
   );
 }

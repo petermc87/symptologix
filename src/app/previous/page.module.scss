@@ -41,7 +41,7 @@ $line: none;
   background-color: var.$hazy-purple;
   text-align: center;
   color: var.$white;
-  padding: 1rem;
+  padding: 0.7rem;
   font-size: large;
   border-radius: 2rem;
   display: none;
@@ -55,24 +55,3 @@ $line: none;
     display: block;
   }
 }
-
-// // Log view
-// .logView {
-//   border: $line purple;
-//   background-color: var.$login-form-background;
-//   position: fixed;
-//   top: 0;
-//   width: 100vw;
-//   height: 100vh;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   background: rgba(255, 255, 255, 0.5);
-//   backdrop-filter: blur(5px);
-// }
-
-// .logContainer {
-//   border: $line yellow;
-//   padding: 5rem;
-//   background-color: white;
-// }
