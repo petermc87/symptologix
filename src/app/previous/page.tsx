@@ -4,6 +4,7 @@ import getLogs from "../../../actions/logRequests/getLogs";
 import { Log } from "../../../typings";
 import NavBarProvider from "../components/ContextNavBar/ContextNavBar";
 import Footer from "../components/Footer/Footer";
+import LogList from "../components/LogList/LogList";
 import LogView from "../components/LogView/LogView";
 import NavBar from "../components/NavBar/NavBar";
 import styles from "./page.module.scss";
@@ -34,7 +35,6 @@ export default function PreviousLogsPage() {
     };
   }, []);
 
-  // console.log(subCategories);
   return (
     <>
       {/*  We add the subCategory global availability in the use context provider. */}
@@ -45,7 +45,7 @@ export default function PreviousLogsPage() {
             in progress will be replaced by the log selected for editing. */}
         {/* Add the ref to the html element so that it can be closed when clicking  */}
         {/* outside of the log. */}
-        <LogView selectedLog={selectedLog} setSelectedLog={setSelectedLog} />
+        <LogView />
         <div className={styles.previousPageContainer} key={889}>
           <div className={styles.headingText}>Select from Previous Logs</div>
           <>
@@ -56,25 +56,7 @@ export default function PreviousLogsPage() {
               4. Delete selectedLog. Also, make sure to change the selected
               log references in LogView to currentLog.
             */}
-            {logsState?.map((log: Log) => {
-              return (
-                <>
-                  <div
-                    className={styles.previousLogContainer}
-                    onClick={() => {
-                      if (log) setSelectedLog(log);
-                    }}
-                    key={log.id}
-                  >
-                    <div className={styles.overlay} key={log.id}>
-                      Click to view
-                    </div>
-                    <h2>{log.createdAt?.toDateString()}</h2>
-                    <h2>{log.createdAt?.toLocaleTimeString()}</h2>
-                  </div>
-                </>
-              );
-            })}
+            <LogList logsState={logsState} />
           </>
         </div>
         <Footer />

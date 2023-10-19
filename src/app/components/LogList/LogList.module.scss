@@ -1,0 +1,37 @@
+@use "../../utilties/font";
+@use "../../utilties/variables" as var;
+
+$line: none;
+
+.previousLogContainer {
+  border: solid var.$dark-blue;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 10px;
+  background-color: var.$lightest-purple;
+  width: 70%;
+  max-width: 60rem;
+  padding: 2rem;
+  margin-bottom: 1rem;
+}
+
+// Text on hover.
+.overlay {
+  position: absolute;
+  background-color: var.$hazy-purple;
+  text-align: center;
+  color: var.$white;
+  padding: 0.7rem;
+  font-size: large;
+  border-radius: 2rem;
+  display: none;
+  width: 50%;
+}
+
+.previousLogContainer:hover {
+  opacity: 0.5;
+  cursor: pointer;
+  .overlay {
+    display: block;
+  }
+}
