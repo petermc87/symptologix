@@ -17,6 +17,8 @@ export type NavBarContextTypes = {
   setSubCategories: Dispatch<SetStateAction<Subcategory[] | null | undefined>>;
   currentLog: Log | null | undefined;
   setCurrentLog: Dispatch<SetStateAction<Log | null | undefined>>;
+  viewEntryForm: boolean | undefined;
+  setViewEntryForm: Dispatch<SetStateAction<boolean | undefined>>;
 };
 
 export const NavBarContext = createContext<NavBarContextTypes | false>(false);
@@ -40,6 +42,11 @@ export default function NavBarProvider(props: any) {
     Subcategory[] | null | undefined
   >(null);
 
+  // State for holding view form
+  const [viewEntryForm, setViewEntryForm] = useState<boolean | undefined>(
+    false
+  );
+
   return (
     <NavBarContext.Provider
       value={{
@@ -53,6 +60,8 @@ export default function NavBarProvider(props: any) {
         setSubCategories,
         currentLog,
         setCurrentLog,
+        viewEntryForm,
+        setViewEntryForm,
       }}
     >
       {props.children}

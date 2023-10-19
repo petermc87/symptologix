@@ -1,7 +1,11 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Subcategory } from "../../../typings";
+import {
+  NavBarContext,
+  NavBarContextTypes,
+} from "../components/ContextNavBar/ContextNavBar";
 import Footer from "../components/Footer/Footer";
 import HeaderInfo from "../components/HeaderInfo/HeaderInfo";
 import InputForm from "../components/InputForm";
@@ -21,8 +25,11 @@ export default function Home() {
   // as well as the general input form.
   const [subCategories, setAllSubCategories] = useState<Subcategory[]>([]);
 
-  // Create state for managing viewing the create category list items.
-  const [viewEntryForm, setViewEntryForm] = useState(false);
+  // // Create state for managing viewing the create category list items.
+  // const [viewEntryForm, setViewEntryForm] = useState(false);
+
+  // Consume context for the viewEntryForm
+  const { viewEntryForm } = useContext<NavBarContextTypes | any>(NavBarContext);
 
   let userData: any;
   try {
@@ -45,11 +52,7 @@ export default function Home() {
           // Turn this into a separate component.
           <div className={styles.homePageContainer}>
             {/* WELCOME HEADER */}
-            <HeaderInfo
-              userName={userData.user.username}
-              viewEntryForm={viewEntryForm}
-              setViewEntryForm={setViewEntryForm}
-            />
+            <HeaderInfo userName={userData.user.username} />
 
             {/* ENTRY FORM */}
             {/* viewEntryForm when true will show all the components below whne the entry form hyperlink is clicked.
@@ -57,7 +60,6 @@ export default function Home() {
             {viewEntryForm ? (
               <>
                 <LogSelection userId={userData.user.id} />
-                {/* Change this to the currentLog context. */}
                 <InputForm
                   key={userData.user.id}
                   user={userData.user}

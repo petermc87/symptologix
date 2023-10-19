@@ -1,4 +1,5 @@
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import GeneralButton from "../Button/Button";
 import Hamburger from "../Hamburger/Hamburger";
 import Logo from "../Logo/Logo";
@@ -22,10 +23,18 @@ export default function NavBar() {
 
       {data ? (
         <>
-          <div>New Logs</div>
-          <div>Previous Logs</div>
+          <Link href={"/home"}>
+            <div>New Log</div>
+          </Link>
+          <Link href={"/previous"}>
+            <div>Previous Logs</div>
+          </Link>
+
           <div>Metrics</div>
-          <GeneralButton name="Log Out" />
+
+          <Link href={"/"}>
+            <GeneralButton name="Log Out" />
+          </Link>
         </>
       ) : (
         <div className={styles.buttonWrapper}>

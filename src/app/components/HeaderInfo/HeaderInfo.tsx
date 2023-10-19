@@ -1,17 +1,18 @@
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { ReactNode, useContext } from "react";
+import {
+  NavBarContext,
+  NavBarContextTypes,
+} from "../ContextNavBar/ContextNavBar";
 import styles from "./HeaderInfo.module.scss";
 
 type HeaderInfoTypes = {
   userName: string;
-  viewEntryForm: boolean;
-  setViewEntryForm: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function HeaderInfo({
-  userName,
-  viewEntryForm,
-  setViewEntryForm,
-}: HeaderInfoTypes) {
+export default function HeaderInfo({ userName }: HeaderInfoTypes) {
+  const { currentLog, viewEntryForm, setViewEntryForm } = useContext<
+    NavBarContextTypes | any
+  >(NavBarContext);
   return (
     <>
       {/* WELCOME HEADER */}
@@ -20,7 +21,7 @@ export default function HeaderInfo({
           Welcome <span>{userName as ReactNode}!</span>
         </h2>
         {/* Heading text will not be visible when the entryform is active */}
-        {!viewEntryForm ? (
+        {!viewEntryForm && !currentLog ? (
           <div className={styles.heading}>
             Create new {/* Add state here to show the whole entry form */}
             <span
