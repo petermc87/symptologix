@@ -14,9 +14,6 @@ export default function PreviousLogsPage() {
     null
   );
 
-  // State for holding the selected log.
-  const [selectedLog, setSelectedLog] = useState<Log | null | undefined>(null);
-
   // Fetch logs and subcategories.
   useEffect(() => {
     const fetchLogs = async () => {

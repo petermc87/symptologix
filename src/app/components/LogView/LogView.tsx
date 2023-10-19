@@ -53,7 +53,7 @@ export default function LogView() {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     function handleClickOutside(event: MouseEvent): void {
-      if (ref.current && ref.current.contains(event.target as Node)) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
         setCurrentLog(null);
       }
     }
@@ -70,8 +70,8 @@ export default function LogView() {
   return (
     <>
       {currentLog ? (
-        <div ref={ref} className={styles.logView} key={currentLog.id}>
-          <div className={styles.logContainer}>
+        <div className={styles.logView} key={currentLog.id}>
+          <div ref={ref} className={styles.logContainer}>
             <h2 className={styles.headingText}>Log View</h2>
             <p className={styles.dateTime}>
               {" "}
