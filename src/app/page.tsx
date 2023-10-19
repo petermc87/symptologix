@@ -12,7 +12,7 @@ import styles from "./landing.module.scss";
 // NOTE: the landing page will have a login/signup button in the middle
 // or in the nav bar to make one of those appear
 
-//TODO: Add in setting for initial state for someone that is a returning
+// TODO: Add in setting for initial state for someone that is a returning
 // user, i.e.: the initial state will be loginForm. Otherwise, its signup.
 export default function Home() {
   return (

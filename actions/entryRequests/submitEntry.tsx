@@ -6,27 +6,27 @@ import getLog from "../logRequests/getLog";
 type SubmitEntryProps = {
   selectedSubCat: Subcategory | any;
   inputQuery: string;
-  currentLogInProgress: Log | null;
+  currentLog: Log | null | undefined | any;
 };
 export default async function submitEntry({
   selectedSubCat,
   inputQuery,
-  currentLogInProgress,
+  currentLog,
 }: SubmitEntryProps) {
   // Check the props that are being passed in are correct.
   let updatedLog;
   // Send entry to the db.
-  if (inputQuery && currentLogInProgress) {
+  if (inputQuery && currentLog) {
     await db.entry.create({
       data: {
-        logId: currentLogInProgress.id,
+        logId: currentLog.id,
         subCategoryId: selectedSubCat.id,
         entry: inputQuery,
       },
     });
 
     // Fetch the log again by id
-    updatedLog = await getLog(currentLogInProgress.id);
+    updatedLog = await getLog(currentLog.id);
   }
 
   // include was added to make sure the entries objects were stored.

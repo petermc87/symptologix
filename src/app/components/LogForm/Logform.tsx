@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import deleteEntryBackend from "../../../../actions/entryRequests/deleteEntry";
 import updateEntryBackend from "../../../../actions/entryRequests/updateEntry";
@@ -7,21 +7,24 @@ import {
   deleteLogWithEntries,
 } from "../../../../actions/logRequests/deleteLog";
 import getLog from "../../../../actions/logRequests/getLog";
-import { Entry, Log, Subcategory } from "../../../../typings";
+import { Entry, Subcategory } from "../../../../typings";
+import {
+  NavBarContext,
+  NavBarContextTypes,
+} from "../ContextNavBar/ContextNavBar";
 import DangerModal from "../modal/dangerModal";
 import styles from "./LogForm.module.scss";
 
 type LogFormTypes = {
-  currentLogInProgress: Log | null | any;
-  setCurrentLogInProgress: any;
   subCategories: Subcategory[];
 };
 
-export default function LogForm({
-  currentLogInProgress,
-  setCurrentLogInProgress,
-  subCategories,
-}: LogFormTypes) {
+export default function LogForm({ subCategories }: LogFormTypes) {
+  // Use and consume context for current log.
+  const { currentLog, setCurrentLog } = useContext<NavBarContextTypes | any>(
+    NavBarContext
+  );
+
   //Show state for modal
   const [show, setShow] = useState(false);
 
@@ -31,15 +34,15 @@ export default function LogForm({
   // ID for delete
   const [id, setId] = useState("");
 
-  // Handlers for the modal state
-  const handleClose = () => setShow(false);
-  const handleOpen = () => setShow(true);
-
   // We handle the entry state by showing it in an input container and updating the state
   const [currentEntry, setCurrentEntry] = useState<Entry | undefined | any>();
 
   // We have an input form that will be shown on click.
   const [showEditEntry, setShowEditEntry] = useState(false);
+
+  // Handlers for the modal state
+  const handleClose = () => setShow(false);
+  const handleOpen = () => setShow(true);
 
   // When the entry is submitted, we search the subCategories state array that are stored in cache so
   // the object can be searched here, matched with the id and the name displayed.
@@ -67,21 +70,21 @@ export default function LogForm({
     await deleteEntryBackend(id);
 
     // Retrieving the log from the updated log from the databse.
-    const updatedLog = await getLog(currentLogInProgress.id);
-    setCurrentLogInProgress(updatedLog);
+    const updatedLog = await getLog(currentLog.id);
+    setCurrentLog(updatedLog);
   };
 
   // Delete method for log.
   const deleteLog = async (id: string) => {
     // Performing delete action on whether there are entries or not.
-    if (currentLogInProgress.entries) {
+    if (currentLog.entries) {
       await deleteLogWithEntries(id);
     } else {
       await deleteLogBackend(id);
     }
 
-    const updatedLog = await getLog(currentLogInProgress.id);
-    setCurrentLogInProgress(updatedLog);
+    const updatedLog = await getLog(currentLog.id);
+    setCurrentLog(updatedLog);
   };
 
   // Create an updater function that will take in the new data for entry and
@@ -93,17 +96,15 @@ export default function LogForm({
     // Update with the new state.
     await updateEntryBackend(id, currentEntry.entry);
     // Retrieving the log from the updated log from the databse.
-    const updatedLog = await getLog(currentLogInProgress.id);
-    setCurrentLogInProgress(updatedLog);
+    const updatedLog = await getLog(currentLog.id);
+    setCurrentLog(updatedLog);
   };
 
   // If there is a current log in progress, breakdown the date/time string and
   // only output the data, month, year, time, etc.
   const getDateTime = () => {
-    if (currentLogInProgress) {
-      const splitDateTime = currentLogInProgress.createdAt
-        .toString()
-        .split(" ");
+    if (currentLog) {
+      const splitDateTime = currentLog.createdAt.toString().split(" ");
       const logDateTime =
         splitDateTime[0] +
         " " +
@@ -118,26 +119,27 @@ export default function LogForm({
     }
   };
 
+  console.log(currentLog);
   return (
     <>
-      {currentLogInProgress ? (
+      {currentLog ? (
         <div className={styles.logWrapper}>
-          <div className={styles.logForm} key={currentLogInProgress.id}>
+          <div className={styles.logForm} key={currentLog.id}>
             {" "}
             <h2 className={styles.logHeading}>Current Log</h2>{" "}
             <header className={styles.logHeader}>
               {/* Making the createdAt date a string outputted to the screen. */}
-              {currentLogInProgress
+              {currentLog
                 ? // Taking the createAd string and splitting it into different sections.
                   getDateTime()
                 : ""}{" "}
               {/* DELETE LOG BUTTON */}
               <Button
                 onClick={() => {
-                  setId(currentLogInProgress.id);
+                  setId(currentLog.id);
                   // Set a conditional to show whether its an empty log or a log
                   // with entries being deleted.
-                  if (currentLogInProgress.entries) {
+                  if (currentLog.entries) {
                     setDeleteElement("log and its associated entries");
                   } else {
                     setDeleteElement("log");
@@ -148,18 +150,15 @@ export default function LogForm({
                 Delete Log
               </Button>
             </header>
-            <div className={styles.entries} key={currentLogInProgress.id}>
+            <div className={styles.entries} key={currentLog.id}>
               {/* SUB HEADINGS */}
-              <div
-                className={styles.headings}
-                key={currentLogInProgress.id + 1}
-              >
+              <div className={styles.headings} key={currentLog.id + 1}>
                 <div className={styles.subcatHeading}>Sub-Category</div>
                 <div className={styles.descriptionHeading}>Description</div>
               </div>
 
               {/* Add in the map here for the rest of the entry components. */}
-              {currentLogInProgress.entries?.map((entry: Entry) => {
+              {currentLog.entries?.map((entry: Entry) => {
                 // Run a mapping function here that will match the subcat id with
                 // the id of the subcat in the entry object.
 
@@ -184,7 +183,7 @@ export default function LogForm({
                             setShowEditEntry(false);
                             updateEntry(e, entry.id);
                           }}
-                          key={currentLogInProgress.id + 5}
+                          key={currentLog.id + 5}
                         >
                           {/* Edit in place field for the current entry. */}
                           <Form.Group className={styles.editEntry}>
@@ -241,10 +240,10 @@ export default function LogForm({
             <div className={styles.finishButton}>
               {/* TASK: Add a feature that will set a text state to show 'success!' when a log  */}
               {/* is submitted. */}
-              {currentLogInProgress.entries ? (
+              {currentLog.entries ? (
                 <Button
                   onClick={() => {
-                    setCurrentLogInProgress(null);
+                    setCurrentLog(null);
                   }}
                 >
                   Finish

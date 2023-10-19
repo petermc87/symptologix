@@ -5,7 +5,7 @@ import { Button, Dropdown, Form } from "react-bootstrap";
 import getCategories from "../../../actions/categoryRequests/getCats";
 import submitForm from "../../../actions/categoryRequests/submitCat";
 import getSubCategories from "../../../actions/subCategoryRequests/getSubCats";
-import { Log, Subcategory, User } from "../../../typings";
+import { Subcategory, User } from "../../../typings";
 import "../global.scss";
 import DottedLine from "./DottedLine/DottedLine";
 import EntryForm from "./EntryForm/EntryForm";
@@ -16,16 +16,12 @@ import SubCategoryForm from "./SubCategory/SubCategoryForm";
 // Types for the user object.
 type InputFormTypes = {
   user: User;
-  currentLogInProgress: Log | null;
-  setCurrentLogInProgress: any;
   subCategories: Subcategory[];
   setAllSubCategories: any;
 };
 
 export default function InputForm({
   user,
-  currentLogInProgress,
-  setCurrentLogInProgress,
   subCategories,
   setAllSubCategories,
 }: InputFormTypes) {
@@ -44,7 +40,6 @@ export default function InputForm({
 
   // NOTE: For a log thats in progress that hasnt been submitted after a user logs out,
   // create another element in the schema to check if the log has been submitted or not
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -157,11 +152,7 @@ export default function InputForm({
                     {/*---- Is this where the key props is showing a warning? ----*/}
                     {/* EntryForm will take in the Log state object and setLog setter. This will get
                     refreshed in the entry form with a get request for the log. The Subcategory State is also passed in.*/}
-                    <EntryForm
-                      currentLogInProgress={currentLogInProgress}
-                      setCurrentLoginProgress={setCurrentLogInProgress}
-                      selectedSubCat={selectedSubCat}
-                    />
+                    <EntryForm selectedSubCat={selectedSubCat} />
                   </>
                 ) : (
                   ""

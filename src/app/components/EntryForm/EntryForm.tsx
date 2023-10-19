@@ -1,23 +1,24 @@
-import { FormEvent } from "react";
+import { FormEvent, useContext } from "react";
 import { Button, Form } from "react-bootstrap";
 import submitEntry from "../../../../actions/entryRequests/submitEntry";
-import { Log } from "../../../../typings";
+import {
+  NavBarContext,
+  NavBarContextTypes,
+} from "../ContextNavBar/ContextNavBar";
 import DottedLine from "../DottedLine/DottedLine";
 import styles from "./EntryForm.module.scss";
 
 // Types for the user object.
 type EntryFormTypes = {
   selectedSubCat: any;
-  currentLogInProgress: Log | null;
-  setCurrentLoginProgress: any;
 };
 
-export default function EntryForm({
-  currentLogInProgress,
-  setCurrentLoginProgress,
-  selectedSubCat,
-}: EntryFormTypes) {
-  // console.log(currentLogInProgress, selectedSubCat);
+export default function EntryForm({ selectedSubCat }: EntryFormTypes) {
+  // Consume the context for currentLog
+  const { currentLog, setCurrentLog } = useContext<NavBarContextTypes | any>(
+    NavBarContext
+  );
+
   // We take in the current subcat and and the current log in progress setter.
   // We perform a submission to Entry, then an get request for the current log in
   // progress so it can be reset to the latest info.
@@ -35,10 +36,11 @@ export default function EntryForm({
         const log = await submitEntry({
           selectedSubCat,
           inputQuery,
-          currentLogInProgress,
+          currentLog,
         });
         // Add the setter function here. The returned value will be the Log object which can be set here.
-        setCurrentLoginProgress(log);
+        // NOTE: This is now changed to a a useContext state varaibles.
+        setCurrentLog(log);
         formData.set("inputquery", "");
       } catch (error) {
         console.error(error);
@@ -47,7 +49,7 @@ export default function EntryForm({
   };
   return (
     <>
-      {currentLogInProgress ? (
+      {currentLog ? (
         <div className={styles.entryFormWrapper}>
           {/* Create a separate componnet for these headings. */}
           <div className={styles.background}>

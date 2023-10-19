@@ -105,11 +105,9 @@ export default function LogView() {
 
             {/* Create a redirect to the home page where the currentLog will be  */}
             {/* displayed at the bottom for editing. */}
-            {/* <Button
+            <Button
               onClick={() => {
-                console.log("here");
                 try {
-                  console.log("click");
                   router.push("/home");
                 } catch (error) {
                   console.error(error);
@@ -117,9 +115,7 @@ export default function LogView() {
               }}
             >
               Edit
-            </Button> */}
-            <Button onClick={() => console.log("click")}>Edit</Button>
-            <button onClick={() => console.log("click")}>Edit</button>
+            </Button>
           </div>
         </div>
       ) : (
@@ -128,72 +124,3 @@ export default function LogView() {
     </>
   );
 }
-
-{
-  /* <>
-{currentLog ? (
-  <div ref={ref} className={styles.logView} key={currentLog.id}>
-    <div className={styles.logContainer}>
-      <h2 className={styles.headingText}>Log View</h2>
-      <p className={styles.dateTime}>
-        {" "}
-        {currentLog.createdAt?.toLocaleDateString()}
-        {", "}
-        {currentLog.createdAt?.toLocaleTimeString()}
-      </p>
-
-      <br />
-      <br />
-      <div className={styles.entryContainer}>
-        <div className={styles.subcat} id={styles.subHeading}>
-          SubCategory
-        </div>
-        <div className={styles.entry} id={styles.subHeading}>
-          Entry
-        </div>
-      </div>
-      {currentLog.entries?.map((entry: Entry) => {
-        // Finding the matching subcat.
-        handleMatchingSubCat(entry.subCategoryId);
-        return (
-          <div className={styles.entryContainer} key={entry.id}>
-            <div className={styles.subcat}>{subCat}</div>
-            <div className={styles.entry}>{entry.entry}</div>
-          </div>
-        );
-      })}
-      {/* // Clicking this will pass the current log into context to be used */
-}
-{
-  /* in the home page for editing. */
-}
-
-{
-  /* Create a redirect to the home page where the currentLog will be  */
-}
-{
-  /* displayed at the bottom for editing. */
-}
-{
-  /* <Button
-        onClick={() => {
-          console.log("here");
-          try {
-            console.log("click");
-            router.push("/home");
-          } catch (error) {
-            console.error(error);
-          }
-        }}
-      >
-        Edit
-      </Button> */
-}
-//       <Button onClick={() => console.log("click")}>Edit</Button>
-//       <button onClick={() => console.log("click")}>Edit</button>
-//     </div>
-//   </div>
-// ) : (
-//   ""
-// )}
-// </> */}

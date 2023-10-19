@@ -1,13 +1,12 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { ReactNode, useState } from "react";
-import { Button } from "react-bootstrap";
-import submitNewLog from "../../../actions/logRequests/submitNewLog";
-import { Log, Subcategory } from "../../../typings";
+import { Subcategory } from "../../../typings";
 import NavBarProvider from "../components/ContextNavBar/ContextNavBar";
 import Footer from "../components/Footer/Footer";
 import InputForm from "../components/InputForm";
 import LogForm from "../components/LogForm/Logform";
+import LogSelection from "../components/LogSelection/LogSelection";
 import NavBar from "../components/NavBar/NavBar";
 import "../global.scss";
 import styles from "./page.module.scss";
@@ -15,15 +14,6 @@ import styles from "./page.module.scss";
 export default function Home() {
   // Passing in the session data for the user logged in or signed up.
   const { data, status } = useSession();
-
-  // TASK: Change this to a useContext state so that it can be used in other
-  // pages
-
-  // State for storing the log in progress. If there is a log in progress,
-  // the the New Log button will dissappear below.
-  const [currentLogInProgress, setCurrentLogInProgress] = useState<Log | null>(
-    null
-  );
 
   // State for storing all subCategories that were previously created
   // for that category.
@@ -48,19 +38,6 @@ export default function Home() {
   if (userData) {
     userId = userData.user.id;
   }
-
-  // Submitting  new log to the database.
-  const handleSubmitLog = async (e: any) => {
-    e.preventDefault();
-    try {
-      if (userId) {
-        const currentLog: Log = await submitNewLog(userId);
-        setCurrentLogInProgress(currentLog);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   // Get the current log refreshed. Use a handler function.
   // will get passed down to the log form. We dont need the setCurrentLogInProgress setter
@@ -99,56 +76,22 @@ export default function Home() {
             {/* ENTRY FORM */}
             {/* viewEntryForm when true will show all the components below whne the entry form hyperlink is clicked.
              */}
-
+            {/* TASK: Make this a context state variable. Also, create a separate component for this. */}
             {viewEntryForm ? (
               <>
-                <div className={styles.entryForm}>
-                  {currentLogInProgress === null ? (
-                    <div className={styles.selection}>
-                      <div className={styles.createWrapper}>
-                        <p>Create new Log:</p>
-                        <Button
-                          key={123}
-                          onClick={(e: any) => handleSubmitLog(e)}
-                          variant="primary"
-                          id={styles.button}
-                        >
-                          Create Log
-                        </Button>
-                      </div>
+                <LogSelection userId={userData.user.id} />
 
-                      <div className={styles.textWrapper}>
-                        <span>OR </span>
-                        <div></div>
-                      </div>
-                      <div
-                        className={styles.createWrapper}
-                        id={styles.openPrevious}
-                      >
-                        <p>Open Previous</p>
-                        <span>
-                          <p>12/10/2023</p>
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  <InputForm
-                    key={userData.user.id}
-                    user={userData.user}
-                    currentLogInProgress={currentLogInProgress}
-                    setCurrentLogInProgress={setCurrentLogInProgress}
-                    subCategories={subCategories}
-                    setAllSubCategories={setAllSubCategories}
-                  />
-                </div>
+                {/* Change this to the currentLog context. */}
+                <InputForm
+                  key={userData.user.id}
+                  user={userData.user}
+                  subCategories={subCategories}
+                  setAllSubCategories={setAllSubCategories}
+                />
 
                 {/* Put the current log obejct state here and pass it down the InputForm and LogForm. */}
                 <LogForm
                   key={userData.user.id + 1}
-                  currentLogInProgress={currentLogInProgress}
-                  setCurrentLogInProgress={setCurrentLogInProgress}
                   subCategories={subCategories}
                 />
               </>
