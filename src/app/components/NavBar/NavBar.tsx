@@ -22,7 +22,7 @@ export default function NavBar() {
       buttons or if its going to be the pages redirects and a login. */}
 
       {data ? (
-        <>
+        <div className={styles.desktopLinks}>
           <Link href={"/home"}>
             <div>New Log</div>
           </Link>
@@ -35,7 +35,7 @@ export default function NavBar() {
           <Link href={"/"}>
             <GeneralButton name="Log Out" />
           </Link>
-        </>
+        </div>
       ) : (
         <div className={styles.buttonWrapper}>
           <GeneralButton name="Log In" />

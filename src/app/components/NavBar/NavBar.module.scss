@@ -2,6 +2,7 @@
 @use "../../utilties/font";
 @use "../../utilties/variables" as var;
 
+$line: none;
 .navbarWrapper {
   display: flex;
   justify-content: space-between;
@@ -23,6 +24,11 @@
   }
 }
 
+// Desktop links initially dont show.
+.desktopLinks {
+  display: none;
+}
+
 // Buttons will show when the screen is 700px wide, and hide
 // the hamburger menu.
 @media only screen and (min-width: "700px") {
@@ -31,6 +37,9 @@
   }
   .hamburgerVisible {
     display: none;
+  }
+  .desktopLinks {
+    display: flex;
   }
 }
 
@@ -43,4 +52,13 @@
     @extend %logo-X;
   }
   text-shadow: 1px 1px 0px var.$hazy-purple;
+}
+
+// Desktop responsive links/redirects
+.desktopLinks {
+  border: $line blue;
+  margin-left: 1rem;
+  width: 80%;
+  justify-content: space-between;
+  align-items: center;
 }
