@@ -119,7 +119,6 @@ export default function LogForm({ subCategories }: LogFormTypes) {
     }
   };
 
-  console.log(currentLog);
   return (
     <>
       {currentLog ? (

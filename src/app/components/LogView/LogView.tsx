@@ -1,4 +1,5 @@
 // Imports
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
 import { Button } from "react-bootstrap";
@@ -105,17 +106,9 @@ export default function LogView() {
 
             {/* Create a redirect to the home page where the currentLog will be  */}
             {/* displayed at the bottom for editing. */}
-            <Button
-              onClick={() => {
-                try {
-                  router.push("/home");
-                } catch (error) {
-                  console.error(error);
-                }
-              }}
-            >
-              Edit
-            </Button>
+            <Link href={"/home"}>
+              <Button>Edit</Button>
+            </Link>
           </div>
         </div>
       ) : (

@@ -22,7 +22,6 @@ export default function EntryForm({ selectedSubCat }: EntryFormTypes) {
   // We take in the current subcat and and the current log in progress setter.
   // We perform a submission to Entry, then an get request for the current log in
   // progress so it can be reset to the latest info.
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Creating a new FormData instance from react and createing the event as

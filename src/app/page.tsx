@@ -4,7 +4,6 @@ import { default as SingnUpForm } from "./components/LoginSignupForm";
 import NavBar from "./components/NavBar/NavBar";
 import "./global.scss";
 
-import NavBarProvider from "./components/ContextNavBar/ContextNavBar";
 import Footer from "./components/Footer/Footer";
 import Perks from "./components/Perks/Perks";
 import styles from "./landing.module.scss";
@@ -18,24 +17,22 @@ export default function Home() {
   return (
     <>
       <main>
-        <NavBarProvider>
-          <NavBar />
-          <SingnUpForm />
+        <NavBar />
+        <SingnUpForm />
+        <div className={styles.heroContainer}>
           <div className={styles.heroContainer}>
-            <div className={styles.heroContainer}>
-              <div className={styles.heroContents}>
-                <h1 className={styles.heroText}>
-                  Be in <span>Control</span> of your <span>Symptoms</span>
-                </h1>
-                {/* Buttons will set the state to a string based on whether it is login
+            <div className={styles.heroContents}>
+              <h1 className={styles.heroText}>
+                Be in <span>Control</span> of your <span>Symptoms</span>
+              </h1>
+              {/* Buttons will set the state to a string based on whether it is login
                 or signup. */}
-                <GeneralButton name="Sign Up" />
-              </div>
+              <GeneralButton name="Sign Up" />
             </div>
           </div>
-          <Perks />
-          <Footer />
-        </NavBarProvider>
+        </div>
+        <Perks />
+        <Footer />
       </main>
     </>
   );

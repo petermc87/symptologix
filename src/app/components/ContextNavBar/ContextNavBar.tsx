@@ -1,6 +1,6 @@
 // 1. Create context using state for Open, close and the state variable for Login and Singup.
 // 2. Create context using state for Logout, CreateLogPage, PreviousLogsPage, and MetricsPage.
-
+"use client";
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 import { Log, Subcategory } from "../../../../typings";
 

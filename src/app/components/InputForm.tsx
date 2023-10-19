@@ -11,7 +11,6 @@ import DottedLine from "./DottedLine/DottedLine";
 import EntryForm from "./EntryForm/EntryForm";
 import styles from "./InputForm.module.scss";
 import SubCategoryForm from "./SubCategory/SubCategoryForm";
-//TODO: Create a state that will manage which input is being created (i.e. category, subcategory, or entry.)
 
 // Types for the user object.
 type InputFormTypes = {
@@ -94,10 +93,8 @@ export default function InputForm({
   return (
     <>
       {/* --- CREATE NEW LOG --- */}
-
       {/* NOTE: We will create a new log that will got to the database. The log will be retrieved and  */}
       {/* stored in state here. */}
-
       {/* --- ADD CATEGORIES AND MAP--- */}
       <Form
         onSubmit={(e) => startTransition(() => handleSubmit(e))}

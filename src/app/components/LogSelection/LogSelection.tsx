@@ -29,7 +29,6 @@ export default function LogSelection({ userId }: LogSelectionTypes) {
       console.error(error);
     }
   };
-  console.log(currentLog);
 
   return (
     <>

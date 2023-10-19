@@ -1,9 +1,9 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { Subcategory } from "../../../typings";
-import NavBarProvider from "../components/ContextNavBar/ContextNavBar";
 import Footer from "../components/Footer/Footer";
+import HeaderInfo from "../components/HeaderInfo/HeaderInfo";
 import InputForm from "../components/InputForm";
 import LogForm from "../components/LogForm/Logform";
 import LogSelection from "../components/LogSelection/LogSelection";
@@ -33,54 +33,30 @@ export default function Home() {
     console.error(error);
   }
 
-  //Creating a readable variable for ssubmittign the new log.
-  let userId: string;
-  if (userData) {
-    userId = userData.user.id;
-  }
-
   // Get the current log refreshed. Use a handler function.
   // will get passed down to the log form. We dont need the setCurrentLogInProgress setter
   // because we are setting it here.
   return (
-    <NavBarProvider>
+    <>
       <NavBar />
       {status ? (
         status === "authenticated" &&
         data !== null && (
+          // Turn this into a separate component.
           <div className={styles.homePageContainer}>
             {/* WELCOME HEADER */}
-            <div className={styles.welcomeHeader}>
-              <h2 className={styles.intro}>
-                Welcome <span>{userData.user.username as ReactNode}!</span>
-              </h2>
-              {/* Heading text will not be visible when the entryform is active */}
-              {!viewEntryForm ? (
-                <div className={styles.heading}>
-                  Create new {/* Add state here to show the whole entry form */}
-                  <span
-                    key={123}
-                    onClick={() => {
-                      setViewEntryForm(true);
-                    }}
-                  >
-                    entry form
-                  </span>
-                  , look at <span>metrics</span>, or <span>previous logs</span>
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
+            <HeaderInfo
+              userName={userData.user.username}
+              viewEntryForm={viewEntryForm}
+              setViewEntryForm={setViewEntryForm}
+            />
 
             {/* ENTRY FORM */}
             {/* viewEntryForm when true will show all the components below whne the entry form hyperlink is clicked.
              */}
-            {/* TASK: Make this a context state variable. Also, create a separate component for this. */}
             {viewEntryForm ? (
               <>
                 <LogSelection userId={userData.user.id} />
-
                 {/* Change this to the currentLog context. */}
                 <InputForm
                   key={userData.user.id}
@@ -105,6 +81,6 @@ export default function Home() {
       )}
 
       <Footer />
-    </NavBarProvider>
+    </>
   );
 }
