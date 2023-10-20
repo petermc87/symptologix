@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import getLogs from "../../../actions/logRequests/getLogs";
 import { Log } from "../../../typings";
 import {
@@ -12,11 +12,6 @@ import LogView from "../components/LogView/LogView";
 import NavBar from "../components/NavBar/NavBar";
 import styles from "./page.module.scss";
 export default function PreviousLogsPage() {
-  // State for holding all the logs previously submitted.
-  const [logsState, setLogsState] = useState<Log[] | null | void | undefined>(
-    null
-  );
-
   // Context for logs
   const { setLogs } = useContext<NavBarContextTypes | any>(NavBarContext);
 
@@ -25,7 +20,6 @@ export default function PreviousLogsPage() {
     const fetchLogs = async () => {
       try {
         const fetchedLogs: Log[] | void | null = await getLogs(); // Assuming getLogs is defined elsewhere
-        setLogsState(fetchedLogs);
         setLogs(fetchedLogs);
       } catch (error) {
         console.error("Error fetching logs:", error);
