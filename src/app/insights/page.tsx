@@ -13,7 +13,12 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
+import { useContext } from "react";
 import { Doughnut } from "react-chartjs-2";
+import {
+  NavBarContext,
+  NavBarContextTypes,
+} from "../components/ContextNavBar/ContextNavBar";
 import Footer from "../components/Footer/Footer";
 import NavBar from "../components/NavBar/NavBar";
 import styles from "./page.module.scss";
@@ -36,6 +41,13 @@ Chart.defaults.color = "#000";
 Chart.overrides.doughnut.color = "#000";
 
 export default function Insights() {
+  // Consume context for Logs.
+  const { logs, subCategories } = useContext<NavBarContextTypes | any>(
+    NavBarContext
+  );
+
+  console.log(logs, subCategories);
+
   // Dataset for doughnut.
   const data = {
     labels: ["Smell", "Taste", "Emotion"],

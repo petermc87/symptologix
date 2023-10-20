@@ -23,7 +23,7 @@ export type NavBarContextTypes = {
   setLogs: Dispatch<SetStateAction<Log[] | undefined | null | void>>;
 };
 
-export const NavBarContext = createContext<NavBarContextTypes | false>(false);
+export const NavBarContext = createContext<NavBarContextTypes | null>(null);
 
 export default function NavBarProvider(props: any) {
   // Showing the login or signup modal.
