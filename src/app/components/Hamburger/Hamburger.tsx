@@ -58,6 +58,9 @@ export default function Hamburger() {
             <li onClick={() => route.push("/previous")}>
               <a className={styles.menuItem}>Previous Logs</a>
             </li>
+            <li onClick={() => route.push("/insights")}>
+              <a className={styles.menuItem}>Insights</a>
+            </li>
             <li
               onClick={() => {
                 signOut();

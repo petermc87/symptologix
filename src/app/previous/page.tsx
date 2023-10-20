@@ -41,7 +41,7 @@ export default function PreviousLogsPage() {
       {/* Add the ref to the html element so that it can be closed when clicking  */}
       {/* outside of the log. */}
       <LogView />
-      <div className={styles.previousPageContainer} key={889}>
+      <div className={styles.pageContainer} key={889}>
         <div className={styles.headingText}>Select from Previous Logs</div>
         <>
           <LogList logsState={logsState} />

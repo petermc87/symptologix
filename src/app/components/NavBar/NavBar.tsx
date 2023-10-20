@@ -22,18 +22,20 @@ export default function NavBar() {
       buttons or if its going to be the pages redirects and a login. */}
 
       {data ? (
-        <div className={styles.desktopLinks}>
-          <Link href={"/home"}>
+        <>
+          <Link href={"/home"} className={styles.desktopLinks}>
             <div>New Log</div>
           </Link>
-          <Link href={"/previous"}>
+          <Link href={"/previous"} className={styles.desktopLinks}>
             <div>Previous Logs</div>
           </Link>
-          <div>Metrics</div>
-          <Link href={"/"}>
+          <Link href={"/insights"} className={styles.desktopLinks}>
+            <div>Insights</div>
+          </Link>
+          <Link href={"/"} className={styles.desktopLinks}>
             <GeneralButton name="Log Out" />
           </Link>
-        </div>
+        </>
       ) : (
         <div className={styles.buttonWrapper}>
           <GeneralButton name="Log In" />

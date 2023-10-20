@@ -4,6 +4,7 @@
 
 $line: none;
 .navbarWrapper {
+  border: $line black;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -57,8 +58,4 @@ $line: none;
 // Desktop responsive links/redirects
 .desktopLinks {
   border: $line blue;
-  margin-left: 1rem;
-  width: 80%;
-  justify-content: space-between;
-  align-items: center;
 }
