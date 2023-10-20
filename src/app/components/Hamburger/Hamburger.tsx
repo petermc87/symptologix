@@ -20,10 +20,6 @@ export default function Hamburger() {
     NavBarContext
   );
 
-  // Convert the name to lower case
-
-  const convertedName = (name: string) => {};
-
   return (
     <div className={styles.hamburgerMenu}>
       {/* This if for toggling on and off the ham menu. */}
@@ -37,10 +33,20 @@ export default function Hamburger() {
         {/* If the data doesnt exist, list these two. */}
         {!data ? (
           <>
-            <li>
+            <li
+              onClick={() => {
+                setState("login");
+                setShow(true);
+              }}
+            >
               <a className={styles.menuItem}>Log In</a>
             </li>
-            <li>
+            <li
+              onClick={() => {
+                setState("signup");
+                setShow(true);
+              }}
+            >
               <a className={styles.menuItem}>Sign Up</a>
             </li>
           </>
