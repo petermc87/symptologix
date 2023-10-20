@@ -1,27 +1,24 @@
-import { Dispatch, SetStateAction, useContext } from "react";
+import { useContext } from "react";
 import { Log } from "../../../../typings";
-import { NavBarContext } from "../ContextNavBar/ContextNavBar";
+import {
+  NavBarContext,
+  NavBarContextTypes,
+} from "../ContextNavBar/ContextNavBar";
 import styles from "./LogList.module.scss";
 
-type LogListTypes = {
-  logsState: Log[] | null | undefined | void;
-};
-
-type ContextTypes = {
-  setCurrentLog: Dispatch<SetStateAction<Log | null | undefined>>;
-};
-
-export default function LogList({ logsState }: LogListTypes) {
+export default function LogList() {
   // Create a context to hold all the logs.
   // Add a useEffect to retrieve all the logs and store them in
   // a use Context state.
 
   // Call the useContext hook and pass in the NavBarContext object.
-  const { setCurrentLog } = useContext<ContextTypes | any>(NavBarContext);
+  const { logs, setCurrentLog } = useContext<NavBarContextTypes | any>(
+    NavBarContext
+  );
 
   return (
     <>
-      {logsState?.map((log: Log) => {
+      {logs?.map((log: Log) => {
         return (
           <>
             <div

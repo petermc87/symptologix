@@ -1,7 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import getLogs from "../../../actions/logRequests/getLogs";
 import { Log } from "../../../typings";
+import {
+  NavBarContext,
+  NavBarContextTypes,
+} from "../components/ContextNavBar/ContextNavBar";
 import Footer from "../components/Footer/Footer";
 import LogList from "../components/LogList/LogList";
 import LogView from "../components/LogView/LogView";
@@ -13,12 +17,16 @@ export default function PreviousLogsPage() {
     null
   );
 
+  // Context for logs
+  const { setLogs } = useContext<NavBarContextTypes | any>(NavBarContext);
+
   // Fetch logs and subcategories.
   useEffect(() => {
     const fetchLogs = async () => {
       try {
         const fetchedLogs: Log[] | void | null = await getLogs(); // Assuming getLogs is defined elsewhere
         setLogsState(fetchedLogs);
+        setLogs(fetchedLogs);
       } catch (error) {
         console.error("Error fetching logs:", error);
       }
@@ -44,7 +52,7 @@ export default function PreviousLogsPage() {
       <div className={styles.pageContainer} key={889}>
         <div className={styles.headingText}>Select from Previous Logs</div>
         <>
-          <LogList logsState={logsState} />
+          <LogList />
         </>
       </div>
       <Footer />

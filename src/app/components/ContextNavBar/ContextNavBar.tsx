@@ -19,6 +19,8 @@ export type NavBarContextTypes = {
   setCurrentLog: Dispatch<SetStateAction<Log | null | undefined>>;
   viewEntryForm: boolean | undefined;
   setViewEntryForm: Dispatch<SetStateAction<boolean | undefined>>;
+  logs: Log[] | undefined | null | void;
+  setLogs: Dispatch<SetStateAction<Log[] | undefined | null | void>>;
 };
 
 export const NavBarContext = createContext<NavBarContextTypes | false>(false);
@@ -47,6 +49,9 @@ export default function NavBarProvider(props: any) {
     false
   );
 
+  // State for holding all logs.
+  const [logs, setLogs] = useState<Log[] | undefined | null | void>(null);
+
   return (
     <NavBarContext.Provider
       value={{
@@ -62,6 +67,8 @@ export default function NavBarProvider(props: any) {
         setCurrentLog,
         viewEntryForm,
         setViewEntryForm,
+        logs,
+        setLogs,
       }}
     >
       {props.children}
