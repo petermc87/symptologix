@@ -10,7 +10,6 @@ type buttonTypes = {
   name: string;
 };
 
-// export default function GeneralButton({ name, setState, state }: buttonTypes) {
 export default function GeneralButton({ name }: buttonTypes) {
   // In order to make the conditional for the form  work,
   // concat the string and make sure its all lowercase.
@@ -18,10 +17,6 @@ export default function GeneralButton({ name }: buttonTypes) {
   // Update the context for showing the modal and setting the modal type.
   const { setShow, setState } = useContext<any>(NavBarContext);
 
-  // NEXT ROUTER OPTION -- Getting Mounting Error
-  // let router;
-  // if (name === "Log Out") {
-  //   // The useRouter Next hook will redirect back home on logout.
   const router = useRouter();
   // }
 

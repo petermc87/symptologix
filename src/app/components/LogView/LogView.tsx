@@ -17,8 +17,13 @@ type LogViewTypes = {
 
 export default function LogView() {
   // Consume the context for subcategories so it can be viewed for each entry.
-  const { subCategories, setSubCategories, currentLog, setCurrentLog } =
-    useContext<LogViewTypes | any>(NavBarContext);
+  const {
+    subCategories,
+    setSubCategories,
+    currentLog,
+    setCurrentLog,
+    setViewEntryForm,
+  } = useContext<LogViewTypes | any>(NavBarContext);
 
   // Create a function that will cycle through the subcats and match with the
   // current entry.
@@ -106,7 +111,7 @@ export default function LogView() {
 
             {/* Create a redirect to the home page where the currentLog will be  */}
             {/* displayed at the bottom for editing. */}
-            <Link href={"/home"}>
+            <Link href={"/home"} onClick={() => setViewEntryForm(true)}>
               <Button>Edit</Button>
             </Link>
           </div>
