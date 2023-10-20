@@ -77,39 +77,3 @@ export default function Hamburger() {
     </div>
   );
 }
-
-/// ---> EXAMPLE FROM NAVBAR <--- ///
-// // Update the context for showing the modal and setting the modal type.
-// const { setShow, setState } = useContext<any>(NavBarContext);
-
-// const router = useRouter();
-
-// // It will clear the current next auth session and route back to
-// // the landing page.
-// const handleLogOut = () => {
-//   router.push("/");
-//   signOut();
-// };
-
-// const convertedName = name.split(" ").join("").toLocaleLowerCase();
-// return (
-//   <div className={styles.button}>
-//     {/* If the button is log out, then make the data equal to null. */}
-//     {convertedName === "logout" ? (
-//       // Use the next link to reroute to the home page on click.
-//       <Link href="/">
-//         <Button onClick={handleLogOut}>{name}</Button>
-//       </Link>
-//     ) : (
-//       <Button
-//         onClick={() => {
-//           // Set the type of form and show modal.
-//           setState(convertedName);
-//           setShow(true);
-//         }}
-//       >
-//         {name}
-//       </Button>
-//     )}
-//   </div>
-// );
