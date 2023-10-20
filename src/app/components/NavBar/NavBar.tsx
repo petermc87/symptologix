@@ -29,9 +29,7 @@ export default function NavBar() {
           <Link href={"/previous"}>
             <div>Previous Logs</div>
           </Link>
-
           <div>Metrics</div>
-
           <Link href={"/"}>
             <GeneralButton name="Log Out" />
           </Link>

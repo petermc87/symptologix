@@ -82,24 +82,6 @@ export default function LoginSingupForm() {
     }
     setFooterNavBarState(true);
   };
-
-  // Add in a function call to close the signup/login modal when clicked
-  // anywhere outside the modal. --> THIS DIDNT WORK AFTER TESTING!!!
-  // const ref: any = useRef();
-
-  // useOutsideClick(ref.current, () => {
-  //   console.log("click");
-  //   setState("");
-  // });
-
-  // Calling an event listener inside the dom element (the div below) --> THIS
-  // DIDNT WORK AFTER TESTING!!!
-  // const onClickOutsideListener = () => {
-  //   alert("click outside!!");
-  //   setState("");
-  //   document.removeEventListener("click", onClickOutsideListener);
-  // };
-
   // NOTE: To handle a click to close outside of the form:
   // Create a use ref instance.
   const ref = useRef<HTMLDivElement>(null);
