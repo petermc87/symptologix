@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import GeneralButton from "../Button/Button";
 import Logo from "../Logo/Logo";
 import styles from "./Footer.module.scss";
@@ -71,22 +72,32 @@ function Footer() {
           className={styles.socials}
           style={{ fontSize: "2rem", color: "white" }}
         >
-          <FontAwesomeIcon
-            icon={faLinkedin}
-            className="fa-solid fa-linkedin fa-1x"
-          />
-          <FontAwesomeIcon
-            icon={faInstagram}
-            className="fa-solid fa-instagram fa-1x"
-          />
-          <FontAwesomeIcon
-            icon={faFacebook}
-            className="fa-solid fa-facebook fa-1x"
-          />
-          <FontAwesomeIcon
-            icon={faGithub}
-            className="fa-solid fa-github fa-1x"
-          />
+          <Link href={"https://www.linkedin.com/in/petermcgibney/"}>
+            <FontAwesomeIcon
+              icon={faLinkedin}
+              className="fa-solid fa-linkedin fa-1x"
+            />
+          </Link>
+
+          <Link href={"https://www.instagram.com/petermc/"}>
+            <FontAwesomeIcon
+              icon={faInstagram}
+              className="fa-solid fa-instagram fa-1x"
+            />
+          </Link>
+
+          <Link href={"https://www.facebook.com/peter.mcgibney.3"}>
+            <FontAwesomeIcon
+              icon={faFacebook}
+              className="fa-solid fa-facebook fa-1x"
+            />
+          </Link>
+          <Link href={"https://github.com/petermc87"}>
+            <FontAwesomeIcon
+              icon={faGithub}
+              className="fa-solid fa-github fa-1x"
+            />
+          </Link>
         </div>
         <div className={styles.copyRight}>Ⓒ 2023 symptologix</div>
       </div>
