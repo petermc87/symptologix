@@ -17,7 +17,6 @@ import { useContext, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import getCategories from "../../../actions/categoryRequests/getCats";
 import getLogs from "../../../actions/logRequests/getLogs";
-import getSubCategories from "../../../actions/subCategoryRequests/getSubCats";
 import { Category, Log, Subcategory } from "../../../typings";
 import {
   NavBarContext,
@@ -46,16 +45,11 @@ Chart.overrides.doughnut.color = "#000";
 
 export default function Insights() {
   // Consume context for Logs.
-  const {
-    logs,
-    setLogs,
-    subCategories,
-    setSubCategories,
-    categories,
-    setCategories,
-  } = useContext<NavBarContextTypes | any>(NavBarContext);
+  const { logs, setLogs, categories, setCategories } = useContext<
+    NavBarContextTypes | any
+  >(NavBarContext);
 
-  console.log(logs, subCategories, categories);
+  console.log(logs, categories);
 
   // Get categories, subcategories and logs here in a useEffect hook.
   // Store this in state via the NavBarContext hook.
@@ -64,9 +58,9 @@ export default function Insights() {
       try {
         const fetchedLogs: Log[] | undefined | null = await getLogs();
         setLogs(fetchedLogs);
-        const fetchedSubCategories: Subcategory[] | undefined | null =
-          await getSubCategories();
-        setSubCategories(fetchedSubCategories);
+        // const fetchedSubCategories: Subcategory[] | undefined | null =
+        //   await getSubCategories();
+        // setSubCategories(fetchedSubCategories);
         const fetchedCategories: Category[] | undefined | null =
           await getCategories();
         setCategories(fetchedCategories);
@@ -79,28 +73,6 @@ export default function Insights() {
     return () => {};
   }, []);
 
-  // Dataset for doughnut.
-  const data = {
-    labels: ["Smell", "Taste", "Emotion"],
-    datasets: [
-      {
-        label: "# of occurances",
-        data: [20, 30, 5],
-        backgroundColor: [
-          "rgba(147, 145, 255, 1)",
-          "rgba(105, 102, 212, 1)",
-          "rgba(0, 7, 89, 1)",
-        ],
-        borderColor: [
-          "rgba(147, 145, 255, 1)",
-          "rgba(105, 102, 212, 1)",
-          "rgba(0, 7, 89, 1)",
-        ],
-        borderWidth: 1,
-        cutout: "40%",
-      },
-    ],
-  };
   return (
     <div>
       <NavBar />
@@ -112,6 +84,44 @@ export default function Insights() {
           */}
           {categories
             ? categories.map((category: Category) => {
+                // Type declaration for subcatgories
+
+                const filteretedSubCats: Subcategory[] | undefined | string =
+                  category.subCategories;
+
+                const data = {
+                  // Set the labels as the subcategory names.
+                  // A function will be called here that will return the filtered subcat names.
+                  labels: category
+                    ? // NOTE: Add an exlamantion point at to end to tell ts the Subcategories array is
+                      // definitely defined.
+                      filteretedSubCats!.map(
+                        (subCategory: Subcategory) => subCategory.name
+                      )
+                    : "",
+
+                  // labels: filteredSubCategories(),
+                  datasets: [
+                    {
+                      label: "# of occurances",
+                      // Create a counter function that will add up
+                      // the occurances/sub.
+                      data: [20, 30, 5],
+                      backgroundColor: [
+                        "rgba(147, 145, 255, 1)",
+                        "rgba(105, 102, 212, 1)",
+                        "rgba(0, 7, 89, 1)",
+                      ],
+                      borderColor: [
+                        "rgba(147, 145, 255, 1)",
+                        "rgba(105, 102, 212, 1)",
+                        "rgba(0, 7, 89, 1)",
+                      ],
+                      borderWidth: 1,
+                      cutout: "40%",
+                    },
+                  ],
+                };
                 return (
                   <>
                     {category.name}

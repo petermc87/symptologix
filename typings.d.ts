@@ -24,6 +24,7 @@ export type Entry = {
 };
 
 export type Category = {
+  id: string;
   name: string;
   subCategories?: SubCategory[];
 };
