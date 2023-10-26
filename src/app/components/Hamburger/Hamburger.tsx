@@ -47,7 +47,9 @@ export default function Hamburger() {
                 setShow(true);
               }}
             >
-              <a className={styles.menuItem}>Sign Up</a>
+              <a className={styles.menuItem} id={styles.signUp}>
+                Sign Up
+              </a>
             </li>
           </>
         ) : (
@@ -73,12 +75,12 @@ export default function Hamburger() {
                 Log Out
               </a>
             </li>
-            <li className={styles.logoWrapper} onClick={() => route.push("/")}>
-              <Logo />
-              <p>All rights reserved 2023</p>
-            </li>
           </>
         )}
+        <li className={styles.logoWrapper} onClick={() => route.push("/")}>
+          <Logo />
+          <p>All rights reserved 2023</p>
+        </li>
       </ul>
     </div>
   );
