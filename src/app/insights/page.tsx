@@ -16,8 +16,8 @@ import {
 import { useContext, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import getCategories from "../../../actions/categoryRequests/getCats";
-import getLogs from "../../../actions/logRequests/getLogs";
-import { Category, Log, Subcategory } from "../../../typings";
+import GetEntries from "../../../actions/entryRequests/getEntries";
+import { Category, Entry, Subcategory } from "../../../typings";
 import {
   NavBarContext,
   NavBarContextTypes,
@@ -45,25 +45,21 @@ Chart.overrides.doughnut.color = "#000";
 
 export default function Insights() {
   // Consume context for Logs.
-  const { logs, setLogs, categories, setCategories } = useContext<
-    NavBarContextTypes | any
-  >(NavBarContext);
+  const { logs, setLogs, categories, setCategories, entries, setEntries } =
+    useContext<NavBarContextTypes | any>(NavBarContext);
 
-  console.log(logs, categories);
+  console.log(logs, categories, entries);
 
   // Get categories, subcategories and logs here in a useEffect hook.
   // Store this in state via the NavBarContext hook.
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchedLogs: Log[] | undefined | null = await getLogs();
-        setLogs(fetchedLogs);
-        // const fetchedSubCategories: Subcategory[] | undefined | null =
-        //   await getSubCategories();
-        // setSubCategories(fetchedSubCategories);
         const fetchedCategories: Category[] | undefined | null =
           await getCategories();
         setCategories(fetchedCategories);
+        const fetchedEntries: Entry[] | undefined | null = await GetEntries();
+        setEntries(fetchedEntries);
       } catch (error) {
         console.error(error);
       }
@@ -84,14 +80,32 @@ export default function Insights() {
           */}
           {categories
             ? categories.map((category: Category) => {
+                // Storing the occurances in an array to be read.
+                let occurances: Array<string> = [];
                 // Type declaration for subcatgories
-
-                const filteretedSubCats: Subcategory[] | undefined | string =
+                const filteretedSubCats: Subcategory[] | undefined =
                   category.subCategories;
 
+                // Filtered subcats are mapped over.
+                filteretedSubCats?.map((subcat) => {
+                  occurances.push(
+                    // The subcats are then matched up
+                    // with the entries using a filter method.
+                    entries.filter(
+                      (entry: Entry) =>
+                        // The filtering is applied to the entry that has
+                        // a matching subCategoryId key:value. Also, so that
+                        // each doughnut chart is segregated by category, match the
+                        // category id with the categoryId key:value in each
+                        // subcat.
+                        entry.subCategoryId === subcat.id &&
+                        subcat.categoryId === category.id
+                    ).length
+                  );
+                });
                 const data = {
                   // Set the labels as the subcategory names.
-                  // A function will be called here that will return the filtered subcat names.
+                  // Filter out the categrories here.
                   labels: category
                     ? // NOTE: Add an exlamantion point at to end to tell ts the Subcategories array is
                       // definitely defined.
@@ -100,13 +114,10 @@ export default function Insights() {
                       )
                     : "",
 
-                  // labels: filteredSubCategories(),
                   datasets: [
                     {
                       label: "# of occurances",
-                      // Create a counter function that will add up
-                      // the occurances/sub.
-                      data: [20, 30, 5],
+                      data: occurances,
                       backgroundColor: [
                         "rgba(147, 145, 255, 1)",
                         "rgba(105, 102, 212, 1)",

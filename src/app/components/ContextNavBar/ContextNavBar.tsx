@@ -3,7 +3,7 @@
 "use client";
 import { Category } from "@prisma/client";
 import { Dispatch, SetStateAction, createContext, useState } from "react";
-import { Log, Subcategory } from "../../../../typings";
+import { Entry, Log, Subcategory } from "../../../../typings";
 
 // Export the counter context.
 
@@ -24,6 +24,8 @@ export type NavBarContextTypes = {
   setLogs: Dispatch<SetStateAction<Log[] | undefined | null | void>>;
   categories: Category[] | undefined | null | void;
   setCategories: Dispatch<SetStateAction<Category[] | undefined | null | void>>;
+  entries: Entry[] | undefined | null | void;
+  setEntries: Dispatch<SetStateAction<Entry[] | undefined | null | void>>;
 };
 
 export const NavBarContext = createContext<NavBarContextTypes | null>(null);
@@ -60,6 +62,11 @@ export default function NavBarProvider(props: any) {
     Category[] | undefined | null | void
   >(null);
 
+  // State for holding entries
+  const [entries, setEntries] = useState<Entry[] | undefined | null | void>(
+    null
+  );
+
   return (
     <NavBarContext.Provider
       value={{
@@ -79,6 +86,8 @@ export default function NavBarProvider(props: any) {
         setLogs,
         categories,
         setCategories,
+        entries,
+        setEntries,
       }}
     >
       {props.children}
