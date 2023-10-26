@@ -13,8 +13,12 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
+import getCategories from "../../../actions/categoryRequests/getCats";
+import getLogs from "../../../actions/logRequests/getLogs";
+import getSubCategories from "../../../actions/subCategoryRequests/getSubCats";
+import { Category, Log, Subcategory } from "../../../typings";
 import {
   NavBarContext,
   NavBarContextTypes,
@@ -42,11 +46,38 @@ Chart.overrides.doughnut.color = "#000";
 
 export default function Insights() {
   // Consume context for Logs.
-  const { logs, subCategories } = useContext<NavBarContextTypes | any>(
-    NavBarContext
-  );
+  const {
+    logs,
+    setLogs,
+    subCategories,
+    setSubCategories,
+    categories,
+    setCategories,
+  } = useContext<NavBarContextTypes | any>(NavBarContext);
 
-  console.log(logs, subCategories);
+  console.log(logs, subCategories, categories);
+
+  // Get categories, subcategories and logs here in a useEffect hook.
+  // Store this in state via the NavBarContext hook.
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedLogs: Log[] | undefined | null = await getLogs();
+        setLogs(fetchedLogs);
+        const fetchedSubCategories: Subcategory[] | undefined | null =
+          await getSubCategories();
+        setSubCategories(fetchedSubCategories);
+        const fetchedCategories: Category[] | undefined | null =
+          await getCategories();
+        setCategories(fetchedCategories);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+
+    return () => {};
+  }, []);
 
   // Dataset for doughnut.
   const data = {
@@ -76,7 +107,19 @@ export default function Insights() {
       <div className={styles.pageContainer} key={889}>
         <div className={styles.headingText}>Your Symptom Story</div>
         <>
-          <Doughnut data={data} />
+          {/* Display the name of each category here. For each category,
+          render a doughnut chart.
+          */}
+          {categories
+            ? categories.map((category: Category) => {
+                return (
+                  <>
+                    {category.name}
+                    <Doughnut data={data} />
+                  </>
+                );
+              })
+            : ""}
         </>
       </div>
 

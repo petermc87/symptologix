@@ -1,6 +1,7 @@
 // 1. Create context using state for Open, close and the state variable for Login and Singup.
 // 2. Create context using state for Logout, CreateLogPage, PreviousLogsPage, and MetricsPage.
 "use client";
+import { Category } from "@prisma/client";
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 import { Log, Subcategory } from "../../../../typings";
 
@@ -21,6 +22,8 @@ export type NavBarContextTypes = {
   setViewEntryForm: Dispatch<SetStateAction<boolean | undefined>>;
   logs: Log[] | undefined | null | void;
   setLogs: Dispatch<SetStateAction<Log[] | undefined | null | void>>;
+  categories: Category[] | undefined | null | void;
+  setCategories: Dispatch<SetStateAction<Category[] | undefined | null | void>>;
 };
 
 export const NavBarContext = createContext<NavBarContextTypes | null>(null);
@@ -52,6 +55,11 @@ export default function NavBarProvider(props: any) {
   // State for holding all logs.
   const [logs, setLogs] = useState<Log[] | undefined | null | void>(null);
 
+  // State for holding categories.
+  const [categories, setCategories] = useState<
+    Category[] | undefined | null | void
+  >(null);
+
   return (
     <NavBarContext.Provider
       value={{
@@ -69,6 +77,8 @@ export default function NavBarProvider(props: any) {
         setViewEntryForm,
         logs,
         setLogs,
+        categories,
+        setCategories,
       }}
     >
       {props.children}

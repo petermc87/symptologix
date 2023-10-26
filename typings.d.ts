@@ -25,7 +25,7 @@ export type Entry = {
 
 export type Category = {
   name: string;
-  subCategories: SubCategory[];
+  subCategories?: SubCategory[];
 };
 
 export type Subcategory = {
