@@ -55,7 +55,7 @@ Below shows a typical logging step using a wireflow. It shows steps to create a 
 
 2.  [Badges](https://ileriayo.github.io/markdown-badges/#markdown-badges)
 
-3.  [Shiled Docs](https://shields.io/)
+3.  [Shield Docs](https://shields.io/)
 
 4.  [ESLint Changelog](https://github.com/conventional-changelog/commitlint)
 
