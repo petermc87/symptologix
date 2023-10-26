@@ -143,7 +143,6 @@ export default function Insights() {
             : ""}
         </>
       </div>
-
       <Footer />
     </div>
   );

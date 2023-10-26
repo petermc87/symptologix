@@ -69,10 +69,13 @@ export default function Hamburger() {
                 route.push("/");
               }}
             >
-              <a className={styles.menuItem}>Log Out</a>
+              <a className={styles.menuItem} id={styles.logOut}>
+                Log Out
+              </a>
             </li>
-            <li onClick={() => route.push("/")}>
+            <li className={styles.logoWrapper} onClick={() => route.push("/")}>
               <Logo />
+              <p>All rights reserved 2023</p>
             </li>
           </>
         )}
