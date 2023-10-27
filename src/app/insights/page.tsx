@@ -24,6 +24,7 @@ import {
 } from "../components/ContextNavBar/ContextNavBar";
 import Footer from "../components/Footer/Footer";
 import NavBar from "../components/NavBar/NavBar";
+import SolidLine from "../components/SolidLine/SolidLine";
 import styles from "./page.module.scss";
 // Register ChartJS elements.
 ChartJS.register(
@@ -48,17 +49,14 @@ export default function Insights() {
   const { logs, setLogs, categories, setCategories, entries, setEntries } =
     useContext<NavBarContextTypes | any>(NavBarContext);
 
-  console.log(logs, categories, entries);
-
   // Get categories, subcategories and logs here in a useEffect hook.
   // Store this in state via the NavBarContext hook.
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchedCategories: Category[] | undefined | null =
-          await getCategories();
+        const fetchedCategories: Category[] = await getCategories();
         setCategories(fetchedCategories);
-        const fetchedEntries: Entry[] | undefined | null = await GetEntries();
+        const fetchedEntries: Entry[] = await GetEntries();
         setEntries(fetchedEntries);
       } catch (error) {
         console.error(error);
@@ -78,7 +76,7 @@ export default function Insights() {
           {/* Display the name of each category here. For each category,
           render a doughnut chart.
           */}
-          {categories
+          {categories && entries
             ? categories.map((category: Category) => {
                 // Storing the occurances in an array to be read.
                 let occurances: Array<string> = [];
@@ -109,10 +107,12 @@ export default function Insights() {
                   labels: category
                     ? // NOTE: Add an exlamantion point at to end to tell ts the Subcategories array is
                       // definitely defined.
+                      // NOTE: Make sure to make the else part of the ternary an empty array
+                      // since that is the data type for labels and not string.
                       filteretedSubCats!.map(
                         (subCategory: Subcategory) => subCategory.name
                       )
-                    : "",
+                    : [],
 
                   datasets: [
                     {
@@ -142,6 +142,7 @@ export default function Insights() {
               })
             : ""}
         </>
+        <SolidLine />
       </div>
       <Footer />
     </div>

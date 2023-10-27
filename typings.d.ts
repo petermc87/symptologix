@@ -18,7 +18,7 @@ export type Log = {
 export type Entry = {
   id: string;
   date: any;
-  entry: string;
+  entry: string | null;
   logId: string;
   subCategoryId: string;
 };
