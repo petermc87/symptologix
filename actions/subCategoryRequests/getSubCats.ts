@@ -10,7 +10,7 @@ export default async function getSubCategories() {
 
   // BETTER WAY: Call all subcategories and filter by cat in the front end.
   // Only one call needed!
-  const subCategories = db.subCategory.findMany();
+  const subCategories = await db.subCategory.findMany();
 
   return subCategories;
 }
