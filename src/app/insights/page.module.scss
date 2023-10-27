@@ -22,3 +22,9 @@ $line: none;
   margin-bottom: 5rem;
   text-align: center;
 }
+
+// Making dotted line visible by changing the width.
+.lineWrapper {
+  border: $line gray;
+  width: 95%;
+}

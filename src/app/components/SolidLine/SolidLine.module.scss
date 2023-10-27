@@ -1,0 +1,6 @@
+@use "../../utilties/elements";
+
+.lineContainer {
+  width: 90%;
+  @extend %solidLine;
+}

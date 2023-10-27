@@ -22,9 +22,10 @@ import {
   NavBarContext,
   NavBarContextTypes,
 } from "../components/ContextNavBar/ContextNavBar";
+import DottedLine from "../components/DottedLine/DottedLine";
 import Footer from "../components/Footer/Footer";
+import MostOccurring from "../components/MostOccurring/MostOccurring";
 import NavBar from "../components/NavBar/NavBar";
-import SolidLine from "../components/SolidLine/SolidLine";
 import styles from "./page.module.scss";
 // Register ChartJS elements.
 ChartJS.register(
@@ -46,8 +47,9 @@ Chart.overrides.doughnut.color = "#000";
 
 export default function Insights() {
   // Consume context for Logs.
-  const { logs, setLogs, categories, setCategories, entries, setEntries } =
-    useContext<NavBarContextTypes | any>(NavBarContext);
+  const { categories, setCategories, entries, setEntries } = useContext<
+    NavBarContextTypes | any
+  >(NavBarContext);
 
   // Get categories, subcategories and logs here in a useEffect hook.
   // Store this in state via the NavBarContext hook.
@@ -142,7 +144,13 @@ export default function Insights() {
               })
             : ""}
         </>
-        <SolidLine />
+        <br />
+        <br />
+
+        <div className={styles.lineWrapper}>
+          <DottedLine />
+        </div>
+        <MostOccurring />
       </div>
       <Footer />
     </div>
