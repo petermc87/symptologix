@@ -12,7 +12,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { Subcategory } from "../../../../typings";
 import {
@@ -46,6 +46,18 @@ export default function MostOccurring() {
     NavBarContext
   );
 
+  // State for holding the number of most occurring to display
+  const [numberToDisplay, setNumberToDisplay] = useState<number>(5);
+
+  const subtract = () => {
+    setNumberToDisplay(numberToDisplay - 1);
+  };
+
+  const add = () => {
+    // If the number is
+    setNumberToDisplay(numberToDisplay + 1);
+  };
+
   console.log(entries, subCategories);
 
   // Options for bar
@@ -53,11 +65,11 @@ export default function MostOccurring() {
     responsiveness: true,
     plugins: {
       legend: {
-        position: "bottom" as const,
+        display: false,
       },
       title: {
         display: true,
-        text: " Occurances",
+        text: `Top ${numberToDisplay} Subcatgories`,
       },
     },
   };
@@ -96,7 +108,7 @@ export default function MostOccurring() {
   // Filtering is applied to the top 5
   const sortedOccurrences = occurrencesWithKey
     .sort((a, b) => b.value - a.value)
-    .filter((a, i: number) => i < 5);
+    .filter((a, i: number) => i < numberToDisplay);
 
   // Bar data
   const barData = {
@@ -109,7 +121,6 @@ export default function MostOccurring() {
         data: sortedOccurrences
           ? sortedOccurrences.map((occurrence) => occurrence.value)
           : [],
-        // data: occurrences,
         backgroundColor: [
           "rgba(147, 145, 255, 1)",
           "rgba(105, 102, 212, 1)",
@@ -131,6 +142,28 @@ export default function MostOccurring() {
       {/* Add bar chart from chartjs and input data based from the most */}
       {/* occurring subcategory */}
       <div className={styles.mostOccurringWrapper}>Most Occurring</div>
+      <div>
+        <button
+          onClick={() => {
+            if (numberToDisplay < 7) {
+              add();
+            }
+          }}
+        >
+          Up
+        </button>
+        {numberToDisplay}
+        <button
+          onClick={() => {
+            if (numberToDisplay > 2) {
+              subtract();
+            }
+          }}
+        >
+          Down
+        </button>
+      </div>
+
       {/* Render the most occurring subcategories.  So here we consume the subcategories */}
       {/* context. */}
       <Bar data={barData} options={options} />
