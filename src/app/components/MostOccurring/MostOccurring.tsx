@@ -62,15 +62,15 @@ export default function MostOccurring() {
     },
   };
 
-  let occurrances: Array<number> = [];
+  let occurrences: Array<number> = [];
   // Map data to array
   if (subCategories) {
-    occurrances = Array(subCategories.length).fill(0);
+    occurrences = Array(subCategories.length).fill(0);
   }
 
   // 1. Maps over every entry.
   if (entries && subCategories) {
-    entries.map((entry: Entry) => {
+    entries.map((entry: Entry, i: number) => {
       // 2. Stores the index of the subcat in the subCats array by matching the id of the
       //  subCategoryId
       const subCategoryIndex = subCategories.findIndex(
@@ -79,27 +79,37 @@ export default function MostOccurring() {
 
       // 3. If the index is not a negative number, then interate up 1 the number at the subCategoryIndex.
       if (subCategoryIndex !== -1) {
-        occurrances[subCategoryIndex]++;
+        occurrences[subCategoryIndex]++;
       }
     });
   }
 
-  // Compare the first and the second number. If the delta is a negative,
+  // 4. Transform the array of numbers into an array of key:value pairs
+  // matching up the name of the subcat with the value in the occurrences array.
+  const occurrencesWithKey = occurrences.map((value, i) => ({
+    key: subCategories[i].name,
+    value: value,
+  }));
+
+  // 5. Compare the first and the second number. If the delta is a negative,
   // then the numbers are swapped. If they are even, then they stay the same.
-  occurrances.sort((a, b) => b - a);
+  // Filtering is applied to the top 5
+  const sortedOccurrences = occurrencesWithKey
+    .sort((a, b) => b.value - a.value)
+    .filter((a, i: number) => i < 5);
 
   // Bar data
   const barData = {
-    labels: subCategories
-      ? subCategories!.map((subcategory: Subcategory, i: number) =>
-          i < 5 ? subcategory.name : ""
-        )
+    labels: sortedOccurrences
+      ? sortedOccurrences.map((occurrence) => occurrence.key)
       : [],
     datasets: [
       {
         labels: "",
+        data: sortedOccurrences
+          ? sortedOccurrences.map((occurrence) => occurrence.value)
+          : [],
         // data: occurrences,
-        data: occurrances,
         backgroundColor: [
           "rgba(147, 145, 255, 1)",
           "rgba(105, 102, 212, 1)",
