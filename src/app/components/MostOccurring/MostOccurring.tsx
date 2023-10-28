@@ -42,28 +42,13 @@ export default function MostOccurring() {
 
   // Consume the entries context so that we can display the most occurring subcats in a
   // chart below.
-  const { entries, categories, subCategories } = useContext<
-    NavBarContextTypes | any
-  >(NavBarContext);
+  const { entries, subCategories } = useContext<NavBarContextTypes | any>(
+    NavBarContext
+  );
 
   console.log(entries, subCategories);
 
-  // cycle through subcategories contained in the categories
-  if (subCategories) {
-    subCategories.map((sub: Subcategory) => {
-      console.log(sub);
-    });
-  }
-
-  // cycle through entries and display the subcatId
-  if (entries) {
-    entries.map((entry: Entry) => {
-      console.log(entry.subCategoryId);
-    });
-  }
-
   // Options for bar
-  // Options for line chart.
   const options = {
     responsiveness: true,
     plugins: {
@@ -77,30 +62,44 @@ export default function MostOccurring() {
     },
   };
 
+  let occurrances: Array<number> = [];
   // Map data to array
-  const occurrences = Array(subCategories.length).fill(0);
+  if (subCategories) {
+    occurrances = Array(subCategories.length).fill(0);
+  }
 
   // 1. Maps over every entry.
-  entries.map((entry: Entry) => {
-    // 2. Stores the index of the subcat in the subCats array by matching the id of the
-    //  subCategoryId
-    const subCategoryIndex = subCategories.findIndex(
-      (subcat: Subcategory) => subcat.id === entry.subCategoryId
-    );
+  if (entries && subCategories) {
+    entries.map((entry: Entry) => {
+      // 2. Stores the index of the subcat in the subCats array by matching the id of the
+      //  subCategoryId
+      const subCategoryIndex = subCategories.findIndex(
+        (subcat: Subcategory) => subcat.id === entry.subCategoryId
+      );
 
-    // 3. If the index is not a negative number, then interate up 1 the number at the subCategoryIndex.
-    if (subCategoryIndex !== -1) {
-      occurrences[subCategoryIndex]++;
-    }
-  });
+      // 3. If the index is not a negative number, then interate up 1 the number at the subCategoryIndex.
+      if (subCategoryIndex !== -1) {
+        occurrances[subCategoryIndex]++;
+      }
+    });
+  }
+
+  // Compare the first and the second number. If the delta is a negative,
+  // then the numbers are swapped. If they are even, then they stay the same.
+  occurrances.sort((a, b) => b - a);
 
   // Bar data
   const barData = {
-    labels: subCategories!.map((subcategory: Subcategory) => subcategory.name),
+    labels: subCategories
+      ? subCategories!.map((subcategory: Subcategory, i: number) =>
+          i < 5 ? subcategory.name : ""
+        )
+      : [],
     datasets: [
       {
         labels: "",
-        data: occurrences,
+        // data: occurrences,
+        data: occurrances,
         backgroundColor: [
           "rgba(147, 145, 255, 1)",
           "rgba(105, 102, 212, 1)",
