@@ -160,7 +160,7 @@ export default function MostOccurring() {
                 xmlns="http://www.w3.org/2000/svg"
                 width={arrowSize}
                 height={arrowSize}
-                fill="currentColor"
+                fill="#9391ff"
                 className="bi bi-caret-up-square-fill"
                 viewBox="0 0 16 16"
               >
@@ -179,7 +179,7 @@ export default function MostOccurring() {
                 xmlns="http://www.w3.org/2000/svg"
                 width={arrowSize}
                 height={arrowSize}
-                fill="currentColor"
+                fill="#9391ff"
                 className="bi bi-caret-down-square-fill"
                 viewBox="0 0 16 16"
               >

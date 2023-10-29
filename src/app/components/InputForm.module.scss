@@ -60,6 +60,10 @@ $line: none;
   display: flex;
 }
 
+.toggle {
+  @extend %formButton;
+}
+
 .dropdownWrapper {
   border: $line yellow;
   width: 70%;

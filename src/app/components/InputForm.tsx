@@ -108,7 +108,16 @@ export default function InputForm({
         </Form.Label>
         <Form.Group className={styles.inputControls}>
           <Form.Control name="inputquery" className={styles.input} />
-          <Button type="submit">Submit</Button>
+          <Button
+            type="submit"
+            style={{
+              backgroundColor: "#9391ff",
+              borderColor: "#9391ff",
+              borderRadius: "15px",
+            }}
+          >
+            Submit
+          </Button>
         </Form.Group>
       </Form>
       <div className={styles.textWrapper}>
@@ -117,7 +126,15 @@ export default function InputForm({
           <p>Select From Previous</p>
           <div className={styles.dropdownWrapper}>
             <Dropdown className={styles.dropdown}>
-              <Dropdown.Toggle>Categrory</Dropdown.Toggle>
+              <Dropdown.Toggle
+                style={{
+                  backgroundColor: "#9391ff",
+                  borderColor: "#9391ff",
+                  borderRadius: "15px",
+                }}
+              >
+                Categrory
+              </Dropdown.Toggle>
             </Dropdown>
           </div>
         </div>

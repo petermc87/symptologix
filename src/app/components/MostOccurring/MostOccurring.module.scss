@@ -14,7 +14,7 @@ $line: none;
 
 .subHeading {
   @extend %smallHeadingText;
-  font-size: 1.3rem;
+  //   font-size: 1.3rem;
 }
 
 .iteration {
@@ -45,4 +45,12 @@ $line: none;
 
 .arrow {
   border: $line blue;
+}
+
+.mostOccurring {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  @extend %boldBlueUnderlined;
 }

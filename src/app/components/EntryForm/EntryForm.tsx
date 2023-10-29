@@ -64,7 +64,16 @@ export default function EntryForm({ selectedSubCat }: EntryFormTypes) {
               </Form.Label>
               <Form.Group className={styles.inputControls}>
                 <Form.Control name="inputquery" className={styles.input} />
-                <Button type="submit">+</Button>
+                <Button
+                  type="submit"
+                  style={{
+                    backgroundColor: "#00c2a8",
+                    borderColor: "#00c2a8",
+                    borderRadius: "8px",
+                  }}
+                >
+                  +
+                </Button>
               </Form.Group>
             </Form>
           </div>

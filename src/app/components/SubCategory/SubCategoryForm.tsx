@@ -66,7 +66,16 @@ export default function SubCategoryForm({
             </Form.Label>
             <Form.Group id={styles.inputControls}>
               <Form.Control name="inputquery" id={styles.input} />
-              <Button type="submit">Create</Button>
+              <Button
+                type="submit"
+                style={{
+                  backgroundColor: "#9391ff",
+                  borderColor: "#9391ff",
+                  borderRadius: "8px",
+                }}
+              >
+                Create
+              </Button>
             </Form.Group>
           </Form>
         </div>
@@ -78,7 +87,15 @@ export default function SubCategoryForm({
               as="textarea"
               placeholder="Enter your record here.."
             />
-            <Button>Add</Button>
+            <Button
+              style={{
+                backgroundColor: "#9391ff",
+                borderColor: "#9391ff",
+                borderRadius: "15px",
+              }}
+            >
+              Add
+            </Button>
           </Form>
         </>
       )}
@@ -97,7 +114,17 @@ export default function SubCategoryForm({
               </div>
             </div>
             <Dropdown as={ButtonGroup}>
-              <Dropdown.Toggle id="dropdown-custom-1">Sub</Dropdown.Toggle>
+              <Dropdown.Toggle
+                id="dropdown-custom-1"
+                style={{
+                  backgroundColor: "#9391ff",
+                  borderColor: "#9391ff",
+                  zIndex: "1",
+                  padding: "0 5px 0 5px",
+                }}
+              >
+                Sub
+              </Dropdown.Toggle>
               <Dropdown.Menu className="super-colors">
                 {subCategories
                   ? subCategories.map((subCategory: any, i: any) => {

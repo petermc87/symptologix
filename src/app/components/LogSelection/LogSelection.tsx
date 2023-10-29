@@ -45,6 +45,11 @@ export default function LogSelection({ userId }: LogSelectionTypes) {
                 }}
                 variant="primary"
                 id={styles.button}
+                style={{
+                  backgroundColor: "#9391ff",
+                  borderColor: "#9391ff",
+                  borderRadius: "8px",
+                }}
               >
                 Create Log
               </Button>

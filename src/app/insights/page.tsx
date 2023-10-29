@@ -157,7 +157,7 @@ export default function Insights() {
                 };
                 return (
                   <>
-                    {category.name}
+                    <div className={styles.categoryName}>{category.name}</div>
                     <Doughnut data={data} />
                   </>
                 );
