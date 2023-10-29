@@ -13,6 +13,7 @@ $line: none;
   max-width: 60rem;
   padding: 2rem;
   margin-bottom: 1rem;
+  @extend %smallHeadingText;
 }
 
 // Text on hover.

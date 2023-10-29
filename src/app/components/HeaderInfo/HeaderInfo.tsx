@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ReactNode, useContext } from "react";
 import {
   NavBarContext,
@@ -32,7 +33,14 @@ export default function HeaderInfo({ userName }: HeaderInfoTypes) {
             >
               entry form
             </span>
-            , look at <span>metrics</span>, or <span>previous logs</span>
+            , look at symptom{" "}
+            <Link href={"/insights"}>
+              <span>insights</span>
+            </Link>
+            , or{" "}
+            <Link href={"/previous"}>
+              <span>previous logs</span>
+            </Link>
           </div>
         ) : (
           ""

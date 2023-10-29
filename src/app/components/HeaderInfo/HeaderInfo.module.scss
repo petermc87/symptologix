@@ -32,4 +32,8 @@ $line: none;
     font-style: italic;
     text-decoration: underline;
   }
+  span:hover {
+    cursor: pointer;
+    opacity: 0.5;
+  }
 }
