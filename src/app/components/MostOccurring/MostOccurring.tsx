@@ -58,8 +58,6 @@ export default function MostOccurring() {
     setNumberToDisplay(numberToDisplay + 1);
   };
 
-  console.log(entries, subCategories);
-
   // Options for bar
   const options = {
     responsiveness: true,
@@ -68,8 +66,7 @@ export default function MostOccurring() {
         display: false,
       },
       title: {
-        display: true,
-        text: `Top ${numberToDisplay} Subcatgories`,
+        display: false,
       },
     },
   };
@@ -137,31 +134,60 @@ export default function MostOccurring() {
     ],
   };
 
+  // Arrow sizing.
+  const arrowSize = 24;
   return (
     <>
       {/* Add bar chart from chartjs and input data based from the most */}
       {/* occurring subcategory */}
-      <div className={styles.mostOccurringWrapper}>Most Occurring</div>
-      <div>
-        <button
-          onClick={() => {
-            if (numberToDisplay < 7) {
-              add();
-            }
-          }}
-        >
-          Up
-        </button>
-        {numberToDisplay}
-        <button
-          onClick={() => {
-            if (numberToDisplay > 2) {
-              subtract();
-            }
-          }}
-        >
-          Down
-        </button>
+      <div className={styles.mostOccurring}>Most Occurring</div>
+      <div className={styles.chartMetaWrapper}>
+        <div className={styles.subHeading}>
+          Top {numberToDisplay} Subcategories
+        </div>
+        <div className={styles.iteration}>
+          <div className={styles.number}>{numberToDisplay}</div>
+          <div className={styles.arrowsWrapper}>
+            <div
+              className={styles.arrow}
+              onClick={() => {
+                if (numberToDisplay < 7) {
+                  add();
+                }
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={arrowSize}
+                height={arrowSize}
+                fill="currentColor"
+                className="bi bi-caret-up-square-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 9h8a.5.5 0 0 0 .374-.832l-4-4.5a.5.5 0 0 0-.748 0l-4 4.5A.5.5 0 0 0 4 11z" />
+              </svg>
+            </div>
+            <div
+              className={styles.arrow}
+              onClick={() => {
+                if (numberToDisplay > 2) {
+                  subtract();
+                }
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={arrowSize}
+                height={arrowSize}
+                fill="currentColor"
+                className="bi bi-caret-down-square-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 4a.5.5 0 0 0-.374.832l4 4.5a.5.5 0 0 0 .748 0l4-4.5A.5.5 0 0 0 12 6H4z" />
+              </svg>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Render the most occurring subcategories.  So here we consume the subcategories */}
