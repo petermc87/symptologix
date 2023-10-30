@@ -1,0 +1,65 @@
+@use "../../utilties/variables" as var;
+@use "../../utilties/elements";
+@use "../../utilties/font";
+
+$line: none;
+
+// Log view
+.logView {
+  border: $line purple;
+  background-color: var.$login-form-background;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: +1;
+}
+
+.logContainer {
+  padding: 5rem;
+  justify-content: center;
+  @extend %logContainerStyles;
+  button {
+    margin-top: 1rem;
+    width: 100%;
+    border: $line gray;
+  }
+}
+
+// Heading
+.headingText {
+  @extend %boldBlueUnderlined;
+}
+
+.dateTime {
+  @extend %smallHeadingText;
+}
+.entryContainer {
+  border: $line red;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  @extend %smallHeadingText;
+  .entry {
+    border: $line gold;
+    width: 30%;
+    margin-left: 0.5rem;
+    align-items: center;
+  }
+  .subcat {
+    border: $line green;
+    display: flex;
+    width: 70%;
+    align-items: center;
+  }
+  #subHeading {
+    @extend %boldBlueUnderlined;
+    text-decoration: none;
+    font-style: normal;
+  }
+}
