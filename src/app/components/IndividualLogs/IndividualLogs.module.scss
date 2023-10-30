@@ -4,6 +4,10 @@
 
 $line: none;
 
+.heading {
+  @extend %boldBlueUnderlined;
+}
+
 // Log view
 .logView {
   border: $line purple;
@@ -21,13 +25,16 @@ $line: none;
 }
 
 .logContainer {
-  padding: 5rem;
+  padding: 1rem 4rem 2rem 2rem;
   justify-content: center;
   @extend %logContainerStyles;
   button {
     margin-top: 1rem;
     width: 100%;
     border: $line gray;
+  }
+  h2 {
+    @extend %boldBlueUnderlined;
   }
 }
 
@@ -36,9 +43,23 @@ $line: none;
   @extend %boldBlueUnderlined;
 }
 
-.dateTime {
+//Header Info
+.headerInfo {
+  display: flex;
+  border: $line red;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+// top level subheading
+.subHeadingTop {
+  border: $line blue;
+  margin: 0.2rem;
+  margin-right: 1rem;
   @extend %smallHeadingText;
 }
+
 .entryContainer {
   border: $line red;
   margin-bottom: 0.5rem;

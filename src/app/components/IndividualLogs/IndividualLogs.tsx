@@ -88,42 +88,45 @@ export default function IndividualLogs() {
   return (
     <>
       {/* Add a dropdown to select a current subcategory */}
-      <div>Individual Entry Patterns</div>
+      <div className={styles.heading}>Individual Entry Patterns</div>
       <div>
-        <div>Select SubCategory</div>
-        <Dropdown as={ButtonGroup}>
-          {/* DROPDOWN TOGGLE BUTTON. */}
-          <Dropdown.Toggle
-            id="dropdown-custom-1"
-            style={{
-              backgroundColor: "#9391ff",
-              borderColor: "#9391ff",
-              zIndex: "0",
-              padding: "0 5px 0 5px",
-            }}
-          >
-            {/* Text in the subcategory dropdown. This will show the default if nothing is selected */}
-            {selectedSubCat ? selectedSubCat.name : "Select a Subcategory"}
-          </Dropdown.Toggle>
-          {/* DROPDOWN MENU ITEMS. */}
-          <Dropdown.Menu className="super-colors">
-            {subCategories
-              ? subCategories.map((subCat: Subcategory, i: number) => {
-                  return (
-                    <Dropdown.Item
-                      eventKey={i}
-                      key={i}
-                      onClick={() => {
-                        handleFilterEntries(subCat);
-                      }}
-                    >
-                      {subCat.name}
-                    </Dropdown.Item>
-                  );
-                })
-              : ""}
-          </Dropdown.Menu>
-        </Dropdown>
+        <div className={styles.headerInfo}>
+          <div className={styles.subHeadingTop}>Select SubCategory</div>
+          <Dropdown as={ButtonGroup}>
+            {/* DROPDOWN TOGGLE BUTTON. */}
+            <Dropdown.Toggle
+              id="dropdown-custom-1"
+              style={{
+                backgroundColor: "#9391ff",
+                borderColor: "#9391ff",
+                zIndex: "0",
+                padding: "0 5px 0 5px",
+              }}
+            >
+              {/* Text in the subcategory dropdown. This will show the default if nothing is selected */}
+              {selectedSubCat ? selectedSubCat.name : "Select a Subcategory"}
+            </Dropdown.Toggle>
+            {/* DROPDOWN MENU ITEMS. */}
+            <Dropdown.Menu className="super-colors">
+              {subCategories
+                ? subCategories.map((subCat: Subcategory, i: number) => {
+                    return (
+                      <Dropdown.Item
+                        eventKey={i}
+                        key={i}
+                        onClick={() => {
+                          handleFilterEntries(subCat);
+                        }}
+                      >
+                        {subCat.name}
+                      </Dropdown.Item>
+                    );
+                  })
+                : ""}
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+
         {/* Show a table with the description and occurrences */}
         <div className={styles.logContainer}>
           <h2>Most Common Key Words</h2>
@@ -157,7 +160,7 @@ export default function IndividualLogs() {
                   </>
                 );
               })
-            : ""}
+            : "Nothing to display yet"}
         </div>
       </div>
     </>
