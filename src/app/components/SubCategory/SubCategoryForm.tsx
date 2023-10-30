@@ -127,7 +127,7 @@ export default function SubCategoryForm({
               </Dropdown.Toggle>
               <Dropdown.Menu className="super-colors">
                 {subCategories
-                  ? subCategories.map((subCategory: any, i: any) => {
+                  ? subCategories.map((subCategory: Subcategory, i: number) => {
                       // Add an if statement here to filter only by the sub categories that match the categories.
                       if (category.id === subCategory.categoryId) {
                         return (

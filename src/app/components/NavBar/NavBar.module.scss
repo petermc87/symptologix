@@ -4,6 +4,7 @@
 
 $line: none;
 .navbarWrapper {
+  z-index: +2;
   border: $line black;
   display: flex;
   justify-content: space-between;

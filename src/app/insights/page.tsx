@@ -25,6 +25,7 @@ import {
 } from "../components/ContextNavBar/ContextNavBar";
 import DottedLine from "../components/DottedLine/DottedLine";
 import Footer from "../components/Footer/Footer";
+import IndividualLogs from "../components/IndividualLogs/IndividualLogs";
 import MostOccurring from "../components/MostOccurring/MostOccurring";
 import NavBar from "../components/NavBar/NavBar";
 import styles from "./page.module.scss";
@@ -171,6 +172,10 @@ export default function Insights() {
           <DottedLine />
         </div>
         <MostOccurring />
+        <div className={styles.lineWrapper}>
+          <DottedLine />
+        </div>
+        <IndividualLogs />
       </div>
       <Footer />
     </div>
