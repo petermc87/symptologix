@@ -10,9 +10,9 @@ import styles from "./IndividualLogs.module.scss";
 export default function IndividualLogs() {
   // Add in the subcategory data through context so that
   // it can be consumed here.
-  const { subCategories, setSubCategories, entries, setEntries } = useContext<
-    NavBarContextTypes | any
-  >(NavBarContext);
+  const { subCategories, entries } = useContext<NavBarContextTypes | any>(
+    NavBarContext
+  );
 
   // Filtering words list.
   const filterWords = [
@@ -25,6 +25,7 @@ export default function IndividualLogs() {
     "big",
     "ass",
     "the",
+    "me",
   ];
 
   // State for holding the selected subcategory
@@ -92,79 +93,82 @@ export default function IndividualLogs() {
     <>
       {/* Add a dropdown to select a current subcategory */}
       <div className={styles.heading}>Individual Entry Patterns</div>
-      <div>
-        <div className={styles.headerInfo}>
-          <div className={styles.subHeadingTop}>Select SubCategory</div>
-          <Dropdown as={ButtonGroup}>
-            {/* DROPDOWN TOGGLE BUTTON. */}
-            <Dropdown.Toggle
-              id="dropdown-custom-1"
-              style={{
-                backgroundColor: "#9391ff",
-                borderColor: "#9391ff",
-                zIndex: "0",
-                padding: "0 5px 0 5px",
-              }}
-            >
-              {/* Text in the subcategory dropdown. This will show the default if nothing is selected */}
-              {selectedSubCat ? selectedSubCat.name : "Select a Subcategory"}
-            </Dropdown.Toggle>
-            {/* DROPDOWN MENU ITEMS. */}
-            <Dropdown.Menu className="super-colors">
-              {subCategories
-                ? subCategories.map((subCat: Subcategory, i: number) => {
-                    return (
-                      <Dropdown.Item
-                        eventKey={i}
-                        key={i}
-                        onClick={() => {
-                          handleFilterEntries(subCat);
-                        }}
-                      >
-                        {subCat.name}
-                      </Dropdown.Item>
-                    );
-                  })
-                : ""}
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
-
-        {/* Show a table with the description and occurrences */}
-        <div className={styles.logContainer}>
-          <h2>Most Common Key Words</h2>
-          <div className={styles.entryContainer}>
-            <div className={styles.subCat} id={styles.subHeading}>
-              Description
-            </div>
-            <div className={styles.entry} id={styles.subHeading}>
-              Occurrence
-            </div>
-          </div>
-          {/* Create a map function that will return all filtered words  */}
-          {/* with the highest occurrence. */}
-          {/* NOTE: Because this is an object, to map we have to take */}
-          {/* each individual entry and map the key value of each. */}
-          {occurrences
-            ? Object.entries(occurrences).map(([key, value]) => {
-                return (
-                  <>
-                    <div className={styles.entryContainer}>
-                      {key.length > 2 && !filterWords.includes(key) ? (
-                        <>
-                          <div className={styles.subcat}>{key}</div>
-                          <div className={styles.entry}>{value}</div>
-                        </>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                  </>
-                );
-              })
-            : "Nothing to display yet"}
-        </div>
+      {/* <div className={styles.containerWrapper}> */}
+      <div className={styles.headerInfo}>
+        <div className={styles.subHeadingTop}>Select SubCategory</div>
+        <Dropdown as={ButtonGroup}>
+          {/* DROPDOWN TOGGLE BUTTON. */}
+          <Dropdown.Toggle
+            id="dropdown-custom-1"
+            style={{
+              backgroundColor: "#9391ff",
+              borderColor: "#9391ff",
+              zIndex: "0",
+              padding: "0 5px 0 5px",
+            }}
+          >
+            {/* Text in the subcategory dropdown. This will show the default if nothing is selected */}
+            {selectedSubCat ? selectedSubCat.name : "Select a Subcategory"}
+          </Dropdown.Toggle>
+          {/* DROPDOWN MENU ITEMS. */}
+          <Dropdown.Menu className="super-colors">
+            {subCategories
+              ? subCategories.map((subCat: Subcategory, i: number) => {
+                  return (
+                    <Dropdown.Item
+                      eventKey={i}
+                      key={i}
+                      onClick={() => {
+                        handleFilterEntries(subCat);
+                      }}
+                    >
+                      {subCat.name}
+                    </Dropdown.Item>
+                  );
+                })
+              : ""}
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
+
+      {/* Show a table with the description and occurrences */}
+      <div className={styles.logContainer}>
+        <h2>Most Common Key Words</h2>
+        <div className={styles.entryContainer}>
+          <div className={styles.subCat} id={styles.subHeading}>
+            Description
+          </div>
+          <div className={styles.entry} id={styles.subHeading}>
+            Occurrence
+          </div>
+        </div>
+        {/* Create a map function that will return all filtered words  */}
+        {/* with the highest occurrence. */}
+        {/* NOTE: Because this is an object, to map we have to take */}
+        {/* each individual entry and map the key value of each. */}
+        {occurrences
+          ? Object.entries(occurrences).map(([key, value]) => {
+              return (
+                <>
+                  <div className={styles.entryContainer}>
+                    {/* Filtering out words that are greater that two letters */}
+                    {/* and are not on the exlcuded word list above. */}
+                    {key.length > 2 && !filterWords.includes(key) ? (
+                      <>
+                        <div className={styles.subcat}>{key}</div>
+                        <div className={styles.entry}>{value}</div>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </>
+              );
+            })
+          : "Nothing to display yet"}
+      </div>
+      {/* </div> */}
+      {/* <SolidLine /> */}
     </>
   );
 }

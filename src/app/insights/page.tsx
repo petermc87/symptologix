@@ -23,11 +23,13 @@ import {
   NavBarContext,
   NavBarContextTypes,
 } from "../components/ContextNavBar/ContextNavBar";
+import DiagnosisFlow from "../components/DiagnosisFlow/DiagnosisFlow";
 import DottedLine from "../components/DottedLine/DottedLine";
 import Footer from "../components/Footer/Footer";
 import IndividualLogs from "../components/IndividualLogs/IndividualLogs";
 import MostOccurring from "../components/MostOccurring/MostOccurring";
 import NavBar from "../components/NavBar/NavBar";
+import SolidLine from "../components/SolidLine/SolidLine";
 import styles from "./page.module.scss";
 // Register ChartJS elements.
 ChartJS.register(
@@ -176,6 +178,8 @@ export default function Insights() {
           <DottedLine />
         </div>
         <IndividualLogs />
+        <SolidLine />
+        <DiagnosisFlow />
       </div>
       <Footer />
     </div>

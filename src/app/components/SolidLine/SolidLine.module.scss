@@ -1,6 +1,8 @@
 @use "../../utilties/elements";
 
 .lineContainer {
-  width: 90%;
+  width: 95%;
+  margin-top: 5rem;
+  margin-bottom: 4rem;
   @extend %solidLine;
 }
