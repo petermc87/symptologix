@@ -48,7 +48,11 @@ export default function IndividualLogs() {
     if (filteredEntries) {
       filteredEntries.map((entry: Entry | null) => {
         // split the sentence into words.
-        if (entry !== null) {
+
+        // NOTE: To ensure entry.entry is only accessed when
+        // it definitely is not null, perform a check. This
+        // will remove any type errors.
+        if (entry !== null && entry.entry !== null) {
           const words = entry.entry.split(" ");
 
           // Count the occurrences.
