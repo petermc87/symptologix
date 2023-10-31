@@ -47,11 +47,10 @@ export default function IndividualLogs() {
     // common words and how many occurrences.
     if (filteredEntries) {
       filteredEntries.map((entry: Entry | null) => {
-        // split the sentence into words.
-
         // NOTE: To ensure entry.entry is only accessed when
         // it definitely is not null, perform a check. This
         // will remove any type errors.
+        // Split the sentence into words.
         if (entry !== null && entry.entry !== null) {
           const words = entry.entry.split(" ");
 
@@ -63,7 +62,7 @@ export default function IndividualLogs() {
               occurrences[word]++;
             } else {
               // Otherwise, there are no repeating words for
-              // the current word. therefore there is only one.
+              // the current word. Therefore there is only one.
               occurrences[word] = 1;
             }
           });
@@ -148,14 +147,13 @@ export default function IndividualLogs() {
           {/* each individual entry and map the key value of each. */}
           {occurrences
             ? Object.entries(occurrences).map(([key, value]) => {
-                console.log(key, value);
                 return (
                   <>
                     <div className={styles.entryContainer}>
                       {key.length > 2 && !filterWords.includes(key) ? (
                         <>
                           <div className={styles.subcat}>{key}</div>
-                          <div className={styles.entry}>({value})</div>
+                          <div className={styles.entry}>{value}</div>
                         </>
                       ) : (
                         ""
