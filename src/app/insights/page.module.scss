@@ -16,6 +16,7 @@ $line: none;
 .headingText {
   @extend %largeHeroText;
   color: var.$light-hazy-purple;
+  font-size: 500%;
   border: $line red;
   display: flex;
   flex-direction: column;

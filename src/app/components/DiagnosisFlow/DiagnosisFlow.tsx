@@ -10,9 +10,20 @@ import styles from "./DiagnosisFlow.module.scss";
 export default function DiagnosisFlow() {
   // Take on context for categories.
 
-  const { categories } = useContext<NavBarContextTypes | any>(NavBarContext);
+  const { categories, entries, subCategories, logs } = useContext<
+    NavBarContextTypes | any
+  >(NavBarContext);
 
-  console.log(categories);
+  console.log(entries, subCategories, logs, categories);
+
+  // Cycle through each of symptom subcategories in entries and see how
+  // many times each appears. Store them in an object.
+
+  // Find the logs matching the highest occurring subcategory
+  // within the entry sub array.
+
+  // See what other subcats appear the most/category.
+
   return (
     <>
       <div className={styles.flowWrapper}>
@@ -33,10 +44,11 @@ export default function DiagnosisFlow() {
 
                     <div key={category.id} className={styles.headingAndSubcat}>
                       {/* Return the symptom and place on body to
-                                       the screen normally and the following three */}
+                       the screen normally and the following three */}
                       <h5>{category.name}</h5>
                       {/* Add another div here to respresent the highest
-                                        occurring smyptom first.*/}
+                        occurring smyptom first.*/}
+
                       <div className={styles.subcatWrapper}>
                         <div className={styles.subcat}>Placeholder</div>
                       </div>
@@ -89,6 +101,28 @@ export default function DiagnosisFlow() {
           <h2>COULD BE RELATED TO</h2>
         </div>
         <FlowArrow />
+        {/* MAP FOR EVENT/CONFLICT */}
+        {categories
+          ? categories.map((category: Category) => {
+              if (category.name === "Event/Conflict") {
+                return (
+                  <>
+                    <div key={category.id} className={styles.headingAndSubcat}>
+                      {/* Return the symptom and place on body to
+                                       the screen normally and the following three */}
+                      <h5>{category.name}</h5>
+                      {/* Add another div here to respresent the highest
+                                        occurring smyptom first.*/}
+                      <div className={styles.subcatWrapper}>
+                        <div className={styles.subcat}>Placeholder</div>
+                      </div>
+                      <div className={styles.dummy}></div>
+                    </div>
+                  </>
+                );
+              }
+            })
+          : ""}
       </div>
     </>
   );
