@@ -1,0 +1,46 @@
+@use "../../utilties/font";
+@use "../../utilties/variables" as var;
+$line: none;
+
+.flowWrapper {
+  border: $line green;
+  padding: 1rem;
+}
+// Diagnosis Flow Heading styles.
+.topHeading {
+  @extend %largeHeroText;
+  color: var.$light-hazy-purple;
+}
+
+// Heading and subcategory container.
+.headingAndSubcat {
+  border: $line red;
+  display: flex;
+  justify-content: space-between;
+  h5 {
+    border: $line black;
+    // height: 100%;
+    // align-items: start;
+    width: 50%;
+  }
+}
+
+//Sub category wrapper and container element.
+.subcatWrapper {
+  border: solid blue;
+  padding: 0.5rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Dummy!
+.dummy {
+  border: $line orange;
+  width: 50%;
+}
+
+.subcat {
+  border: $line purple;
+}

@@ -1,0 +1,19 @@
+// Arrow styling
+.arrowWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.stem {
+  border: solid black;
+  background-color: black;
+  width: 30px;
+  height: 60px;
+}
+.triangleBottom {
+  border-top: 40px solid black;
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+}
