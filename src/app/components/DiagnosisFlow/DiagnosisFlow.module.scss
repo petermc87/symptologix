@@ -1,6 +1,6 @@
 @use "../../utilties/font";
 @use "../../utilties/variables" as var;
-$line: none;
+$line: solid;
 
 .flowWrapper {
   border: $line green;
@@ -19,8 +19,6 @@ $line: none;
   justify-content: space-between;
   h5 {
     border: $line black;
-    // height: 100%;
-    // align-items: start;
     width: 50%;
   }
 }
@@ -43,4 +41,30 @@ $line: none;
 
 .subcat {
   border: $line purple;
+}
+
+// Styling for the inLine category elements (after 'Happens')
+.happensWrapper {
+  border: $line turquoise;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.happensSubcats {
+  border: $line lightseagreen;
+  display: flex;
+  justify-content: space-between;
+}
+
+// Subheading in between arrows on the flow diagram.
+.subHeading {
+  border: $line pink;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  h2 {
+    width: 50%;
+  }
 }
