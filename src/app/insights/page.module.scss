@@ -4,6 +4,12 @@
 
 $line: none;
 
+.pageWrapper {
+  border: $line black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .pageContainer {
   border: $line green;
   display: flex;
@@ -11,6 +17,7 @@ $line: none;
   justify-content: center;
   align-items: center;
   margin-bottom: 10rem;
+  max-width: 40rem;
 }
 
 .headingText {
