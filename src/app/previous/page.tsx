@@ -14,7 +14,7 @@ import NavBar from "../components/NavBar/NavBar";
 import styles from "./page.module.scss";
 export default function PreviousLogsPage() {
   // Context for logs
-  const { setLogs } = useContext<NavBarContextTypes | any>(NavBarContext);
+  const { setLogs, logs } = useContext<NavBarContextTypes | any>(NavBarContext);
 
   // Import the user session data so that it can be passed into
   // the getLogs function for filtering by user.
@@ -63,7 +63,16 @@ export default function PreviousLogsPage() {
       <div className={styles.pageContainer} key={889}>
         <div className={styles.headingText}>Select from Previous Logs</div>
         <>
-          <LogList />
+          {logs && logs.length !== 0 ? (
+            <>
+              <LogList />
+            </>
+          ) : (
+            <div className={styles.noLogs}>
+              No logs to display yet. Please go to new logs page above to create
+              one.
+            </div>
+          )}
         </>
       </div>
       <Footer />
