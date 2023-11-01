@@ -51,7 +51,7 @@ export default function IndividualLogs() {
         // NOTE: To ensure entry.entry is only accessed when
         // it definitely is not null, perform a check. This
         // will remove any type errors.
-        // Split the sentence into words.
+        // Split the entry (which is one sentence) into words.
         if (entry !== null && entry.entry !== null) {
           const words = entry.entry.split(" ");
 

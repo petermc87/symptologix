@@ -13,6 +13,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
+import { useSession } from "next-auth/react";
 import { useContext, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import getCategories from "../../../actions/categoryRequests/getCats";
@@ -62,6 +63,20 @@ export default function Insights() {
     setLogs,
   } = useContext<NavBarContextTypes | any>(NavBarContext);
 
+  // Import the user session data so that it can be passed into
+  // the getLogs function for filtering by user.
+  const { data } = useSession<any>();
+
+  // Store in a new variable to avoid type issues.
+  let userData: any;
+  try {
+    if (data && data !== undefined) {
+      userData = data;
+    }
+  } catch (error: any) {
+    console.error(error);
+  }
+
   // Get categories, subcategories and logs here in a useEffect hook.
   // Store this in state via the NavBarContext hook.
   // TASK: Improve the time complexity of this component (currently its O(n^2)):
@@ -81,7 +96,7 @@ export default function Insights() {
         // Fetch subcategories to improve time complexity.
         const fetchedSubcats: Subcategory[] = await getSubCategories();
         setSubCategories(fetchedSubcats);
-        const fetchedLogs: Log[] = await GetLogs();
+        const fetchedLogs: Log[] = await GetLogs(userData.user.id);
         setLogs(fetchedLogs);
       } catch (error) {
         console.error(error);

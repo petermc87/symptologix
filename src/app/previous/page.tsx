@@ -1,4 +1,5 @@
 "use client";
+import { useSession } from "next-auth/react";
 import { useContext, useEffect } from "react";
 import getLogs from "../../../actions/logRequests/getLogs";
 import { Log } from "../../../typings";
@@ -15,11 +16,27 @@ export default function PreviousLogsPage() {
   // Context for logs
   const { setLogs } = useContext<NavBarContextTypes | any>(NavBarContext);
 
+  // Import the user session data so that it can be passed into
+  // the getLogs function for filtering by user.
+  const { data } = useSession<any>();
+
+  // Store in a new variable to avoid type issues.
+  let userData: any;
+  try {
+    if (data && data !== undefined) {
+      userData = data;
+    }
+  } catch (error: any) {
+    console.error(error);
+  }
+
   // Fetch logs and subcategories.
   useEffect(() => {
     const fetchLogs = async () => {
       try {
-        const fetchedLogs: Log[] | void | null = await getLogs(); // Assuming getLogs is defined elsewhere
+        const fetchedLogs: Log[] | void | null = await getLogs(
+          userData?.user.id
+        ); // Assuming getLogs is defined elsewhere
         setLogs(fetchedLogs);
       } catch (error) {
         console.error("Error fetching logs:", error);

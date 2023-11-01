@@ -1,9 +1,9 @@
 export type User = {
   id?: string | unknown;
-  name: string;
+  name?: string;
   username?: string | unknown;
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
   logs?: Log[];
 };
 
