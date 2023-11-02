@@ -1,5 +1,6 @@
 import { Category } from "@prisma/client";
 import { useContext } from "react";
+import { Subcategory } from "../../../../typings";
 import {
   NavBarContext,
   NavBarContextTypes,
@@ -10,12 +11,17 @@ import styles from "./DiagnosisFlow.module.scss";
 export default function DiagnosisFlow() {
   // Take on context for categories.
 
-  const { categories, entries, subCategories, logs } = useContext<
-    NavBarContextTypes | any
-  >(NavBarContext);
+  const {
+    categories,
+    entries,
+    subCategories,
+    logs,
+    mostOccurringState,
+    mostOccurringCategories,
+  } = useContext<NavBarContextTypes | any>(NavBarContext);
 
-  console.log(entries, subCategories, logs, categories);
-
+  console.log(mostOccurringState);
+  console.log(mostOccurringCategories);
   // Search through each subcategory in each category to find a match. The
   return (
     <>
@@ -29,7 +35,32 @@ export default function DiagnosisFlow() {
               if (
                 category.name === "Place On Body" ||
                 category.name === "Symptom"
-              )
+              ) {
+                // category.subCategories.filter((subcat) => subcat.id)
+
+                // // // // Cycle through the occurrences object.
+                if (mostOccurringState) {
+                  Object.entries(mostOccurringState).map(([key, object], i) => {
+                    // Separate and store the key(which is the name) of the object.
+                    const subcatName = Object.keys(object)[0];
+
+                    // Store the corresponding value.
+                    const value = object[subcatName];
+
+                    // console.log(key, subcatName, value);
+                    //Filter out the subcategories in the occurrences object that
+                    // match with the subcats in the category object.
+
+                    const filteredSubcats: Subcategory[] =
+                      category.subCategories.filter(
+                        (subcat: Subcategory) => subcat.id === key
+                      );
+
+                    if (filteredSubcats)
+                      console.log(category.name, filteredSubcats, value);
+                  });
+                }
+
                 return (
                   <>
                     {/* use a ternary to only the display the flow sections that are */}
@@ -44,7 +75,11 @@ export default function DiagnosisFlow() {
                         occurring smyptom first.*/}
 
                       <div className={styles.subcatWrapper}>
-                        <div className={styles.subcat}>Placeholder</div>
+                        <div className={styles.subcat}>
+                          {/* Add the category and value after it if it matches the category. */}
+
+                          {category.name}
+                        </div>
                       </div>
                       <div className={styles.dummy}></div>
                     </div>
@@ -64,6 +99,7 @@ export default function DiagnosisFlow() {
                     <FlowArrow />
                   </>
                 );
+              }
             })
           : ""}
         {/* MAP FOR INLINE ELEMENTS */}

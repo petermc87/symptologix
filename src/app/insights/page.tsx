@@ -238,26 +238,29 @@ export default function Insights() {
         setSubCategories(fetchedSubcats);
         const fetchedLogs: Log[] = await GetLogs(userData.user.id);
         setLogs(fetchedLogs);
+
+        // If the data is available, then call the occurrence function here.
+        if (
+          fetchedEntries &&
+          fetchedCategories &&
+          fetchedSubcats &&
+          fetchedLogs
+        ) {
+          handleHighestOccurrence();
+        }
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
+    // const occurrenceFunction = () => {
+    //   handleHighestOccurrence();
+    // };
 
+    // occurrenceFunction();
     return () => {};
   }, []);
-
-  // Calling the function on render.
-  useEffect(() => {
-    const occurrenceFunction = () => {
-      handleHighestOccurrence();
-    };
-
-    occurrenceFunction();
-  }, []);
-
-  console.log(mostOccurringState);
-  console.log(mostOccurringCategories);
+  console.log(entries, categories, subCategories, logs);
   return (
     <>
       <NavBar />
