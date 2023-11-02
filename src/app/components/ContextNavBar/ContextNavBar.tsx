@@ -26,6 +26,10 @@ export type NavBarContextTypes = {
   setCategories: Dispatch<SetStateAction<Category[] | undefined | null | void>>;
   entries: Entry[] | undefined | null | void;
   setEntries: Dispatch<SetStateAction<Entry[] | undefined | null | void>>;
+  mostOccurringState: object | null;
+  setMostOccurringState: Dispatch<SetStateAction<object | null>>;
+  mostOccurringCategories: Array<string> | null;
+  setMostOccurringCategories: Dispatch<SetStateAction<Array<string> | null>>;
 };
 
 export const NavBarContext = createContext<NavBarContextTypes | null>(null);
@@ -66,6 +70,14 @@ export default function NavBarProvider(props: any) {
   const [entries, setEntries] = useState<Entry[] | undefined | null | void>(
     null
   );
+  // Store the flow chart occurrences
+  const [mostOccurringState, setMostOccurringState] = useState<object | null>(
+    null
+  );
+
+  // Store the filtered categories
+  const [mostOccurringCategories, setMostOccurringCategories] =
+    useState<Array<string> | null>(null);
 
   return (
     <NavBarContext.Provider
@@ -88,6 +100,10 @@ export default function NavBarProvider(props: any) {
         setCategories,
         entries,
         setEntries,
+        mostOccurringState,
+        setMostOccurringState,
+        mostOccurringCategories,
+        setMostOccurringCategories,
       }}
     >
       {props.children}

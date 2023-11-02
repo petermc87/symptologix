@@ -61,6 +61,11 @@ export default function Insights() {
     entries,
     setEntries,
     setLogs,
+    logs,
+    mostOccurringState,
+    setMostOccurringState,
+    mostOccurringCategories,
+    setMostOccurringCategories,
   } = useContext<NavBarContextTypes | any>(NavBarContext);
 
   // Import the user session data so that it can be passed into
@@ -76,6 +81,141 @@ export default function Insights() {
   } catch (error: any) {
     console.error(error);
   }
+
+  // Cycle through each of symptom subcategories in entries and see how
+  // many times each appears. Store them in an object.
+
+  // Find the logs matching the highest occurring subcategory
+  // within the entry sub array.
+
+  // See what other subcats appear the most/category.
+
+  /// --> OPTIMIZE THIS FUNCITON!! <-- ///
+  // Go to the last answer: https://chat.openai.com/c/b4d63c4b-95d7-4d12-b76c-f7ad6f3f4836
+  const handleHighestOccurrence = () => {
+    // For storing all the subcat occurrences
+    let occurrences: { [key: string]: any } = {};
+
+    // --> 1.  Get the category named symptom <-- //
+    let symptom: Category;
+
+    if (categories) {
+      symptom = categories.filter(
+        (category: Category) => category.name === "Symptom"
+      );
+
+      // --> 2. Cycle through each subcat within the Symptom cat. <-- //
+      symptom[0].subCategories.map((subcat: Subcategory) => {
+        if (entries) {
+          // --> 3. Filter entries that match the subcatIds in Symptom category and create an occurrance for each. <-- //
+          const filteredEntries = entries.filter(
+            (entry: Entry) => entry.subCategoryId === subcat.id
+          );
+
+          // Cycle through each filtered entry and add to occurences object
+          filteredEntries.map((entry: Entry) => {
+            // Make sure we are matching up the subcats before adding
+            // to the occurrences object.
+            if (entry.subCategoryId === subcat.id) {
+              // Adding a 1 to the number of subcats if there
+              // already exisits one.
+              if (occurrences[subcat.id]) {
+                occurrences[subcat.id]++;
+              } else {
+                // If this does not already exist after looping, make
+                // it just one.
+                occurrences[subcat.id] = 1;
+              }
+            }
+          });
+        }
+      });
+    }
+
+    // --> 4. Sort the occurrences in descending order. <-- //
+    const sortedObject = Object.keys(occurrences)
+      .sort((a, b) => occurrences[b] - occurrences[a])
+      .reduce((obj, key: string) => {
+        // Make the current sorted key:value by equal to
+        // to the key:value in the occurrences object.
+        obj[key] = occurrences[key];
+        return obj;
+      }, {});
+
+    let filteredLogs: Log[] = [];
+
+    // --> 5. Find the logs that have the highest occurring symtpom SubCat in the Entries. <-- //
+    Object.entries(sortedObject).map(([key, value], i) => {
+      // console.log(key, value)
+      // Only the top 2
+      if (i <= 0) {
+        // Filter the logs.
+        if (logs) {
+          filteredLogs = logs.filter((log: Log | undefined) => {
+            // We use the .some to check if the
+            // array of entries includes the subcat.
+            if (log && log.entries) {
+              return log.entries.some((entry) => entry.subCategoryId === key);
+            }
+          });
+        }
+      }
+    });
+
+    // --> 6. Put all the entries relative to the most occuring symptom into an array. <-- //
+    let filteredEntriesForMostOccurring: Entry[] = [];
+    // Cycle through each log return the id of each.
+    filteredLogs.map((log: Log) => {
+      if (log && log.entries) {
+        filteredEntriesForMostOccurring.push(log.entries);
+      }
+    });
+    // Create another object of the most occurring entries connected to
+    // that symptom.
+    let mostOccurring: { [key: string]: any } = {};
+
+    // --> 7. Cycle through each filtered entry and add to occurences object <-- //
+
+    // TASK:  TO OMPTIMIZE, USE REDUCE INSTEAD OF AN ORIGINAL MAPPING
+    // FUNCTION
+    // SO THAT ALL ENTRIES ARE CONSIDERED IN ONE PASS.
+    // https://chat.openai.com/c/4ccd89cf-0447-4daa-acbb-29d3596b42f1
+
+    filteredEntriesForMostOccurring.map((entries: any) => {
+      entries.map((entry: Entry) => {
+        if (mostOccurring[entry.subCategoryId]) {
+          mostOccurring[entry.subCategoryId]++;
+        } else {
+          // If this does not already exist after looping, make
+          // it just one.
+          mostOccurring[entry.subCategoryId] = 1;
+        }
+      });
+    });
+
+    let separateCategories: Array<string> = [];
+
+    // Create an updated most occurring object.
+    let updatedMostOccurring: { [key: string]: any } = {};
+    if (subCategories) {
+      // --> 8. Find out if it is in the subcats.
+      subCategories.map((subcat: Subcategory) => {
+        if (entries) {
+          Object.entries(mostOccurring).map(([key, value], i) => {
+            if (key === subcat.id) {
+              // Save each element in the object as: subcat.id: { subcat.name:value }
+              updatedMostOccurring[subcat.id] = {
+                [subcat.name]: value,
+              };
+              separateCategories.push(subcat.categoryId);
+            }
+          });
+        }
+      });
+      setMostOccurringState(updatedMostOccurring);
+      setMostOccurringCategories(separateCategories);
+    }
+  };
 
   // Get categories, subcategories and logs here in a useEffect hook.
   // Store this in state via the NavBarContext hook.
@@ -107,6 +247,17 @@ export default function Insights() {
     return () => {};
   }, []);
 
+  // Calling the function on render.
+  useEffect(() => {
+    const occurrenceFunction = () => {
+      handleHighestOccurrence();
+    };
+
+    occurrenceFunction();
+  }, []);
+
+  console.log(mostOccurringState);
+  console.log(mostOccurringCategories);
   return (
     <>
       <NavBar />
