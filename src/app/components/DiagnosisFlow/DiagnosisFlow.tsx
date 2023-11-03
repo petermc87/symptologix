@@ -1,5 +1,5 @@
 import { Category } from "@prisma/client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   NavBarContext,
   NavBarContextTypes,
@@ -20,22 +20,44 @@ export default function DiagnosisFlow() {
   } = useContext<NavBarContextTypes | any>(NavBarContext);
 
   // Holding symptom and place on body state
-  const [symptomSubcat, setSymptomSubcat] = useState<object | null>(null);
+  const [symptomSubcat, setSymptomSubcat] = useState<Array<string> | null>(
+    null
+  );
 
-  console.log(mostOccurringState);
+  useEffect(() => {
+    // Check if mostOccurringState and categories are available
+    if (mostOccurringState && categories) {
+      // Define variables for subcatName, value, and categoryId
+      let subcatName: string | null = null;
+      let value: number = 0;
+      let categoryId: string | null = null;
 
-  let highestValue: number = 0;
-  // Search through each subcategory in each category to find a match. The
-  // The category id, name and occurance are stored here to be
-  // displayed.
+      // Iterate through mostOccurringState
+      Object.entries(mostOccurringState).forEach(([key, object]) => {
+        const subcat = Object.keys(object)[0];
+        const subcatValue = object[subcat];
 
-  let subcatName: string;
-  let value: number;
-  let categoryId: string;
+        // Check if the subcategory matches the category and is a "Symptom"
+        if (
+          categories.some(
+            (category) => category.id === key && category.name === "Symptom"
+          )
+        ) {
+          // Check if the value is greater than the current value
+          if (subcatValue > value) {
+            subcatName = subcat;
+            value = subcatValue;
+            categoryId = key;
+          }
+        }
+      });
 
-  let symptomObject: object[];
+      // Set the symptomSubcat with the found value
+      setSymptomSubcat(subcatName);
+    }
+  }, [mostOccurringState, categories]);
 
-  // console.log(symptomObject);
+  console.log(symptomSubcat);
   return (
     <>
       <div className={styles.flowWrapper}>
@@ -50,19 +72,39 @@ export default function DiagnosisFlow() {
                   filteredCategory.name === "Place On Body"
               )
               .map((category: Category, i: number) => {
+                // // console.log(category);
+
+                // //Cycle through the occurrences object.
+                // if (mostOccurringState) {
+                //   Object.entries(mostOccurringState).map(([key, object], i) => {
+                //     // Separate and store the key(which is the name) of the object.
+                //     subcatName = Object.keys(object)[0];
+                //     value = object[subcatName];
+                //     categoryId = key;
+
+                //     // console.log(subcatName, category.id, categoryId);
+
+                //     // If the ids match the the category.name is 'Symptom', then
+                //     // save the variable.
+                //     if (
+                //       category.id === categoryId &&
+                //       category.name === "Symptom"
+                //     ) {
+                //       // console.log("sdfgsdfgsdfg");
+                //       // console.log(category.name, subcatName);
+                //       return setSymptomSubcat(subcatName);
+                //     }
+                //   });
+                // }
+
                 return (
                   <>
                     <div key={category.id} className={styles.headingAndSubcat}>
-                      {/* Return the symptom and place on body to
-                 the screen normally and the following three */}
                       <h5>{category.name}</h5>
-                      {/* Add another div here to respresent the highest
-                  occurring smyptom first.*/}
-
                       <div className={styles.subcatWrapper}>
                         <div className={styles.subcat}>
                           {/* Add the category and value after it if it matches the category. */}
-                          {symptomObject}
+                          {symptomSubcat}
                         </div>
                       </div>
                       <div className={styles.dummy}></div>
