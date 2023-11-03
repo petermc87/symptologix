@@ -51,11 +51,12 @@ export default function MostOccurring() {
   // Retrieve the user data so that we can match the id up with the entry.
   const { data } = useSession<boolean>();
 
-  let userId: string;
+  // console.log(data);
+  // let userId: string;
 
-  if (data && data.user.id === "string") {
-    userId = data.user.id;
-  }
+  // if (data && data.user.id === "string") {
+  //   userId = data.user.id;
+  // }
 
   // State for holding the number of most occurring to display
   const [numberToDisplay, setNumberToDisplay] = useState<number>(5);
@@ -93,14 +94,18 @@ export default function MostOccurring() {
     entries.map((entry: Entry, i: number) => {
       // 2. Stores the index of the subcat in the subCats array by matching the id of the
       //  subCategoryId in the current entry.
-      const subCategoryIndex = subCategories.findIndex(
-        (subcat: Subcategory) =>
-          subcat.id === entry.subCategoryId && entry.userId === userId
-      );
 
-      // 3. If the index is not a negative number, then interate up 1 the number at the subCategoryIndex.
-      if (subCategoryIndex !== -1) {
-        occurrences[subCategoryIndex]++;
+      let subCategoryIndex: number;
+      if (entry.userId === data?.user.id) {
+        // console.log("sdfsdfsdfsdf");
+        subCategoryIndex = subCategories.findIndex(
+          (subcat: Subcategory) => subcat.id === entry.subCategoryId
+        );
+
+        // 3. If the index is not a negative number, then interate up 1 the number at the subCategoryIndex.
+        if (subCategoryIndex !== -1) {
+          occurrences[subCategoryIndex]++;
+        }
       }
     });
   }
@@ -149,7 +154,6 @@ export default function MostOccurring() {
   // Arrow sizing.
   const arrowSize = 24;
 
-  console.log(sortedOccurrences);
   return (
     <>
       {/* Add bar chart from chartjs and input data based from the most */}

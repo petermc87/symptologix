@@ -53,6 +53,19 @@ Chart.overrides.doughnut.color = "#000";
 Chart.defaults.color = "#000";
 Chart.overrides.doughnut.color = "#000";
 
+// Declare types for the doughnut data so that the type error
+// for cutout is resolved.
+type CustomChartData = {
+  datasets: {
+    label: string;
+    data: number[];
+    backgroundColor: string[];
+    borderColor: string[];
+    borderWidth: number;
+    cutout: string; // Add the 'cutout' property here
+  }[];
+};
+
 export default function Insights() {
   // Consume context for Logs.
   const {
@@ -202,8 +215,8 @@ export default function Insights() {
         if (entries) {
           Object.entries(mostOccurring).map(([key, value], i) => {
             if (key === subcat.id) {
-              // Save each element in the object as: subcat.id: { subcat.name:value }
-              updatedMostOccurring[subcat.id] = {
+              // console.log(subcat.categoryId, subcat.name);
+              updatedMostOccurring[subcat.categoryId] = {
                 [subcat.name]: value,
               };
               separateCategories.push(subcat.categoryId);
@@ -297,7 +310,11 @@ export default function Insights() {
                     );
                   });
 
-                  let data: ChartData<"doughnut", number[], unknown>;
+                  // Dataset for the doughnut.
+                  // NOTE: We are also adding types for the 'dataset', which
+                  // is declared above.
+                  let data: ChartData<"doughnut", number[], unknown> &
+                    CustomChartData;
 
                   if (occurances.some((item) => item !== 0)) {
                     data = {
@@ -333,7 +350,8 @@ export default function Insights() {
                         },
                       ],
                     };
-                    // Handle the case when there is no data.
+                    // Handle the case when there is no data. Make the
+                    // data objects equal to blank arrays.
                   } else {
                     data = {
                       labels: [],
@@ -342,7 +360,7 @@ export default function Insights() {
                     // Generating message to the screen only once.
                     if (i === 0) {
                       return (
-                        <NoDataMessage data="No data to display yet, please created a log by going to the New Log page." />
+                        <NoDataMessage data="You do not have any data to show yet. Please go to new logs page to create a log." />
                       );
                     } else {
                       return "";
@@ -377,108 +395,3 @@ export default function Insights() {
     </>
   );
 }
-
-//// ->>>> UPDATED CODE <<<<<- ///
-// return (
-//   <>
-//     <NavBar />
-//     <div className={styles.pageWrapper}>
-//       <div className={styles.pageContainer} key={889}>
-//         <div className={styles.headingText}>Your Symptom Story</div>
-//         <>
-//           {/* Display the name of each category here. For each category,
-//         render a doughnut chart.
-//         */}
-//           {categories && entries ? (
-//             categories.map((category: Category) => {
-//               // Type declaration for subcatgories
-//               const filteretedSubCats: Subcategory[] | undefined =
-//                 category.subCategories;
-
-//               // Filtered subcats are mapped over.
-//               filteretedSubCats?.map((subcat) => {
-//                 // NOTE: The # of occurances of subcats in the entries is added
-//                 // to an array so it can be displayed on a chart. We loop over using
-//                 // a map, filter out the matching entries, and use .length to count
-//                 // the number.
-//                 occurances.push(
-//                   // The subcats are then matched up
-//                   // with the entries using a filter method.
-//                   entries.filter(
-//                     (entry: Entry) =>
-//                       // The filtering is applied to the entry that has
-//                       // a matching subCategoryId key:value. Also, so that
-//                       // each doughnut chart is segregated by category, match the
-//                       // category id with the categoryId key:value in each
-//                       // subcat.
-//                       // NOTE: Check the userId in the entries matches the user.
-//                       entry.subCategoryId === subcat.id &&
-//                       subcat.categoryId === category.id
-//                     // entry.userId === userId
-//                   ).length
-//                 );
-//               });
-//               const data = {
-//                 // Set the labels as the subcategory names.
-//                 // Filter out the categrories here.
-//                 labels: category
-//                   ? // NOTE: Add an exlamantion point at to end to tell ts the Subcategories array is
-//                     // definitely defined.
-//                     // NOTE: Make sure to make the else part of the ternary an empty array
-//                     // since that is the data type for labels and not string.
-//                     filteretedSubCats!.map(
-//                       (subCategory: Subcategory) => subCategory.name
-//                     )
-//                   : [],
-
-//                 datasets: [
-//                   {
-//                     label: "# of occurances",
-//                     data: occurances,
-//                     backgroundColor: [
-//                       "rgba(147, 145, 255, 1)",
-//                       "rgba(105, 102, 212, 1)",
-//                       "rgba(0, 7, 89, 1)",
-//                     ],
-//                     borderColor: [
-//                       "rgba(147, 145, 255, 1)",
-//                       "rgba(105, 102, 212, 1)",
-//                       "rgba(0, 7, 89, 1)",
-//                     ],
-//                     borderWidth: 1,
-//                     cutout: "40%",
-//                   },
-//                 ],
-//               };
-//               return (
-//                 <>
-//                   <div className={styles.categoryName}>{category.name}</div>
-//                   <Doughnut key={category.id} data={data} />
-//                 </>
-//               );
-//             })
-//           ) : (
-//             <NoDataMessage
-//               data="You do not have any data to show yet. Please go to new logs page
-//             to create a log."
-//             />
-//           )}
-//         </>
-//         <br />
-//         <br />
-
-//         <div className={styles.lineWrapper}>
-//           <DottedLine />
-//         </div>
-//         <MostOccurring />
-//         <div className={styles.lineWrapper}>
-//           <DottedLine />
-//         </div>
-//         <IndividualLogs />
-//         <SolidLine />
-//         <DiagnosisFlow />
-//       </div>
-//     </div>
-//     <Footer />
-//   </>
-// );

@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import { useContext, useEffect, useState } from "react";
 import { ButtonGroup, Dropdown } from "react-bootstrap";
 import { Entry, Subcategory } from "../../../../typings";
@@ -6,13 +7,15 @@ import {
   NavBarContextTypes,
 } from "../ContextNavBar/ContextNavBar";
 import styles from "./IndividualLogs.module.scss";
-
 export default function IndividualLogs() {
   // Add in the subcategory data through context so that
   // it can be consumed here.
   const { subCategories, entries } = useContext<NavBarContextTypes | any>(
     NavBarContext
   );
+
+  // Retrieve user session data.
+  const { data } = useSession<boolean>();
 
   // Filtering words list.
   const filterWords = [
@@ -76,8 +79,10 @@ export default function IndividualLogs() {
   // Filter out entries matching the id of the selected subcat.
   const handleFilterEntries = (subCat: Subcategory) => {
     setSeletedSubCat(subCat);
+
     const filtereEntries = entries.filter(
-      (entry: Entry) => entry.subCategoryId === subCat.id
+      (entry: Entry) =>
+        entry.subCategoryId === subCat.id && entry.userId == data?.user.id
     );
     setSelectedEntries(filtereEntries);
     handleFilterWords();
