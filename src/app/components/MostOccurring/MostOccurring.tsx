@@ -1,3 +1,4 @@
+"use client";
 import { Entry } from "@prisma/client";
 import {
   ArcElement,
@@ -12,6 +13,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
+import { useSession } from "next-auth/react";
 import { useContext, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { Subcategory } from "../../../../typings";
@@ -19,8 +21,8 @@ import {
   NavBarContext,
   NavBarContextTypes,
 } from "../ContextNavBar/ContextNavBar";
+import NoDataMessage from "../NoDataMessage/NoDataMessage";
 import styles from "./MostOccurring.module.scss";
-
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -45,6 +47,15 @@ export default function MostOccurring() {
   const { entries, subCategories } = useContext<NavBarContextTypes | any>(
     NavBarContext
   );
+
+  // Retrieve the user data so that we can match the id up with the entry.
+  const { data } = useSession<boolean>();
+
+  let userId: string;
+
+  if (data && data.user.id === "string") {
+    userId = data.user.id;
+  }
 
   // State for holding the number of most occurring to display
   const [numberToDisplay, setNumberToDisplay] = useState<number>(5);
@@ -83,7 +94,8 @@ export default function MostOccurring() {
       // 2. Stores the index of the subcat in the subCats array by matching the id of the
       //  subCategoryId in the current entry.
       const subCategoryIndex = subCategories.findIndex(
-        (subcat: Subcategory) => subcat.id === entry.subCategoryId
+        (subcat: Subcategory) =>
+          subcat.id === entry.subCategoryId && entry.userId === userId
       );
 
       // 3. If the index is not a negative number, then interate up 1 the number at the subCategoryIndex.
@@ -136,63 +148,71 @@ export default function MostOccurring() {
 
   // Arrow sizing.
   const arrowSize = 24;
+
+  console.log(sortedOccurrences);
   return (
     <>
       {/* Add bar chart from chartjs and input data based from the most */}
       {/* occurring subcategory */}
       <div className={styles.mostOccurring}>Most Occurring</div>
-      <div className={styles.chartMetaWrapper}>
-        <div className={styles.subHeading}>
-          Top {numberToDisplay} Subcategories
-        </div>
-        <div className={styles.iteration}>
-          <div className={styles.number}>{numberToDisplay}</div>
-          <div className={styles.arrowsWrapper}>
-            <div
-              className={styles.arrow}
-              onClick={() => {
-                if (numberToDisplay < 7) {
-                  add();
-                }
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={arrowSize}
-                height={arrowSize}
-                fill="#9391ff"
-                className="bi bi-caret-up-square-fill"
-                viewBox="0 0 16 16"
-              >
-                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 9h8a.5.5 0 0 0 .374-.832l-4-4.5a.5.5 0 0 0-.748 0l-4 4.5A.5.5 0 0 0 4 11z" />
-              </svg>
+      {/* Put a tenerary here to check if there is data present. */}
+      {sortedOccurrences.some((item) => item.value > 0) ? (
+        <>
+          <div className={styles.chartMetaWrapper}>
+            <div className={styles.subHeading}>
+              Top {numberToDisplay} Subcategories
             </div>
-            <div
-              className={styles.arrow}
-              onClick={() => {
-                if (numberToDisplay > 2) {
-                  subtract();
-                }
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={arrowSize}
-                height={arrowSize}
-                fill="#9391ff"
-                className="bi bi-caret-down-square-fill"
-                viewBox="0 0 16 16"
-              >
-                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 4a.5.5 0 0 0-.374.832l4 4.5a.5.5 0 0 0 .748 0l4-4.5A.5.5 0 0 0 12 6H4z" />
-              </svg>
+            <div className={styles.iteration}>
+              <div className={styles.number}>{numberToDisplay}</div>
+              <div className={styles.arrowsWrapper}>
+                <div
+                  className={styles.arrow}
+                  onClick={() => {
+                    if (numberToDisplay < 7) {
+                      add();
+                    }
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={arrowSize}
+                    height={arrowSize}
+                    fill="#9391ff"
+                    className="bi bi-caret-up-square-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 9h8a.5.5 0 0 0 .374-.832l-4-4.5a.5.5 0 0 0-.748 0l-4 4.5A.5.5 0 0 0 4 11z" />
+                  </svg>
+                </div>
+                <div
+                  className={styles.arrow}
+                  onClick={() => {
+                    if (numberToDisplay > 2) {
+                      subtract();
+                    }
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={arrowSize}
+                    height={arrowSize}
+                    fill="#9391ff"
+                    className="bi bi-caret-down-square-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 4a.5.5 0 0 0-.374.832l4 4.5a.5.5 0 0 0 .748 0l4-4.5A.5.5 0 0 0 12 6H4z" />
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Render the most occurring subcategories.  So here we consume the subcategories */}
-      {/* context. */}
-      <Bar data={barData} options={options} />
+          {/* Render the most occurring subcategories.  So here we consume the subcategories */}
+          {/* context. */}
+          <Bar data={barData} options={options} />
+        </>
+      ) : (
+        <NoDataMessage data="You do not have any data to show yet. Please go to new logs page to create a log." />
+      )}
     </>
   );
 }

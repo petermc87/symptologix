@@ -5,6 +5,7 @@ import {
   BarElement,
   CategoryScale,
   Chart,
+  ChartData,
   Chart as ChartJS,
   Legend,
   LineElement,
@@ -31,6 +32,7 @@ import Footer from "../components/Footer/Footer";
 import IndividualLogs from "../components/IndividualLogs/IndividualLogs";
 import MostOccurring from "../components/MostOccurring/MostOccurring";
 import NavBar from "../components/NavBar/NavBar";
+import NoDataMessage from "../components/NoDataMessage/NoDataMessage";
 import SolidLine from "../components/SolidLine/SolidLine";
 import styles from "./page.module.scss";
 // Register ChartJS elements.
@@ -70,16 +72,13 @@ export default function Insights() {
 
   // Import the user session data so that it can be passed into
   // the getLogs function for filtering by user.
-  const { data } = useSession<any>();
+  const { data } = useSession<boolean>();
 
   // Store in a new variable to avoid type issues.
-  let userData: any;
-  try {
-    if (data && data !== undefined) {
-      userData = data;
-    }
-  } catch (error: any) {
-    console.error(error);
+  let userId: string;
+
+  if (data && typeof data.user.id === "string") {
+    userId = data.user.id;
   }
 
   // Cycle through each of symptom subcategories in entries and see how
@@ -236,7 +235,7 @@ export default function Insights() {
         // Fetch subcategories to improve time complexity.
         const fetchedSubcats: Subcategory[] = await getSubCategories();
         setSubCategories(fetchedSubcats);
-        const fetchedLogs: Log[] = await GetLogs(userData.user.id);
+        const fetchedLogs: Log[] = await GetLogs(userId);
         setLogs(fetchedLogs);
 
         // If the data is available, then call the occurrence function here.
@@ -253,17 +252,10 @@ export default function Insights() {
       }
     };
     fetchData();
-    // const occurrenceFunction = () => {
-    //   handleHighestOccurrence();
-    // };
-
-    // occurrenceFunction();
     return () => {};
   }, []);
-  console.log(entries, categories, subCategories, logs);
+  // console.log(entries, categories, subCategories, logs);
 
-  // Storing the occurances in an array to be read.
-  let occurances: Array<number> = [];
   return (
     <>
       <NavBar />
@@ -274,82 +266,97 @@ export default function Insights() {
             {/* Display the name of each category here. For each category,
           render a doughnut chart.
           */}
-            {categories &&
-            entries &&
-            occurances.some((element) => element !== 0) ? (
-              categories.map((category: Category) => {
-                // Type declaration for subcatgories
-                const filteretedSubCats: Subcategory[] | undefined =
-                  category.subCategories;
+            {categories && entries
+              ? categories.map((category: Category, i: number) => {
+                  // Storing the occurances in an array to be read.
+                  let occurances: Array<number> = [];
+                  // Type declaration for subcatgories
+                  const filteretedSubCats: Subcategory[] | undefined =
+                    category.subCategories;
 
-                // Filtered subcats are mapped over.
-                filteretedSubCats?.map((subcat) => {
-                  // NOTE: The # of occurances of subcats in the entries is added
-                  // to an array so it can be displayed on a chart. We loop over using
-                  // a map, filter out the matching entries, and use .length to count
-                  // the number.
-                  occurances.push(
-                    // The subcats are then matched up
-                    // with the entries using a filter method.
-                    entries.filter(
-                      (entry: Entry) =>
-                        // The filtering is applied to the entry that has
-                        // a matching subCategoryId key:value. Also, so that
-                        // each doughnut chart is segregated by category, match the
-                        // category id with the categoryId key:value in each
-                        // subcat.
-                        // NOTE: Check the userId in the entries matches the user.
-                        entry.subCategoryId === subcat.id &&
-                        subcat.categoryId === category.id &&
-                        entry.userId === userData.user.id
-                    ).length
+                  // Filtered subcats are mapped over.
+                  filteretedSubCats?.map((subcat) => {
+                    // NOTE: The # of occurances of subcats in the entries is added
+                    // to an array so it can be displayed on a chart. We loop over using
+                    // a map, filter out the matching entries, and use .length to count
+                    // the number.
+                    occurances.push(
+                      // The subcats are then matched up
+                      // with the entries using a filter method.
+                      entries.filter(
+                        (entry: Entry) =>
+                          // The filtering is applied to the entry that has
+                          // a matching subCategoryId key:value. Also, so that
+                          // each doughnut chart is segregated by category, match the
+                          // category id with the categoryId key:value in each
+                          // subcat.
+                          entry.subCategoryId === subcat.id &&
+                          subcat.categoryId === category.id &&
+                          entry.userId === userId
+                      ).length
+                    );
+                  });
+
+                  let data: ChartData<"doughnut", number[], unknown>;
+
+                  if (occurances.some((item) => item !== 0)) {
+                    data = {
+                      // Set the labels as the subcategory names.
+                      // Filter out the categrories here.
+                      labels:
+                        category && filteretedSubCats
+                          ? // NOTE: Add an exlamantion point at to end to tell ts the Subcategories array is
+                            // definitely defined.
+                            // NOTE: Make sure to make the else part of the ternary an empty array
+                            // since that is the data type for labels and not string.
+                            filteretedSubCats.map(
+                              (subCategory: Subcategory) => subCategory.name
+                            )
+                          : [],
+
+                      datasets: [
+                        {
+                          label: "# of occurances",
+                          data: occurances,
+                          backgroundColor: [
+                            "rgba(147, 145, 255, 1)",
+                            "rgba(105, 102, 212, 1)",
+                            "rgba(0, 7, 89, 1)",
+                          ],
+                          borderColor: [
+                            "rgba(147, 145, 255, 1)",
+                            "rgba(105, 102, 212, 1)",
+                            "rgba(0, 7, 89, 1)",
+                          ],
+                          borderWidth: 1,
+                          cutout: "40%",
+                        },
+                      ],
+                    };
+                    // Handle the case when there is no data.
+                  } else {
+                    data = {
+                      labels: [],
+                      datasets: [],
+                    };
+                    // Generating message to the screen only once.
+                    if (i === 0) {
+                      return (
+                        <NoDataMessage data="No data to display yet, please created a log by going to the New Log page." />
+                      );
+                    } else {
+                      return "";
+                    }
+                  }
+
+                  return (
+                    <>
+                      <div className={styles.categoryName}>{category.name}</div>
+                      <Doughnut data={data} />
+                    </>
                   );
-                });
-                const data = {
-                  // Set the labels as the subcategory names.
-                  // Filter out the categrories here.
-                  labels: category
-                    ? // NOTE: Add an exlamantion point at to end to tell ts the Subcategories array is
-                      // definitely defined.
-                      // NOTE: Make sure to make the else part of the ternary an empty array
-                      // since that is the data type for labels and not string.
-                      filteretedSubCats!.map(
-                        (subCategory: Subcategory) => subCategory.name
-                      )
-                    : [],
-
-                  datasets: [
-                    {
-                      label: "# of occurances",
-                      data: occurances,
-                      backgroundColor: [
-                        "rgba(147, 145, 255, 1)",
-                        "rgba(105, 102, 212, 1)",
-                        "rgba(0, 7, 89, 1)",
-                      ],
-                      borderColor: [
-                        "rgba(147, 145, 255, 1)",
-                        "rgba(105, 102, 212, 1)",
-                        "rgba(0, 7, 89, 1)",
-                      ],
-                      borderWidth: 1,
-                      cutout: "40%",
-                    },
-                  ],
-                };
-                return (
-                  <>
-                    <div className={styles.categoryName}>{category.name}</div>
-                    <Doughnut key={category.id} data={data} />
-                  </>
-                );
-              })
-            ) : (
-              <div>
-                You do not have any data to show yet. Please go to new logs page
-                to create a log.
-              </div>
-            )}
+                })
+              : ""}
           </>
           <br />
           <br />
@@ -370,3 +377,108 @@ export default function Insights() {
     </>
   );
 }
+
+//// ->>>> UPDATED CODE <<<<<- ///
+// return (
+//   <>
+//     <NavBar />
+//     <div className={styles.pageWrapper}>
+//       <div className={styles.pageContainer} key={889}>
+//         <div className={styles.headingText}>Your Symptom Story</div>
+//         <>
+//           {/* Display the name of each category here. For each category,
+//         render a doughnut chart.
+//         */}
+//           {categories && entries ? (
+//             categories.map((category: Category) => {
+//               // Type declaration for subcatgories
+//               const filteretedSubCats: Subcategory[] | undefined =
+//                 category.subCategories;
+
+//               // Filtered subcats are mapped over.
+//               filteretedSubCats?.map((subcat) => {
+//                 // NOTE: The # of occurances of subcats in the entries is added
+//                 // to an array so it can be displayed on a chart. We loop over using
+//                 // a map, filter out the matching entries, and use .length to count
+//                 // the number.
+//                 occurances.push(
+//                   // The subcats are then matched up
+//                   // with the entries using a filter method.
+//                   entries.filter(
+//                     (entry: Entry) =>
+//                       // The filtering is applied to the entry that has
+//                       // a matching subCategoryId key:value. Also, so that
+//                       // each doughnut chart is segregated by category, match the
+//                       // category id with the categoryId key:value in each
+//                       // subcat.
+//                       // NOTE: Check the userId in the entries matches the user.
+//                       entry.subCategoryId === subcat.id &&
+//                       subcat.categoryId === category.id
+//                     // entry.userId === userId
+//                   ).length
+//                 );
+//               });
+//               const data = {
+//                 // Set the labels as the subcategory names.
+//                 // Filter out the categrories here.
+//                 labels: category
+//                   ? // NOTE: Add an exlamantion point at to end to tell ts the Subcategories array is
+//                     // definitely defined.
+//                     // NOTE: Make sure to make the else part of the ternary an empty array
+//                     // since that is the data type for labels and not string.
+//                     filteretedSubCats!.map(
+//                       (subCategory: Subcategory) => subCategory.name
+//                     )
+//                   : [],
+
+//                 datasets: [
+//                   {
+//                     label: "# of occurances",
+//                     data: occurances,
+//                     backgroundColor: [
+//                       "rgba(147, 145, 255, 1)",
+//                       "rgba(105, 102, 212, 1)",
+//                       "rgba(0, 7, 89, 1)",
+//                     ],
+//                     borderColor: [
+//                       "rgba(147, 145, 255, 1)",
+//                       "rgba(105, 102, 212, 1)",
+//                       "rgba(0, 7, 89, 1)",
+//                     ],
+//                     borderWidth: 1,
+//                     cutout: "40%",
+//                   },
+//                 ],
+//               };
+//               return (
+//                 <>
+//                   <div className={styles.categoryName}>{category.name}</div>
+//                   <Doughnut key={category.id} data={data} />
+//                 </>
+//               );
+//             })
+//           ) : (
+//             <NoDataMessage
+//               data="You do not have any data to show yet. Please go to new logs page
+//             to create a log."
+//             />
+//           )}
+//         </>
+//         <br />
+//         <br />
+
+//         <div className={styles.lineWrapper}>
+//           <DottedLine />
+//         </div>
+//         <MostOccurring />
+//         <div className={styles.lineWrapper}>
+//           <DottedLine />
+//         </div>
+//         <IndividualLogs />
+//         <SolidLine />
+//         <DiagnosisFlow />
+//       </div>
+//     </div>
+//     <Footer />
+//   </>
+// );

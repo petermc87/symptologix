@@ -73,9 +73,6 @@ export default function PreviousLogsPage() {
               data="No logs to display yet. Please go to new logs page above to create
             one."
             />
-            // <div className={styles.noLogs}>
-
-            // </div>
           )}
         </>
       </div>
