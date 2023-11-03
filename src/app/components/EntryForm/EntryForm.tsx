@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import { FormEvent, useContext } from "react";
 import { Button, Form } from "react-bootstrap";
 import submitEntry from "../../../../actions/entryRequests/submitEntry";
@@ -7,7 +8,6 @@ import {
 } from "../ContextNavBar/ContextNavBar";
 import DottedLine from "../DottedLine/DottedLine";
 import styles from "./EntryForm.module.scss";
-
 // Types for the user object.
 type EntryFormTypes = {
   selectedSubCat: any;
@@ -18,6 +18,19 @@ export default function EntryForm({ selectedSubCat }: EntryFormTypes) {
   const { currentLog, setCurrentLog } = useContext<NavBarContextTypes | any>(
     NavBarContext
   );
+
+  // Take in the user session so that the id can be passed in to the backend
+  // for addition to the log entry.
+  const { data } = useSession<boolean>();
+
+  // console.log();
+
+  let userId: string;
+
+  // Type checking the user.id is a string before assigning it.
+  if (data && typeof data.user.id === "string") {
+    userId = data.user.id;
+  }
 
   // We take in the current subcat and and the current log in progress setter.
   // We perform a submission to Entry, then an get request for the current log in
@@ -36,6 +49,7 @@ export default function EntryForm({ selectedSubCat }: EntryFormTypes) {
           selectedSubCat,
           inputQuery,
           currentLog,
+          userId,
         });
         // Add the setter function here. The returned value will be the Log object which can be set here.
         // NOTE: This is now changed to a a useContext state varaibles.

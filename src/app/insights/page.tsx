@@ -261,6 +261,9 @@ export default function Insights() {
     return () => {};
   }, []);
   console.log(entries, categories, subCategories, logs);
+
+  // Storing the occurances in an array to be read.
+  let occurances: Array<number> = [];
   return (
     <>
       <NavBar />
@@ -271,75 +274,82 @@ export default function Insights() {
             {/* Display the name of each category here. For each category,
           render a doughnut chart.
           */}
-            {categories && entries
-              ? categories.map((category: Category) => {
-                  // Storing the occurances in an array to be read.
-                  let occurances: Array<string> = [];
-                  // Type declaration for subcatgories
-                  const filteretedSubCats: Subcategory[] | undefined =
-                    category.subCategories;
+            {categories &&
+            entries &&
+            occurances.some((element) => element !== 0) ? (
+              categories.map((category: Category) => {
+                // Type declaration for subcatgories
+                const filteretedSubCats: Subcategory[] | undefined =
+                  category.subCategories;
 
-                  // Filtered subcats are mapped over.
-                  filteretedSubCats?.map((subcat) => {
-                    // NOTE: The # of occurances of subcats in the entries is added
-                    // to an array so it can be displayed on a chart. We loop over using
-                    // a map, filter out the matching entries, and use .length to count
-                    // the number.
-                    occurances.push(
-                      // The subcats are then matched up
-                      // with the entries using a filter method.
-                      entries.filter(
-                        (entry: Entry) =>
-                          // The filtering is applied to the entry that has
-                          // a matching subCategoryId key:value. Also, so that
-                          // each doughnut chart is segregated by category, match the
-                          // category id with the categoryId key:value in each
-                          // subcat.
-                          entry.subCategoryId === subcat.id &&
-                          subcat.categoryId === category.id
-                      ).length
-                    );
-                  });
-                  const data = {
-                    // Set the labels as the subcategory names.
-                    // Filter out the categrories here.
-                    labels: category
-                      ? // NOTE: Add an exlamantion point at to end to tell ts the Subcategories array is
-                        // definitely defined.
-                        // NOTE: Make sure to make the else part of the ternary an empty array
-                        // since that is the data type for labels and not string.
-                        filteretedSubCats!.map(
-                          (subCategory: Subcategory) => subCategory.name
-                        )
-                      : [],
-
-                    datasets: [
-                      {
-                        label: "# of occurances",
-                        data: occurances,
-                        backgroundColor: [
-                          "rgba(147, 145, 255, 1)",
-                          "rgba(105, 102, 212, 1)",
-                          "rgba(0, 7, 89, 1)",
-                        ],
-                        borderColor: [
-                          "rgba(147, 145, 255, 1)",
-                          "rgba(105, 102, 212, 1)",
-                          "rgba(0, 7, 89, 1)",
-                        ],
-                        borderWidth: 1,
-                        cutout: "40%",
-                      },
-                    ],
-                  };
-                  return (
-                    <>
-                      <div className={styles.categoryName}>{category.name}</div>
-                      <Doughnut data={data} />
-                    </>
+                // Filtered subcats are mapped over.
+                filteretedSubCats?.map((subcat) => {
+                  // NOTE: The # of occurances of subcats in the entries is added
+                  // to an array so it can be displayed on a chart. We loop over using
+                  // a map, filter out the matching entries, and use .length to count
+                  // the number.
+                  occurances.push(
+                    // The subcats are then matched up
+                    // with the entries using a filter method.
+                    entries.filter(
+                      (entry: Entry) =>
+                        // The filtering is applied to the entry that has
+                        // a matching subCategoryId key:value. Also, so that
+                        // each doughnut chart is segregated by category, match the
+                        // category id with the categoryId key:value in each
+                        // subcat.
+                        // NOTE: Check the userId in the entries matches the user.
+                        entry.subCategoryId === subcat.id &&
+                        subcat.categoryId === category.id &&
+                        entry.userId === userData.user.id
+                    ).length
                   );
-                })
-              : ""}
+                });
+                const data = {
+                  // Set the labels as the subcategory names.
+                  // Filter out the categrories here.
+                  labels: category
+                    ? // NOTE: Add an exlamantion point at to end to tell ts the Subcategories array is
+                      // definitely defined.
+                      // NOTE: Make sure to make the else part of the ternary an empty array
+                      // since that is the data type for labels and not string.
+                      filteretedSubCats!.map(
+                        (subCategory: Subcategory) => subCategory.name
+                      )
+                    : [],
+
+                  datasets: [
+                    {
+                      label: "# of occurances",
+                      data: occurances,
+                      backgroundColor: [
+                        "rgba(147, 145, 255, 1)",
+                        "rgba(105, 102, 212, 1)",
+                        "rgba(0, 7, 89, 1)",
+                      ],
+                      borderColor: [
+                        "rgba(147, 145, 255, 1)",
+                        "rgba(105, 102, 212, 1)",
+                        "rgba(0, 7, 89, 1)",
+                      ],
+                      borderWidth: 1,
+                      cutout: "40%",
+                    },
+                  ],
+                };
+                return (
+                  <>
+                    <div className={styles.categoryName}>{category.name}</div>
+                    <Doughnut key={category.id} data={data} />
+                  </>
+                );
+              })
+            ) : (
+              <div>
+                You do not have any data to show yet. Please go to new logs page
+                to create a log.
+              </div>
+            )}
           </>
           <br />
           <br />

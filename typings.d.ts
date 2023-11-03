@@ -20,6 +20,7 @@ export type Entry = {
   date: any;
   entry: string | null;
   logId: string;
+  userId?: string;
   subCategoryId: string;
 };
 

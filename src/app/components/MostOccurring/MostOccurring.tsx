@@ -81,7 +81,7 @@ export default function MostOccurring() {
   if (entries && subCategories) {
     entries.map((entry: Entry, i: number) => {
       // 2. Stores the index of the subcat in the subCats array by matching the id of the
-      //  subCategoryId
+      //  subCategoryId in the current entry.
       const subCategoryIndex = subCategories.findIndex(
         (subcat: Subcategory) => subcat.id === entry.subCategoryId
       );

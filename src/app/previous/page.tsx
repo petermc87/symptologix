@@ -11,6 +11,7 @@ import Footer from "../components/Footer/Footer";
 import LogList from "../components/LogList/LogList";
 import LogView from "../components/LogView/LogView";
 import NavBar from "../components/NavBar/NavBar";
+import NoDataMessage from "../components/NoDataMessage/NoDataMessage";
 import styles from "./page.module.scss";
 export default function PreviousLogsPage() {
   // Context for logs
@@ -68,10 +69,13 @@ export default function PreviousLogsPage() {
               <LogList />
             </>
           ) : (
-            <div className={styles.noLogs}>
-              No logs to display yet. Please go to new logs page above to create
-              one.
-            </div>
+            <NoDataMessage
+              data="No logs to display yet. Please go to new logs page above to create
+            one."
+            />
+            // <div className={styles.noLogs}>
+
+            // </div>
           )}
         </>
       </div>

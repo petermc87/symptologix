@@ -7,11 +7,13 @@ type SubmitEntryProps = {
   selectedSubCat: Subcategory | any;
   inputQuery: string;
   currentLog: Log | null | undefined | any;
+  userId: string;
 };
 export default async function submitEntry({
   selectedSubCat,
   inputQuery,
   currentLog,
+  userId,
 }: SubmitEntryProps) {
   // Check the props that are being passed in are correct.
   let updatedLog;
@@ -22,6 +24,7 @@ export default async function submitEntry({
         logId: currentLog.id,
         subCategoryId: selectedSubCat.id,
         entry: inputQuery,
+        userId: userId,
       },
     });
 

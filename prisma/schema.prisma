@@ -35,6 +35,7 @@ model Entry {
   date          DateTime    @default(now())
   entry         String?
   logId         String
+  userId        String
   log           Log         @relation(fields: [logId], references: [id])
   subCategoryId String
   subcategory   SubCategory @relation(fields: [subCategoryId], references: [id])

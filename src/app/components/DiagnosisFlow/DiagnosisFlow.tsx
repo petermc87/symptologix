@@ -20,8 +20,8 @@ export default function DiagnosisFlow() {
     mostOccurringCategories,
   } = useContext<NavBarContextTypes | any>(NavBarContext);
 
-  console.log(mostOccurringState);
-  console.log(mostOccurringCategories);
+  // console.log(mostOccurringState);
+  // console.log(mostOccurringCategories);
   // Search through each subcategory in each category to find a match. The
   return (
     <>

@@ -1,0 +1,7 @@
+@use "../../utilties/font";
+
+.noLogs {
+  margin: 0 2rem 0 2rem;
+  @extend %smallHeadingText;
+  color: gray;
+}
