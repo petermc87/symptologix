@@ -73,7 +73,7 @@ export default function LogSelection({ userId }: LogSelectionTypes) {
               <div></div>
             </div>
             <div className={styles.createWrapper} id={styles.openPrevious}>
-              <p>Open Previous</p>
+              <p>Open Previous:</p>
               <span>
                 {/* Showing the latest log that can be edited as an option. */}
                 <p onClick={() => setCurrentLog(logs[0])}>
