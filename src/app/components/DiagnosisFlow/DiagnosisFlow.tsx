@@ -20,7 +20,14 @@ export default function DiagnosisFlow() {
   } = useContext<NavBarContextTypes | any>(NavBarContext);
 
   // Holding symptom and place on body state
-  const [symptomSubcat, setSymptomSubcat] = useState<Array<string> | null>(
+  const [symptomSubcat, setSymptomSubcat] = useState<string | null>(null);
+
+  const [placeOnBodySubcat, setPlaceOnBodySubcat] = useState<string | null>(
+    null
+  );
+  const [todSubcat, setTodSubcat] = useState<string | null>(null);
+  const [locationSubcat, setLocationSubcat] = useState<string | null>(null);
+  const [environmentSubcat, setEnvironmentSubcat] = useState<string | null>(
     null
   );
 
@@ -33,31 +40,38 @@ export default function DiagnosisFlow() {
       let categoryId: string | null = null;
 
       // Iterate through mostOccurringState
-      Object.entries(mostOccurringState).forEach(([key, object]) => {
-        const subcat = Object.keys(object)[0];
-        const subcatValue = object[subcat];
+      Object.entries(mostOccurringState).map(([key, object]) => {
+        subcatName = Object.keys(object)[0];
+        value = object[subcatName];
 
-        // Check if the subcategory matches the category and is a "Symptom"
-        if (
-          categories.some(
-            (category) => category.id === key && category.name === "Symptom"
-          )
-        ) {
-          // Check if the value is greater than the current value
-          if (subcatValue > value) {
-            subcatName = subcat;
-            value = subcatValue;
-            categoryId = key;
-          }
+        // The current subcat CategoryId(key), filter the category out
+        // from the array. If the name of that filtered cat is symptom,
+        // pass in the subcatname.
+        // console.log(categories);
+        // console.log(subcatName, key);
+
+        categoryId = key;
+        // Set the symptomSubcat with the found value.
+        // Make sure the key of the mostOccurring matches the
+        // key of the cateogry.
+        // console.log(categories[0].id, categoryId);
+        console.log(categories);
+        if (categories[0].id === categoryId) {
+          setSymptomSubcat(subcatName);
+        } else if (categories[2].id === categoryId) {
+          setPlaceOnBodySubcat(subcatName);
+        } else if (categories[3].id === categoryId) {
+          setTodSubcat(subcatName);
+        } else if (categories[4].id === categoryId) {
+          setLocationSubcat(subcatName);
+        } else if (categories[5].id === categoryId) {
+          setEnvironmentSubcat(subcatName);
         }
       });
-
-      // Set the symptomSubcat with the found value
-      setSymptomSubcat(subcatName);
     }
   }, [mostOccurringState, categories]);
 
-  console.log(symptomSubcat);
+  console.log(symptomSubcat, placeOnBodySubcat);
   return (
     <>
       <div className={styles.flowWrapper}>
@@ -72,31 +86,6 @@ export default function DiagnosisFlow() {
                   filteredCategory.name === "Place On Body"
               )
               .map((category: Category, i: number) => {
-                // // console.log(category);
-
-                // //Cycle through the occurrences object.
-                // if (mostOccurringState) {
-                //   Object.entries(mostOccurringState).map(([key, object], i) => {
-                //     // Separate and store the key(which is the name) of the object.
-                //     subcatName = Object.keys(object)[0];
-                //     value = object[subcatName];
-                //     categoryId = key;
-
-                //     // console.log(subcatName, category.id, categoryId);
-
-                //     // If the ids match the the category.name is 'Symptom', then
-                //     // save the variable.
-                //     if (
-                //       category.id === categoryId &&
-                //       category.name === "Symptom"
-                //     ) {
-                //       // console.log("sdfgsdfgsdfg");
-                //       // console.log(category.name, subcatName);
-                //       return setSymptomSubcat(subcatName);
-                //     }
-                //   });
-                // }
-
                 return (
                   <>
                     <div key={category.id} className={styles.headingAndSubcat}>
@@ -104,7 +93,14 @@ export default function DiagnosisFlow() {
                       <div className={styles.subcatWrapper}>
                         <div className={styles.subcat}>
                           {/* Add the category and value after it if it matches the category. */}
-                          {symptomSubcat}
+                          {/* Create a ternary that checks what symptom it is so that it renders the appropriate */}
+                          {/* subcat. */}
+                          {category.name === "Symptom" ? (
+                            <>{symptomSubcat}</>
+                          ) : (
+                            <>{placeOnBodySubcat}</>
+                          )}
+                          {/* {symptomSubcat} */}
                         </div>
                       </div>
                       <div className={styles.dummy}></div>
@@ -131,26 +127,26 @@ export default function DiagnosisFlow() {
         {/* MAP FOR INLINE ELEMENTS */}
         <div className={styles.happensWrapper}>
           {categories
-            ? categories.map((category: Category) => {
-                //Filtering out the three categories to be lined in a row.
-                if (
-                  category.name === "Environment" ||
-                  category.name === "Location" ||
-                  category.name === "Time of Day"
-                ) {
+            ? categories
+                .filter(
+                  (filteredCategory: Category) =>
+                    filteredCategory.name === "Time of Day" ||
+                    filteredCategory.name === "Location" ||
+                    filteredCategory.name === "Environment"
+                )
+                .map((category: Category) => {
                   return (
                     <div>
                       <h5>{category.name}</h5>{" "}
                     </div>
                   );
-                }
-              })
+                })
             : ""}
         </div>
         <div className={styles.happensSubcats}>
-          <div className={styles.subcatWrapper}>Placeholder</div>
-          <div className={styles.subcatWrapper}>Placeholder</div>
-          <div className={styles.subcatWrapper}>Placeholder</div>
+          <div className={styles.subcatWrapper}>{todSubcat}</div>
+          <div className={styles.subcatWrapper}>{locationSubcat}</div>
+          <div className={styles.subcatWrapper}>{environmentSubcat}</div>
         </div>
         <FlowArrow />
         <div className={styles.subHeading}>
