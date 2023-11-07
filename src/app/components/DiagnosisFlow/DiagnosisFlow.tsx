@@ -21,7 +21,7 @@ export default function DiagnosisFlow() {
     NavBarContextTypes | any
   >(NavBarContext);
 
-  // Holding symptom and place on body state
+  // Storing different symptom matches.
   const [symptomSubcat, setSymptomSubcat] = useState<string | null>(null);
 
   const [placeOnBodySubcat, setPlaceOnBodySubcat] = useState<string | null>(
@@ -32,6 +32,7 @@ export default function DiagnosisFlow() {
   const [environmentSubcat, setEnvironmentSubcat] = useState<string | null>(
     null
   );
+  const [eventSubcat, setEventSubcat] = useState<string | null>(null);
 
   useEffect(() => {
     // Check if mostOccurringState and categories are available
@@ -70,6 +71,8 @@ export default function DiagnosisFlow() {
             setLocationSubcat(subcatName);
           } else if (categories[5].id === categoryId) {
             setEnvironmentSubcat(subcatName);
+          } else {
+            setEventSubcat(subcatName);
           }
         });
       }
@@ -170,7 +173,7 @@ export default function DiagnosisFlow() {
                       {/* Add another div here to respresent the highest
                         occurring smyptom first.*/}
                       <div className={styles.subcatWrapper}>
-                        <div className={styles.subcat}>Placeholder</div>
+                        <div className={styles.subcat}>{eventSubcat}</div>
                       </div>
                       <div className={styles.dummy}></div>
                     </div>

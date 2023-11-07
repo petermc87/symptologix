@@ -1,5 +1,7 @@
 @use "../../utilties/font";
 @use "../../utilties/variables" as var;
+@use "../../utilties/elements";
+
 $line: none;
 
 .flowWrapper {
@@ -35,6 +37,7 @@ $line: none;
   align-items: center;
   justify-content: center;
   width: 25%;
+  @extend %inputField;
 }
 
 // Dummy!
@@ -42,10 +45,6 @@ $line: none;
   border: $line orange;
   width: 50%;
 }
-
-// .subcat {
-//   border: $line purple;
-// }
 
 // Styling for the inLine category elements (after 'Happens')
 .happensWrapper {
