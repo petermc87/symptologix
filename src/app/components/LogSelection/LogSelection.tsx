@@ -1,5 +1,6 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Button } from "react-bootstrap";
+import GetLogs from "../../../../actions/logRequests/getLogs";
 import submitNewLog from "../../../../actions/logRequests/submitNewLog";
 import { Log } from "../../../../typings";
 import {
@@ -13,9 +14,9 @@ type LogSelectionTypes = {
 };
 
 export default function LogSelection({ userId }: LogSelectionTypes) {
-  const { currentLog, setCurrentLog } = useContext<NavBarContextTypes | any>(
-    NavBarContext
-  );
+  const { currentLog, setCurrentLog, logs, setLogs } = useContext<
+    NavBarContextTypes | any
+  >(NavBarContext);
 
   // Submitting  new log to the database.
   const handleSubmitLog = async (e: any) => {
@@ -29,6 +30,19 @@ export default function LogSelection({ userId }: LogSelectionTypes) {
       console.error(error);
     }
   };
+
+  // Get all the logs and filter out the top result i.e the latest.
+  useEffect(() => {
+    const fetchLogs = async () => {
+      try {
+        const logs: Log[] | null = await GetLogs(userId);
+        setLogs(logs);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchLogs();
+  }, []);
 
   return (
     <>
@@ -54,7 +68,6 @@ export default function LogSelection({ userId }: LogSelectionTypes) {
                 Create Log
               </Button>
             </div>
-
             <div className={styles.textWrapper}>
               <span>OR </span>
               <div></div>
@@ -62,7 +75,10 @@ export default function LogSelection({ userId }: LogSelectionTypes) {
             <div className={styles.createWrapper} id={styles.openPrevious}>
               <p>Open Previous</p>
               <span>
-                <p>12/10/2023</p>
+                {/* Showing the latest log that can be edited as an option. */}
+                <p onClick={() => setCurrentLog(logs[0])}>
+                  {logs ? logs[0].createdAt.toDateString() : ""}
+                </p>
               </span>
             </div>
           </div>

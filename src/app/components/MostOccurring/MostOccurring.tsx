@@ -51,13 +51,6 @@ export default function MostOccurring() {
   // Retrieve the user data so that we can match the id up with the entry.
   const { data } = useSession<boolean>();
 
-  // console.log(data);
-  // let userId: string;
-
-  // if (data && data.user.id === "string") {
-  //   userId = data.user.id;
-  // }
-
   // State for holding the number of most occurring to display
   const [numberToDisplay, setNumberToDisplay] = useState<number>(5);
 

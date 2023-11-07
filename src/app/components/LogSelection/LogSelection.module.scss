@@ -45,6 +45,10 @@ $line: none;
   p {
     margin: 0;
   }
+  p:hover {
+    cursor: pointer;
+    opacity: 0.6;
+  }
 }
 
 #openPrevious {

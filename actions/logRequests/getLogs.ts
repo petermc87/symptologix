@@ -14,6 +14,9 @@ export default async function GetLogs(id: string) {
     where: {
       userId: id,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
   return logs;
 }
