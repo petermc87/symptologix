@@ -7,17 +7,19 @@ import {
 import FlowArrow from "../flowArrow/flowArrow";
 import styles from "./DiagnosisFlow.module.scss";
 
+// Set types for mostOccurring
+type MostOccurringTypes = {
+  [key: string]: {
+    [key: string]: number;
+  };
+};
+
 export default function DiagnosisFlow() {
   // Take on context for categories.
 
-  const {
-    categories,
-    entries,
-    subCategories,
-    logs,
-    mostOccurringState,
-    mostOccurringCategories,
-  } = useContext<NavBarContextTypes | any>(NavBarContext);
+  const { categories, mostOccurringState } = useContext<
+    NavBarContextTypes | any
+  >(NavBarContext);
 
   // Holding symptom and place on body state
   const [symptomSubcat, setSymptomSubcat] = useState<string | null>(null);
@@ -39,39 +41,41 @@ export default function DiagnosisFlow() {
       let value: number = 0;
       let categoryId: string | null = null;
 
-      // Iterate through mostOccurringState
-      Object.entries(mostOccurringState).map(([key, object]) => {
-        subcatName = Object.keys(object)[0];
-        value = object[subcatName];
+      // Checking the types of mostOccurringState and categories before
+      // accessing them.
+      if (typeof mostOccurringState === "object" && Array.isArray(categories)) {
+        // Iterate through mostOccurringState
+        Object.entries(mostOccurringState).map(([key, object]) => {
+          if (object) {
+            subcatName = Object.keys(object)[0];
+            value = object[subcatName];
+          }
 
-        // The current subcat CategoryId(key), filter the category out
-        // from the array. If the name of that filtered cat is symptom,
-        // pass in the subcatname.
-        // console.log(categories);
-        // console.log(subcatName, key);
-
-        categoryId = key;
-        // Set the symptomSubcat with the found value.
-        // Make sure the key of the mostOccurring matches the
-        // key of the cateogry.
-        // console.log(categories[0].id, categoryId);
-        console.log(categories);
-        if (categories[0].id === categoryId) {
-          setSymptomSubcat(subcatName);
-        } else if (categories[2].id === categoryId) {
-          setPlaceOnBodySubcat(subcatName);
-        } else if (categories[3].id === categoryId) {
-          setTodSubcat(subcatName);
-        } else if (categories[4].id === categoryId) {
-          setLocationSubcat(subcatName);
-        } else if (categories[5].id === categoryId) {
-          setEnvironmentSubcat(subcatName);
-        }
-      });
+          // The current subcat CategoryId(key), filter the category out
+          // from the array. If the name of that filtered cat is symptom,
+          // pass in the subcatname.
+          // console.log(categories);
+          // console.log(subcatName, key);
+          categoryId = key;
+          // Set the symptomSubcat with the found value.
+          // Make sure the key of the mostOccurring matches the
+          // key of the cateogry.
+          if (categories[0].id === categoryId) {
+            setSymptomSubcat(subcatName);
+          } else if (categories[2].id === categoryId) {
+            setPlaceOnBodySubcat(subcatName);
+          } else if (categories[3].id === categoryId) {
+            setTodSubcat(subcatName);
+          } else if (categories[4].id === categoryId) {
+            setLocationSubcat(subcatName);
+          } else if (categories[5].id === categoryId) {
+            setEnvironmentSubcat(subcatName);
+          }
+        });
+      }
     }
   }, [mostOccurringState, categories]);
 
-  console.log(symptomSubcat, placeOnBodySubcat);
   return (
     <>
       <div className={styles.flowWrapper}>
@@ -179,65 +183,3 @@ export default function DiagnosisFlow() {
     </>
   );
 }
-
-// ? categories.map((category: Category, i: number) => {
-//     // Separating out styling by category.
-
-//     if (
-//       category.name === "Place On Body" ||
-//       category.name === "Symptom"
-//     ) {
-//       console.log(category.id);
-//       // category.subCategories.filter((subcat) => subcat.id)
-//       console.log(mostOccurringState);
-//       //  Cycle through the occurrences object.
-//       if (mostOccurringState) {
-//         Object.entries(mostOccurringState).map(([key, object], i) => {
-//           // Separate and store the key(which is the name) of the object.
-//           subcatName = Object.keys(object)[0];
-
-//           value = object[subcatName];
-
-//           categoryId = key;
-
-//           // // console.log(categoryId, subcatName, value, category.name);
-
-//           // console.log(retrievedId, category.name, categoryId);
-
-//           // console.log(category);
-
-//           // // Current name is 'Symptom' and the ids match up, store
-//           // // the symptomcatname.
-
-//           // if (
-//           //   (retrievedId = categoryId && category.name === "Symptom")
-//           // ) {
-//           //   console.log("hkhjkjkhjkhk");
-//           // }
-
-//           // if (
-//           //   category.name === "Symptom" &&
-//           //   categoryId === category.id
-//           // ) {
-//           //   console.log("HERJKGHJKHKHDJKSH");
-//           //   // symptomObject = subcatName;
-//           // }
-
-//           // //Filter out the subcategories in the occurrences object that
-//           // // match with the subcats in the category object.
-
-//           // const filteredSubcats: Subcategory[] =
-//           //   category.subCategories.filter(
-//           //     (subcat: Subcategory) => subcat.id === key
-//           //   );
-
-//           // // Only considering the subcat occurring the most.
-//           // if (filteredSubcats && value > highestValue) {
-//           //   highestValue = value;
-//           //   // console.log(category.name, filteredSubcats[0], value);
-
-//           //   // Store the filteredSubcat here
-//           //   filteredSubcat = filteredSubcats[0];
-//           //   console.log(category.name, filteredSubcat);
-//           // }
-//         });
