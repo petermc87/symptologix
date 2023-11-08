@@ -117,11 +117,11 @@ export default function DiagnosisFlow() {
                     {/* 'HAPPENS' respectively. Use a ternary and i (iterator) to  */}
                     {/* determine which one the render. */}
                     {i === 0 ? (
-                      <div className={styles.subHeading}>
+                      <div key={category.id + 1} className={styles.subHeading}>
                         <h2>EFFECTS</h2>
                       </div>
                     ) : (
-                      <div className={styles.subHeading}>
+                      <div key={category.id + 2} className={styles.subHeading}>
                         <h2>HAPPENS</h2>
                       </div>
                     )}
@@ -143,7 +143,7 @@ export default function DiagnosisFlow() {
                 )
                 .map((category: Category) => {
                   return (
-                    <div>
+                    <div key={category.id}>
                       <h5>{category.name}</h5>{" "}
                     </div>
                   );

@@ -155,13 +155,17 @@ export default function IndividualLogs() {
           ? Object.entries(occurrences).map(([key, value]) => {
               return (
                 <>
-                  <div className={styles.entryContainer}>
+                  <div key={key} className={styles.entryContainer}>
                     {/* Filtering out words that are greater that two letters */}
                     {/* and are not on the exlcuded word list above. */}
                     {key.length > 2 && !filterWords.includes(key) ? (
                       <>
-                        <div className={styles.subcat}>{key}</div>
-                        <div className={styles.entry}>{value}</div>
+                        <div key={key + 4} className={styles.subcat}>
+                          {key}
+                        </div>
+                        <div key={key + 7} className={styles.entry}>
+                          {value}
+                        </div>
                       </>
                     ) : (
                       ""

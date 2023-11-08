@@ -170,11 +170,11 @@ export default function LogForm({ subCategories }: LogFormTypes) {
                 const name = getSubcat(entry.subCategoryId);
 
                 return (
-                  <div className={styles.entry}>
+                  <div key={entry.id} className={styles.entry}>
                     {" "}
                     {/* ENTRY SUBCAT AND DESCRIPTION. */}
-                    <div className={styles.entriesWrapper}>
-                      <div className={styles.loggedSubcat} key={entry.id}>
+                    <div key={entry.id + 4} className={styles.entriesWrapper}>
+                      <div className={styles.loggedSubcat} key={entry.id + 5}>
                         {name}
                       </div>
                       {/* This is where the edit entry will be shown and will replace the current text. */}

@@ -267,13 +267,12 @@ export default function Insights() {
     fetchData();
     return () => {};
   }, []);
-  // console.log(entries, categories, subCategories, logs);
 
   return (
     <>
       <NavBar />
       <div className={styles.pageWrapper}>
-        <div className={styles.pageContainer} key={889}>
+        <div className={styles.pageContainer}>
           <div className={styles.headingText}>Your Symptom Story</div>
           <>
             {/* Display the name of each category here. For each category,
@@ -369,7 +368,9 @@ export default function Insights() {
 
                   return (
                     <>
-                      <div className={styles.categoryName}>{category.name}</div>
+                      <div key={category.id} className={styles.categoryName}>
+                        {category.name}
+                      </div>
                       <Doughnut data={data} />
                     </>
                   );
