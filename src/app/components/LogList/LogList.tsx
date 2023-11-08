@@ -18,7 +18,7 @@ export default function LogList() {
 
   return (
     <>
-      {logs?.map((log: Log) => {
+      {logs?.map((log: Log, i: number) => {
         return (
           <>
             <div
@@ -26,11 +26,9 @@ export default function LogList() {
               onClick={() => {
                 if (log) setCurrentLog(log);
               }}
-              key={log.id}
+              key={i}
             >
-              <div className={styles.overlay} key={log.id}>
-                Click to view
-              </div>
+              <div className={styles.overlay}>Click to view</div>
               <h2>{log.createdAt?.toDateString()}</h2>
               <h2>{log.createdAt?.toLocaleTimeString()}</h2>
             </div>

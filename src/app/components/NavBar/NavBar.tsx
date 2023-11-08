@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import GeneralButton from "../Button/Button";
@@ -14,6 +14,14 @@ export default function NavBar() {
   // Instigate the useRouter hook to route back to the landing page
   // when the logout button is selected.
   const router = useRouter();
+
+  // Handle logout and redirect.
+  const handleLogout = () => {
+    // signOut({ redirect: false }).then(() => {
+    //   router.push("/");
+    // });
+    signOut({ callbackUrl: "/" });
+  };
 
   return (
     <div className={styles.navbarWrapper}>
@@ -40,13 +48,12 @@ export default function NavBar() {
           <Link
             href={"/"}
             className={styles.desktopLinks}
-            onClick={() => {
-              console.log("click before");
-              setTimeout(() => {
-                console.log("click");
-                router.push("/");
-              }, 4000);
-            }}
+            onClick={
+              handleLogout
+              // setTimeout(() => {
+              //   router.push("/");
+              // }, 4000);
+            }
           >
             <GeneralButton name="Log Out" />
           </Link>

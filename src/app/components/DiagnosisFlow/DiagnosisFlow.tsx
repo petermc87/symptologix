@@ -95,7 +95,7 @@ export default function DiagnosisFlow() {
               .map((category: Category, i: number) => {
                 return (
                   <>
-                    <div key={category.id} className={styles.headingAndSubcat}>
+                    <div key={i} className={styles.headingAndSubcat}>
                       <h5>{category.name}</h5>
                       <div className={styles.subcatWrapper}>
                         <div className={styles.subcat}>
@@ -112,20 +112,20 @@ export default function DiagnosisFlow() {
                       </div>
                       <div className={styles.dummy}></div>
                     </div>
-                    <FlowArrow />
+                    <FlowArrow key={category.id + 1} />
                     {/* Subheading betwen the arrows are going to be 'EFFECTS' and */}
                     {/* 'HAPPENS' respectively. Use a ternary and i (iterator) to  */}
                     {/* determine which one the render. */}
                     {i === 0 ? (
-                      <div key={category.id + 1} className={styles.subHeading}>
+                      <div key={category.id + 3} className={styles.subHeading}>
                         <h2>EFFECTS</h2>
                       </div>
                     ) : (
-                      <div key={category.id + 2} className={styles.subHeading}>
+                      <div key={category.id + 4} className={styles.subHeading}>
                         <h2>HAPPENS</h2>
                       </div>
                     )}
-                    <FlowArrow />
+                    <FlowArrow key={category.id + 10} />
                   </>
                 );
               })
@@ -141,9 +141,9 @@ export default function DiagnosisFlow() {
                     filteredCategory.name === "Location" ||
                     filteredCategory.name === "Environment"
                 )
-                .map((category: Category) => {
+                .map((category: Category, i: number) => {
                   return (
-                    <div key={category.id}>
+                    <div key={i}>
                       <h5>{category.name}</h5>{" "}
                     </div>
                   );
@@ -162,11 +162,11 @@ export default function DiagnosisFlow() {
         <FlowArrow />
         {/* MAP FOR EVENT/CONFLICT */}
         {categories
-          ? categories.map((category: Category) => {
+          ? categories.map((category: Category, i: number) => {
               if (category.name === "Event/Conflict") {
                 return (
                   <>
-                    <div key={category.id} className={styles.headingAndSubcat}>
+                    <div key={i} className={styles.headingAndSubcat}>
                       {/* Return the symptom and place on body to
                         the screen normally and the following three */}
                       <h5>{category.name}</h5>

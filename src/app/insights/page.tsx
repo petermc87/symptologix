@@ -371,7 +371,7 @@ export default function Insights() {
                       <div key={category.id} className={styles.categoryName}>
                         {category.name}
                       </div>
-                      <Doughnut data={data} />
+                      <Doughnut key={i + 1} data={data} />
                     </>
                   );
                 })
