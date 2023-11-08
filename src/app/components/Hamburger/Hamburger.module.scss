@@ -70,6 +70,9 @@
   transition-duration: 0.25s;
   text-align: center;
 }
+.menuItem:hover {
+  cursor: pointer;
+}
 
 // Adding white space between logout and the logo and the same
 // for singUp on the landing page.

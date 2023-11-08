@@ -17,9 +17,6 @@ export default function NavBar() {
 
   // Handle logout and redirect.
   const handleLogout = () => {
-    // signOut({ redirect: false }).then(() => {
-    //   router.push("/");
-    // });
     signOut({ callbackUrl: "/" });
   };
 
@@ -48,12 +45,7 @@ export default function NavBar() {
           <Link
             href={"/"}
             className={styles.desktopLinks}
-            onClick={
-              handleLogout
-              // setTimeout(() => {
-              //   router.push("/");
-              // }, 4000);
-            }
+            onClick={handleLogout}
           >
             <GeneralButton name="Log Out" />
           </Link>
