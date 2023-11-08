@@ -65,10 +65,7 @@ export default function Hamburger() {
             </li>
             <li
               onClick={() => {
-                signOut();
-                // Myabe add a time delay to route home after signing out to
-                // give the signOut function enough time to complete before performing the reroute.
-                route.push("/");
+                signOut({ callbackUrl: "/" });
               }}
             >
               <a className={styles.menuItem} id={styles.logOut}>
