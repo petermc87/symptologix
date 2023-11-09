@@ -143,7 +143,11 @@ export default function DiagnosisFlow() {
                 )
                 .map((category: Category, i: number) => {
                   return (
-                    <div key={i}>
+                    <div
+                      key={i}
+                      className={styles.headingAndSubcat}
+                      id={styles.happensHeadings}
+                    >
                       <h5>{category.name}</h5>{" "}
                     </div>
                   );

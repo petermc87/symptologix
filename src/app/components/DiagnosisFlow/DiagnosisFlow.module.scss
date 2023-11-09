@@ -22,9 +22,19 @@ $line: none;
   border: $line red;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   h5 {
     border: $line black;
     width: 50%;
+    @extend %boldBlueUnderlined;
+  }
+}
+
+// Headings under the 'happens' flow.
+#happensHeadings {
+  h5 {
+    border: $line orange;
+    width: 100%;
   }
 }
 
@@ -38,6 +48,8 @@ $line: none;
   justify-content: center;
   width: 25%;
   @extend %inputField;
+  color: var.$hazy-purple;
+  font-weight: bolder;
 }
 
 // Dummy!
@@ -69,5 +81,7 @@ $line: none;
   justify-content: center;
   h2 {
     width: 50%;
+    @extend %smallBoldText;
+    font-size: 2rem;
   }
 }
