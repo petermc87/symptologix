@@ -207,22 +207,32 @@ export default function InputForm({
                           />
                         </svg>
                       </div>
+                      <DottedLine />
                     </>
                   )}
 
                   {/* --- SUB CATEGORIES --- */}
-                  <SubCategoryForm
-                    category={category}
-                    subCategories={subCategories}
-                    setAllSubCategories={setAllSubCategories}
-                    setSeletedSubCat={setSelectedSubCat}
-                  />
+                  {reveal && revealCategory === category.name ? (
+                    <>
+                      <SubCategoryForm
+                        category={category}
+                        subCategories={subCategories}
+                        setAllSubCategories={setAllSubCategories}
+                        setSeletedSubCat={setSelectedSubCat}
+                      />
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 {/* NOTE: Render the entry form here, only if the categoryID in the Subcat
                matches the category id. This means it will show the entry in the Cat field
                it falls under only i.e. no duplicated entry fields. */}
-                {selectedSubCat && category.id === selectedSubCat.categoryId ? (
+                {selectedSubCat &&
+                category.id === selectedSubCat.categoryId &&
+                reveal &&
+                revealCategory === category.name ? (
                   //TODO: Create an Entry component.
                   <>
                     {/*---- Is this where the key props is showing a warning? ----*/}

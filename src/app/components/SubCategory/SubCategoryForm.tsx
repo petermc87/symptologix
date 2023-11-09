@@ -61,7 +61,10 @@ export default function SubCategoryForm({
             className={styles.form}
           >
             <div className={styles.spacer}></div>
-            <Form.Label style={{ margin: "0" }} className={styles.label}>
+            <Form.Label
+              style={{ margin: "0", marginBottom: "1rem" }}
+              className={styles.label}
+            >
               Create Subcategory
             </Form.Label>
             <Form.Group id={styles.inputControls}>
@@ -123,7 +126,7 @@ export default function SubCategoryForm({
                   padding: "0 5px 0 5px",
                 }}
               >
-                Sub
+                Subcat.
               </Dropdown.Toggle>
               <Dropdown.Menu className="super-colors">
                 {subCategories
