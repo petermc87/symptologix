@@ -81,3 +81,9 @@ $line: none;
 .catHeading {
   @extend %boldBlueUnderlined;
 }
+
+// Chevron Styling
+.chevron {
+  border: $line red;
+  text-align: center;
+}

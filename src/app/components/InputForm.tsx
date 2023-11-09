@@ -37,6 +37,12 @@ export default function InputForm({
     Subcategory | null | any
   >();
 
+  // Chevron reveal.
+  const [reveal, setReveal] = useState<boolean>(false);
+
+  // Current reveal category.
+  const [revealCategory, setRevealCategory] = useState<string>("");
+
   // NOTE: For a log thats in progress that hasnt been submitted after a user logs out,
   // create another element in the schema to check if the log has been submitted or not
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -144,10 +150,66 @@ export default function InputForm({
         ? categories?.map((category) => {
             return (
               <>
+                {/* Create a ternary to reveal the subcat entries and log entries  */}
+                {/* form elements/components */}
                 <div key={category.id} className={styles.catContainer}>
-                  <h2 key={category.id + 1} className={styles.catHeading}>
-                    {category.name}
-                  </h2>
+                  <h2 className={styles.catHeading}>{category.name}</h2>
+                  {reveal && revealCategory === category.name ? (
+                    <>
+                      {/* CHEVRON UP */}
+                      <div className={styles.chevron}>
+                        {/* SET THE CURRENT CATEGORY NAME. */}
+                        <svg
+                          onClick={() => {
+                            setReveal(false);
+                          }}
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="40"
+                          height="40"
+                          fill="currentColor"
+                          className="bi bi-chevron-double-up"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z"
+                          />
+                          <path
+                            fill-rule="evenodd"
+                            d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"
+                          />
+                        </svg>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* CHEVRON DOWN */}
+                      <div className={styles.chevron}>
+                        <svg
+                          onClick={() => {
+                            setReveal(true);
+                            setRevealCategory(category.name);
+                          }}
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="40"
+                          height="40"
+                          fill="currentColor"
+                          className="bi bi-chevron-double-down"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                          />
+                          <path
+                            fill-rule="evenodd"
+                            d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                          />
+                        </svg>
+                      </div>
+                    </>
+                  )}
+
                   {/* --- SUB CATEGORIES --- */}
                   <SubCategoryForm
                     category={category}

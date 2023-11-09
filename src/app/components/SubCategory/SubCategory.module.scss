@@ -15,12 +15,9 @@ $line: none;
   }
 }
 
-.spacer {
-  border: $line black;
-  padding: 1rem;
-}
 .form {
   display: flex;
+  flex-direction: column;
   margin-top: 2rem;
   border: $line brown;
   justify-content: space-between;
@@ -31,7 +28,7 @@ $line: none;
   display: flex;
   justify-content: space-between;
   border: $line red;
-  width: 70%;
+  width: 100%;
   align-items: center;
   #input {
     width: 70%;
