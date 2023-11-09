@@ -47,8 +47,10 @@ $line: none;
   align-items: center;
   justify-content: center;
   width: 25%;
+  box-shadow: 2px 4px 6px 2px rgba(0, 0, 0, 0.3);
   @extend %inputField;
   color: var.$hazy-purple;
+  // text-shadow: 0.8px 0.8px 0px var.$light-hazy-purple;
   font-weight: bolder;
 }
 
