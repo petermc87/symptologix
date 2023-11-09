@@ -42,3 +42,13 @@ $line: none;
   border-radius: 3px;
   padding: 0.2rem 0 0.2rem 0.2rem;
 }
+
+// Error message if a new log hasnt been created.
+.errorMessage {
+  border: $line purple;
+  color: red;
+  background-color: rgb(233, 176, 176, 0.6);
+  margin-bottom: 2rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+}

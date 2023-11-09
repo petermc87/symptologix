@@ -1,7 +1,7 @@
 "use client";
 import { Category } from "@prisma/client";
 import { FormEvent, useEffect, useState, useTransition } from "react";
-import { Button, Dropdown, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import getCategories from "../../../actions/categoryRequests/getCats";
 import submitForm from "../../../actions/categoryRequests/submitCat";
 import getSubCategories from "../../../actions/subCategoryRequests/getSubCats";
@@ -126,25 +126,6 @@ export default function InputForm({
           </Button>
         </Form.Group>
       </Form>
-      <div className={styles.textWrapper}>
-        <span>OR</span>
-        <div className={styles.selectPrevCat}>
-          <p>Select From Previous</p>
-          <div className={styles.dropdownWrapper}>
-            <Dropdown className={styles.dropdown}>
-              <Dropdown.Toggle
-                style={{
-                  backgroundColor: "#9391ff",
-                  borderColor: "#9391ff",
-                  borderRadius: "15px",
-                }}
-              >
-                Categrory
-              </Dropdown.Toggle>
-            </Dropdown>
-          </div>
-        </div>
-      </div>
       <DottedLine />
       {categories
         ? categories?.map((category) => {

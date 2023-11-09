@@ -94,7 +94,10 @@ export default function EntryForm({ selectedSubCat }: EntryFormTypes) {
           <DottedLine />
         </div>
       ) : (
-        "Please create a log first (at the top of the page) before creating an entry."
+        <div className={styles.errorMessage}>
+          Please create a log or select the last created log first (at the top
+          of the page) before creating an entry.
+        </div>
       )}
     </>
   );
