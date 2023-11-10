@@ -94,9 +94,9 @@ $line: none;
     width: 10%;
     @extend %inputField;
     padding: 0.2rem;
-    box-shadow: 1px 1px 15px 0.4px rgba(0, 0, 0, 0.18);
-    -webkit-box-shadow: 1px 1px 15px 0.4px rgba(0, 0, 0, 0.18);
-    -moz-box-shadow: 1px 1px 15px 0.4px rgba(0, 0, 0, 0.18);
+    // box-shadow: 1px 1px 15px 0.4px rgba(0, 0, 0, 0.18);
+    // -webkit-box-shadow: 1px 1px 15px 0.4px rgba(0, 0, 0, 0.18);
+    // -moz-box-shadow: 1px 1px 15px 0.4px rgba(0, 0, 0, 0.18);
   }
   svg:hover {
     cursor: pointer;

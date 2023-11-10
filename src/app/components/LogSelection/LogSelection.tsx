@@ -76,9 +76,15 @@ export default function LogSelection({ userId }: LogSelectionTypes) {
               <p>Open Previous:</p>
               <span>
                 {/* Showing the latest log that can be edited as an option. */}
-                <p onClick={() => setCurrentLog(logs[0])}>
-                  {logs ? logs[0].createdAt.toDateString() : ""}
-                </p>
+                {currentLog ? (
+                  <>
+                    <p onClick={() => setCurrentLog(logs[0])}>
+                      {logs ? logs[0].createdAt.toDateString() : ""}
+                    </p>
+                  </>
+                ) : (
+                  "No previous logs"
+                )}
               </span>
             </div>
           </div>
