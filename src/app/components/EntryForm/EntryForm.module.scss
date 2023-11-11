@@ -1,5 +1,6 @@
 @use "../../utilties/font";
 @use "../../utilties/elements";
+
 $line: none;
 
 .entryFormWrapper {
@@ -16,9 +17,9 @@ $line: none;
 
 .form {
   display: flex;
+  flex-direction: column;
   margin-top: 2rem;
   border: $line brown;
-
   padding: 0.5rem;
   justify-content: space-between;
   align-items: center;
@@ -26,10 +27,9 @@ $line: none;
 
 .inputControls {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   border: $line greenyellow;
-
-  width: 70%;
+  width: 90%;
   align-items: center;
   .input {
     width: 70%;
@@ -39,8 +39,8 @@ $line: none;
 
 .background {
   background-color: rgb(173, 255, 47, 0.26);
-  border-radius: 3px;
-  padding: 0.2rem 0 0.2rem 0.2rem;
+  border-radius: 8px;
+  padding: 0.2rem 0 0.4rem 0.6rem;
 }
 
 // Error message if a new log hasnt been created.
