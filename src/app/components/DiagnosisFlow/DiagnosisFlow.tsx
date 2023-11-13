@@ -90,9 +90,10 @@ export default function DiagnosisFlow() {
               .filter(
                 (filteredCategory: Category) =>
                   filteredCategory.name === "Symptom" ||
-                  filteredCategory.name === "Place On Body"
+                  filteredCategory.name === "Place on Body"
               )
               .map((category: Category, i: number) => {
+                console.log(symptomSubcat, placeOnBodySubcat, category.name);
                 return (
                   <>
                     <div key={i} className={styles.headingAndSubcat}>
