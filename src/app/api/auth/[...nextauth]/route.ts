@@ -70,8 +70,8 @@ const authOptions: NextAuthOptions = {
     }),
     // Google provider.
     GoogleProvider({
-      clientId: "ID",
-      clientSecret: "SECRET",
+      clientId: process.env.GOOGLE_ID ?? "",
+      clientSecret: process.env.GOOGLE_SECRET ?? "",
     }),
   ],
   // This will be instigated right after the account is retrieved.
