@@ -62,6 +62,9 @@ dependencies:
   pg:
     specifier: ^8.11.3
     version: 8.11.3
+  providers@latest:
+    specifier: link:next-auth/providers@latest
+    version: link:next-auth/providers@latest
   react:
     specifier: 18.2.0
     version: 18.2.0

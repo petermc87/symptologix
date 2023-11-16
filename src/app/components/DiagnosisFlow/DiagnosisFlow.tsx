@@ -78,6 +78,7 @@ export default function DiagnosisFlow() {
       }
     }
   }, [mostOccurringState, categories]);
+  //THIS IS A CHANGE
 
   return (
     <>
@@ -114,6 +115,7 @@ export default function DiagnosisFlow() {
                       <div className={styles.dummy}></div>
                     </div>
                     <FlowArrow key={category.id + 1} />
+
                     {/* Subheading betwen the arrows are going to be 'EFFECTS' and */}
                     {/* 'HAPPENS' respectively. Use a ternary and i (iterator) to  */}
                     {/* determine which one the render. */}

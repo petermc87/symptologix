@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 // ERROR:  The expected type comes from property 'authorize'
 // which is declared here on type 'UserCredentialsConfig<{ email: { label: string; placeholder:...
 // This is because the types for next-auth have id as a string and not a user. Here, we
@@ -66,6 +67,11 @@ const authOptions: NextAuthOptions = {
         // Otherwise return null, which would be other cases besides passowrd invalid.
         return null;
       },
+    }),
+    // Google provider.
+    GoogleProvider({
+      clientId: "ID",
+      clientSecret: "SECRET",
     }),
   ],
   // This will be instigated right after the account is retrieved.
