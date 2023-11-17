@@ -25,7 +25,17 @@ declare module "next-auth" {
   }
 }
 
-declare module "next-auth" {}
+// declare module "next-auth" {
+//   type ReturnedUser = {
+//     id: string;
+//     password: string | null | undefined;
+//     email: string | null | undefined;
+//   }
+
+//   type Session {
+
+//   }
+// }
 
 const authOptions: NextAuthOptions = {
   // These could be google, or facebook, etc...

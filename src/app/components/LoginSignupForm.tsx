@@ -86,6 +86,14 @@ export default function LoginSingupForm() {
   // Create a use ref instance.
   const ref = useRef<HTMLDivElement>(null);
 
+  // Add handle submit for google oauth
+  const handleSubmitGoogle = () => {
+    // console.log("Click");
+    signIn("google", {
+      callbackUrl: "/home",
+    });
+  };
+
   // Use a side effect to call the handle click outside.
   useEffect(() => {
     function handleClickOutside(event: MouseEvent): void {
@@ -186,7 +194,14 @@ export default function LoginSingupForm() {
               <p id={styles.boldText}>
                 <span>OR</span>
               </p>
-              <div className={styles.googleSignup}>Sign in with google</div>
+              <div
+                className={styles.googleSignup}
+                onClick={() => {
+                  handleSubmitGoogle();
+                }}
+              >
+                Sign in with google
+              </div>
               {/* Text at the bottom of the form. */}
               {state === "signup" ? (
                 <p id={styles.boldText}>
