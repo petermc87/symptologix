@@ -1,4 +1,5 @@
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 import { SyntheticEvent, useContext, useEffect, useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import registerUser from "../../../actions/singupForm";
@@ -200,6 +201,14 @@ export default function LoginSingupForm() {
                   handleSubmitGoogle();
                 }}
               >
+                <div>
+                  <Image
+                    src="/home/petermc/Desktop/post_course/symptologix/public/images/google.png"
+                    alt="google"
+                    width={100}
+                    height={100}
+                  />
+                </div>
                 Sign in with google
               </div>
               {/* Text at the bottom of the form. */}
