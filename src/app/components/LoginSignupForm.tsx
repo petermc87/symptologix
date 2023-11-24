@@ -214,11 +214,25 @@ export default function LoginSingupForm() {
               {/* Text at the bottom of the form. */}
               {state === "signup" ? (
                 <p id={styles.boldText}>
-                  Dont have an account? <span>Log In</span>
+                  Dont have an account?{" "}
+                  <span
+                    onClick={() => {
+                      setState("login");
+                    }}
+                  >
+                    Log In
+                  </span>
                 </p>
               ) : state === "login" ? (
                 <p id={styles.boldText}>
-                  Already have an account? <span>Sign up</span>
+                  Already have an account?{" "}
+                  <span
+                    onClick={() => {
+                      setState("signup");
+                    }}
+                  >
+                    Sign up
+                  </span>
                 </p>
               ) : (
                 ""
