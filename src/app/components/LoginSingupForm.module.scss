@@ -48,6 +48,10 @@
   border-radius: var.$form-element-radius;
   margin-bottom: 0.5rem;
 }
+.googleSignup:hover {
+  background-color: rgb(240, 240, 240);
+  cursor: pointer;
+}
 
 #boldText {
   @extend %smallBoldText;
