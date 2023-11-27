@@ -203,13 +203,13 @@ export default function LoginSingupForm() {
               >
                 <div>
                   <Image
-                    src="/home/petermc/Desktop/post_course/symptologix/public/images/google.png"
+                    src="/images/google.png"
                     alt="google"
-                    width={100}
-                    height={100}
+                    width={20}
+                    height={20}
                   />
                 </div>
-                Sign in with google
+                <div>Sign in with google</div>
               </div>
               {/* Text at the bottom of the form. */}
               {state === "signup" ? (
