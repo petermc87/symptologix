@@ -18,6 +18,9 @@ export default function LogSelection({ userId }: LogSelectionTypes) {
     NavBarContextTypes | any
   >(NavBarContext);
 
+  // Print out logs to the console so that they can be checked.
+  if (logs) console.log(logs);
+
   // Submitting  new log to the database.
   const handleSubmitLog = async (e: any) => {
     e.preventDefault();
@@ -76,7 +79,7 @@ export default function LogSelection({ userId }: LogSelectionTypes) {
               <p>Open Previous:</p>
               <span>
                 {/* Showing the latest log that can be edited as an option. */}
-                {logs ? (
+                {logs && logs[0] ? (
                   <>
                     <p onClick={() => setCurrentLog(logs[0])}>
                       {logs ? logs[0].createdAt.toDateString() : ""}
