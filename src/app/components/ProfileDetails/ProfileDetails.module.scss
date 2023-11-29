@@ -1,0 +1,46 @@
+@use "../../utilties/elements";
+@use "../../utilties/font";
+
+$line: none;
+
+.mainWrapper {
+  border: $line black;
+  width: 80%;
+  max-width: 40rem;
+}
+.photoWrapper {
+  border: $line red;
+}
+
+.detailsWrapper {
+  border: $line green;
+}
+
+// Headings styles
+.heading {
+  @extend %boldBlueUnderlined;
+}
+
+// individual details styling
+.individualContainer {
+  border: $line blue;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
+// Each details heading and data styles
+.title,
+.data {
+  border: $line gray;
+}
+.title {
+  @extend %smallHeadingText;
+}
+
+.data {
+  width: 70%;
+  text-align: center;
+  padding: 0.5rem;
+  @extend %inputField;
+}
