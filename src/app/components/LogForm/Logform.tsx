@@ -181,7 +181,7 @@ export default function LogForm({ subCategories }: LogFormTypes) {
                       {/* NOTE: So that only the entry field for that specific entry opens, we have to check  */}
                       {/* the current entry matches one of the entries in the list. */}
                       {showEditEntry && entry.id === currentEntry.id ? (
-                        // This will be shown when the edit button is
+                        // This will be shown when the edit button is selected.
                         <Form
                           onSubmit={(e) => {
                             setShowEditEntry(false);

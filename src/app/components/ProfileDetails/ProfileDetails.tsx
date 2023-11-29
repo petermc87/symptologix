@@ -1,8 +1,9 @@
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
-import { Button } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import CreateSubscriber from "../../../../actions/subscriberCalls/createSubscriber";
 import UpdateSubscriber from "../../../../actions/subscriberCalls/updatesubscriber";
+import UpdateUser from "../../../../actions/userRequests/updateUser";
 import { User } from "../../../../typings";
 import styles from "./ProfileDetails.module.scss";
 
@@ -13,7 +14,15 @@ export default function ProfileDetails() {
   // Saving just the user data to a variable.
   const user: User | undefined = data?.user;
 
-  // console.log(user);
+  // Field for updating selected data.
+  const [updateField, setUpdateField] = useState<boolean>(false);
+
+  // Data title being updated.
+  const [title, setTitle] = useState<string>("");
+
+  // State for holding the updated user.
+  const [updatedUser, setUpdatedUser] = useState<User | null>(null);
+
   // UseEffect will instigate the subscriber backend function
   // for testing.
   useEffect(() => {
@@ -27,9 +36,19 @@ export default function ProfileDetails() {
     }
   }, [user]);
 
+  // Check if the session data updates after an item within the
+  // data is updated below.
+  console.log(updatedUser);
+
   // Test update subscriber.
   const handleUpdateSubscriber = (newName: string) => {
     UpdateSubscriber(newName, user?.email as string, user?.id as string);
+  };
+
+  // Update user.
+  const handleUpdateUser = async (e: any) => {
+    e.preventDefault();
+    await UpdateUser(user?.id as string, updatedUser as any);
   };
 
   return (
@@ -42,7 +61,71 @@ export default function ProfileDetails() {
         <h3 className={styles.heading}>Details</h3>
         <div className={styles.individualContainer}>
           <div className={styles.title}>Name</div>
-          <div className={styles.data}>{user?.name}</div>
+          {/* Create edit entry for this one first. Make sure it updates */}
+          {/* in the database as well as in Novu. */}
+
+          {updateField && title === "name" ? (
+            <Form
+              onSubmit={(e) => {
+                console.log("hurray!");
+                setUpdateField(false);
+                handleUpdateUser(e);
+              }}
+              key={Math.floor(Math.random() * 10) + 1}
+            >
+              <Form.Group>
+                <Form.Control
+                  value={user?.name}
+                  placeholder="name"
+                  onChange={(e) => {
+                    setUpdatedUser({
+                      ...updatedUser,
+                      name: e.target.value,
+                    });
+                  }}
+                />
+                <div
+                  onClick={() => {
+                    setUpdateField(false);
+                  }}
+                >
+                  X
+                </div>
+              </Form.Group>
+            </Form>
+          ) : (
+            <div className={styles.data}>{user?.name}</div>
+          )}
+          <Button
+            style={{
+              backgroundColor: "#1071e5",
+              borderColor: "#1071e5",
+              borderRadius: "8px",
+              padding: "2px",
+              margin: "2px",
+            }}
+            onClick={() => {
+              setTitle("name");
+              setUpdateField(true);
+              // Set id for the selected entry.
+            }}
+            //--- EDIT BUTTON ICON ---//
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-pencil-square"
+              viewBox="0 0 16 16"
+            >
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+              <path
+                fill-rule="evenodd"
+                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+              />
+            </svg>
+          </Button>
         </div>
         <div className={styles.individualContainer}>
           <div className={styles.title}>UserName</div>
