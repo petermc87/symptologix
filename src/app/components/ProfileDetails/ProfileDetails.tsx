@@ -9,7 +9,7 @@ import styles from "./ProfileDetails.module.scss";
 
 export default function ProfileDetails() {
   // Get user data to be added to the subscriber.
-  const { data } = useSession();
+  const { data, update } = useSession();
 
   // Saving just the user data to a variable.
   const user: User | undefined = data?.user;
@@ -21,7 +21,7 @@ export default function ProfileDetails() {
   const [title, setTitle] = useState<string>("");
 
   // State for holding the updated user.
-  const [updatedUser, setUpdatedUser] = useState<User | null | undefined>(user);
+  const [updatedUser, setUpdatedUser] = useState<User | null | undefined>(null);
 
   // UseEffect will instigate the subscriber backend function
   // for testing.
@@ -48,12 +48,14 @@ export default function ProfileDetails() {
   // Update user.
   const handleUpdateUser = async (e: any) => {
     e.preventDefault();
-    //TEST: Check if the updatedUser is visble inside the funciton.
-    console.log(updatedUser);
+
     // Pass in the current field being edited. This will determine what update
     // need to happen in the backend.
-    await UpdateUser(updatedUser as User | any);
-    console.log(user);
+    await UpdateUser(updatedUser?.name as string, title, user?.id as string);
+
+    // Get the user and update the session data here using update() function
+    // baked into next-auth.
+    update({ name: updatedUser?.name });
   };
 
   return (
@@ -75,10 +77,12 @@ export default function ProfileDetails() {
                 setUpdateField(false);
                 handleUpdateUser(e);
               }}
-              key={Math.floor(Math.random() * 10) + 1}
+              key={12345678}
             >
               <Form.Group>
                 <Form.Control
+                  // Taking the updatedUser (just the name) and
+                  // passing it in as the current value.
                   value={updatedUser?.name}
                   placeholder="name"
                   onChange={(e) => {
@@ -108,8 +112,11 @@ export default function ProfileDetails() {
               padding: "2px",
               margin: "2px",
             }}
+            //we need to set the updated user to here to the current
+            // user object so it can be edited.
             onClick={() => {
               setTitle("name");
+              setUpdatedUser(user);
               setUpdateField(true);
               // Set id for the selected entry.
             }}

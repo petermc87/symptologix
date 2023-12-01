@@ -94,11 +94,26 @@ const authOptions: NextAuthOptions = {
     },
 
     // Creating the token. Requires: user id for the tokend id.
-    jwt({ token, account, user }) {
+    jwt({ token, account, trigger, session, user }) {
       if (account) {
         token.accessToken = account.access_token;
         token.id = user.id;
         token.username = (user as User | any).username;
+      }
+
+      // Update for name, username and email in the frontend session data.
+      // NOTE: Each statement had to be a separate if to avoid issues with
+      // logging in.
+      if (trigger === "update" && session?.name) {
+        token.name = session.name;
+      }
+
+      if (trigger === "update" && session?.username) {
+        token.username = session.username;
+      }
+
+      if (trigger === "update" && session?.email) {
+        token.email = session.email;
       }
       return token;
     },
