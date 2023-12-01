@@ -36,13 +36,13 @@ export default function ProfileDetails() {
     }
   }, [user]);
 
-  // Check if the session data updates after an item within the
-  // data is updated below.
-  // console.log(updatedUser);
-
   // Test update subscriber.
-  const handleUpdateSubscriber = (newName: string) => {
-    UpdateSubscriber(newName, user?.email as string, user?.id as string);
+  const handleUpdateSubscriber = async () => {
+    await UpdateSubscriber(
+      user?.name as string,
+      user?.email as string,
+      user?.id as string
+    );
   };
 
   // Update user.
@@ -56,6 +56,7 @@ export default function ProfileDetails() {
     // Get the user and update the session data here using update() function
     // baked into next-auth.
     update({ name: updatedUser?.name });
+    handleUpdateSubscriber();
   };
 
   return (
@@ -77,7 +78,7 @@ export default function ProfileDetails() {
                 setUpdateField(false);
                 handleUpdateUser(e);
               }}
-              key={12345678}
+              key={user?.id as string}
             >
               <Form.Group>
                 <Form.Control
