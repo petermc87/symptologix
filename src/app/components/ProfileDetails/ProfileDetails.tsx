@@ -21,7 +21,7 @@ export default function ProfileDetails() {
   const [title, setTitle] = useState<string>("");
 
   // State for holding the updated user.
-  const [updatedUser, setUpdatedUser] = useState<User | null>(null);
+  const [updatedUser, setUpdatedUser] = useState<User | null | undefined>(user);
 
   // UseEffect will instigate the subscriber backend function
   // for testing.
@@ -38,7 +38,7 @@ export default function ProfileDetails() {
 
   // Check if the session data updates after an item within the
   // data is updated below.
-  console.log(updatedUser);
+  // console.log(updatedUser);
 
   // Test update subscriber.
   const handleUpdateSubscriber = (newName: string) => {
@@ -48,7 +48,12 @@ export default function ProfileDetails() {
   // Update user.
   const handleUpdateUser = async (e: any) => {
     e.preventDefault();
-    await UpdateUser(user?.id as string, updatedUser as any);
+    //TEST: Check if the updatedUser is visble inside the funciton.
+    console.log(updatedUser);
+    // Pass in the current field being edited. This will determine what update
+    // need to happen in the backend.
+    await UpdateUser(updatedUser as User | any);
+    console.log(user);
   };
 
   return (
@@ -67,7 +72,6 @@ export default function ProfileDetails() {
           {updateField && title === "name" ? (
             <Form
               onSubmit={(e) => {
-                console.log("hurray!");
                 setUpdateField(false);
                 handleUpdateUser(e);
               }}
@@ -75,7 +79,7 @@ export default function ProfileDetails() {
             >
               <Form.Group>
                 <Form.Control
-                  value={user?.name}
+                  value={updatedUser?.name}
                   placeholder="name"
                   onChange={(e) => {
                     setUpdatedUser({

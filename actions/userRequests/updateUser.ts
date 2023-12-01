@@ -1,25 +1,28 @@
 "use server";
-
 import db from "@/app/modules/db";
-import { User } from "../../typings";
-
 type typesForUser = {
-  updatedUser: User | any;
+  id?: string;
+  name?: string;
+  username?: string;
+  email?: string;
 };
 
-export default async function UpdateUser(
-  id: string,
-  { updatedUser }: typesForUser
-) {
+export default async function UpdateUser({
+  id,
+  name,
+  username,
+  email,
+}: typesForUser) {
+  console.log(id, name, username, email);
   await db.user.update({
     where: {
       id: id,
     },
 
     data: {
-      name: updatedUser.name,
-      username: updatedUser.username,
-      email: updatedUser.email,
+      name: name,
+      username: username,
+      email: email,
     },
   });
 }
