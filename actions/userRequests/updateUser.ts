@@ -37,7 +37,7 @@ export default async function UpdateUser(
         username: item,
       },
     });
-  } else {
+  } else if (type === "email") {
     user = await db.user.update({
       where: {
         id: id,

@@ -84,12 +84,12 @@ export default function ProfileDetails() {
     setUpdatedUser(null);
   };
 
-  //Check the user data coming in.
-  console.log("user data", user);
-  // Check the updatedUser as it is being updated.
-  console.log("udpated user data", updatedUser);
-  // The current selected title.
-  console.log(title);
+  // //Check the user data coming in.
+  // console.log("user data", user);
+  // // Check the updatedUser as it is being updated.
+  // console.log("udpated user data", updatedUser);
+  // // The current selected title.
+  // console.log(title);
 
   return (
     <div className={styles.mainWrapper}>
@@ -210,11 +210,18 @@ export default function ProfileDetails() {
                   //we need to set the updated user to here to the current
                   // user object so it can be edited.
                   onClick={() => {
-                    // Set the current selected componentName
-                    setTitle(componentName);
-                    setUpdatedUser(user);
-                    setUpdateField(true);
-                    // Set id for the selected entry.
+                    // Will open the edit field if it isnt open already.
+                    if (!updateField) {
+                      // Set the current selected componentName
+                      setTitle(componentName);
+                      setUpdatedUser(user);
+                      setUpdateField(true);
+                      // Set id for the selected entry.
+                    } else {
+                      setTitle("");
+                      setUpdatedUser(null);
+                      setUpdateField(false);
+                    }
                   }}
                   //--- EDIT BUTTON ICON ---//
                 >
