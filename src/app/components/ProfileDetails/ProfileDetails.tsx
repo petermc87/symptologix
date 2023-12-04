@@ -72,16 +72,24 @@ export default function ProfileDetails() {
 
       // Get the user and update the session data here using update() function
       // baked into next-auth.
-      update({ name: updatedUser?.username });
+      update({ username: updatedUser?.username });
     } else {
       await UpdateUser(updatedUser?.email as string, title, user?.id as string);
 
       // Get the user and update the session data here using update() function
       // baked into next-auth.
-      update({ name: updatedUser?.email });
+      update({ email: updatedUser?.email });
     }
     handleUpdateSubscriber();
+    setUpdatedUser(null);
   };
+
+  //Check the user data coming in.
+  console.log("user data", user);
+  // Check the updatedUser as it is being updated.
+  console.log("udpated user data", updatedUser);
+  // The current selected title.
+  console.log(title);
 
   return (
     <div className={styles.mainWrapper}>
@@ -96,9 +104,6 @@ export default function ProfileDetails() {
         {/* These are all identical components in terms of their stlying. */}
         {detailsComponents.map((componentName, i: number) => {
           // console.log(user?.id + componentName);
-
-          // Check if the title and componentName are the same.
-          console.log(title, componentName);
           return (
             <>
               <div className={styles.individualContainer}>
@@ -123,9 +128,11 @@ export default function ProfileDetails() {
                           <Form.Control
                             // Taking the updatedUser (just the name) and
                             // passing it in as the current value.
+                            key={user?.id + "1"}
                             value={updatedUser?.name}
                             placeholder="input"
                             onChange={(e) => {
+                              console.log("name selected", updatedUser?.name);
                               setUpdatedUser({
                                 ...updatedUser,
                                 name: e.target.value,
@@ -136,12 +143,17 @@ export default function ProfileDetails() {
                           <Form.Control
                             // Taking the updatedUser (just the name) and
                             // passing it in as the current value.
+                            key={user?.id + "2"}
                             value={updatedUser?.username}
                             placeholder="input"
                             onChange={(e) => {
+                              console.log(
+                                "username selected",
+                                updatedUser?.username
+                              );
                               setUpdatedUser({
                                 ...updatedUser,
-                                name: e.target.value,
+                                username: e.target.value,
                               });
                             }}
                           />
@@ -149,12 +161,13 @@ export default function ProfileDetails() {
                           <Form.Control
                             // Taking the updatedUser (just the name) and
                             // passing it in as the current value.
+                            key={user?.id + "3"}
                             value={updatedUser?.email}
                             placeholder="input"
                             onChange={(e) => {
                               setUpdatedUser({
                                 ...updatedUser,
-                                name: e.target.value,
+                                email: e.target.value,
                               });
                             }}
                           />
@@ -163,6 +176,7 @@ export default function ProfileDetails() {
                         <div
                           onClick={() => {
                             setUpdateField(false);
+                            setUpdatedUser(null);
                           }}
                         >
                           X
