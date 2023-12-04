@@ -144,7 +144,7 @@ export default function ProfileDetails() {
                             // Taking the updatedUser (just the name) and
                             // passing it in as the current value.
                             key={user?.id + "2"}
-                            value={updatedUser?.username}
+                            value={updatedUser?.username as string}
                             placeholder="input"
                             onChange={(e) => {
                               console.log(

@@ -28,8 +28,24 @@ export default async function UpdateUser(
         name: item,
       },
     });
-
-    console.log(user);
+  } else if (type === "username") {
+    user = await db.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        username: item,
+      },
+    });
+  } else {
+    user = await db.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        email: item,
+      },
+    });
   }
 }
 
