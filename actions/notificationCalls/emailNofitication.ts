@@ -1,22 +1,31 @@
+"use server";
+
 import { Novu } from "@novu/node";
 
 // NOTES: Have a notification procedure setup based on the
 // user preference. Ex. if the user wants to log three times
-// a day,
+// a day, we automatically set this for everyday up until the
+// specified end date.
 
-export default async function NotificationEmail() {
+export default async function NotificationEmail(id: string, email: string) {
   const novu = new Novu(`${process.env.NOVU_API}`);
+
+  // Add the current date/time UTC string to the payload
+  // on trigger of this function.
+
+  // Get the current date/time in UTC format.
+  let now = new Date().toISOString();
 
   novu.trigger("event-reminder", {
     to: {
-      subscriberId: "<REPLACE_WITH_DATA>",
-      email: "<REPLACE_WITH_DATA>",
+      subscriberId: id,
+      email: email,
     },
     payload: {
       // Pass in the required field (event name & date)
-      eventName: "<REPLACE_WITH_DATA>",
-      eventDate: "<REPLACE_WITH_DATA>",
-      rsvpLink: "<REPLACE_WITH_DATA>",
+      eventName: "Placeholder",
+      eventDate: now,
+      rsvpLink: "localhost:3000",
       "": "<REPLACE_WITH_DATA>",
     },
   });
