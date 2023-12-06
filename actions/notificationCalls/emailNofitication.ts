@@ -25,7 +25,7 @@ export default async function NotificationEmail(id: string, email: string) {
       // Pass in the required field (event name & date)
       eventName: "Placeholder",
       eventDate: now,
-      rsvpLink: "localhost:3000",
+      rsvpLink: "http://localhost:3000/",
       "": "<REPLACE_WITH_DATA>",
     },
   });
