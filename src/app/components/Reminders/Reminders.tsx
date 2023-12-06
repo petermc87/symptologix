@@ -27,25 +27,56 @@ export default function Reminders() {
   // 2. Convert the inputted times to a number format that can be
   // used in the algorithm.
 
-  const handleDailyIntervals = (e: any) => {
-    e.preventDefault();
-    // Have another function within this to run based on the
-    // trigger update.
+  // const handleDailyIntervals = (e: any) => {
+  //   e.preventDefault();
+  //   // Have another function within this to run based on the
+  //   // trigger update.
 
+  //   function triggerNotifications() {
+  //     const window = () => alert("dfgdfgdfg");
+  //     setTimeout(window, 1000);
+  //   }
+  //   // 1. Setup a set trigger first to determine if it works.
+  //   // setInterval(triggerNotifications, 10000);
+
+  //   // 2. Trigger the notification once per day until a certain date.
+  //   // have this work when the app is closed
+  //   const endDate = new Date("12-08-2023");
+
+  //   // 3. Schedule it to go off a certain number of times a day.
+  //   // NOTE: The first one will go off in the future as the
+  //   // difference between now and when the time occurs again.
+  //   // https://www.google.com/search?q=get+a+function+to+go+off+at+selected+times+everyday+javascript&oq=get+a+function+to+go+off+at+selected+times+everyday+ja&gs_lcrp=EgZjaHJvbWUqBwgBECEYoAEyBggAEEUYOTIHCAEQIRigATIHCAIQIRigAdIBCTE1OTEyajBqN6gCALACAA&sourceid=chrome&ie=UTF-8
+  // };
+
+  let intervalId: any;
+
+  const handleDailyIntervals = (e: any, bool: boolean) => {
+    console.log(bool);
+
+    e.preventDefault(e);
+    // Notification that pops up.
     function triggerNotifications() {
-      console.log("Timed Intervals");
-
       const window = () => alert("dfgdfgdfg");
-
-      setTimeout(window, 1000);
+      setTimeout(window, 100);
     }
 
-    setInterval(triggerNotifications, 10000);
+    // Check the boolean here. If its true,
+    // clear the interval.
+    if (bool === true) {
+      clearInterval(intervalId);
+    } else {
+      // Create the daily interval.
+      intervalId = setInterval(triggerNotifications, 10000);
+    }
 
-    // 1. Setup a set trigger first to determine if it works.
-    // 2. Schedule it to go off a certain number of times a day
-    // NOTE: The first one will go off in the future as the
-    // difference between now and when the time occurs again.
+    // Set the end of the notifications.
+    const endDate = new Date("12-07-2023");
+
+    // Check this against the end date
+    if (new Date() >= endDate || bool === true) {
+      clearInterval(intervalId);
+    }
   };
 
   // Handler function for the notification.
@@ -61,7 +92,12 @@ export default function Reminders() {
   return (
     <>
       <Button onClick={(e) => handleNotification(e)}>Send Notification</Button>
-      <Button onClick={(e) => handleDailyIntervals(e)}>Timed intervals</Button>
+      <Button onClick={(e) => handleDailyIntervals(e, false)}>
+        Set intervals
+      </Button>
+      <Button onClick={(e) => handleDailyIntervals(e, true)}>
+        Delete intervals
+      </Button>
     </>
   );
 }
