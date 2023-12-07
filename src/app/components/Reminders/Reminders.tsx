@@ -13,23 +13,16 @@ import NotificationEmail from "../../../../actions/notificationCalls/emailNofiti
 import { User } from "../../../../typings";
 
 export default function Reminders() {
-  // // Add service worker at the top level here.
-  // useEffect(() => {
-  //   // Checking if the service worker is available in the browser.
-  //   if ("serviceWorker" in navigator) {
-  //     navigator.serviceWorker
-  //       // Registering the service worker in the browser. Go to inspect tools > application > service workers
-  //       .register("/service-worker.js")
-  //       .then((registration) => console.log("scope is: ", registration.scope));
-  //   }
-  // }, []);
-
   // Consume the useSession data here.
   const { data } = useSession();
+
   let currentUser: User;
   if (data) {
     currentUser = data?.user;
   }
+
+  // TEST: Check if the jwt is visible here.
+  // console.log(accessToken);
 
   // Create a function that will perform the notification 3 times.
   // 1. Make sure to have it run when the app has been closed - use window.addEventListner(unload, function(){//code here})
@@ -51,71 +44,75 @@ export default function Reminders() {
   };
 
   let intervalId: any;
-  const handleDailyIntervals = (e: any, bool: boolean) => {
-    e.preventDefault(e);
+  // const handleDailyIntervals = (e: any, bool: boolean) => {
+  //   e.preventDefault(e);
 
-    // TEST: Parameters passed in. PASS!
-    // console.log(bool);
+  //   // TEST: Parameters passed in. PASS!
+  //   // console.log(bool);
 
-    // Notification that pops up.
-    function triggerNotifications() {
-      // const window = () => alert("dfgdfgdfg");
-      // setTimeout(window, 100);
-      handleNotification(e);
-    }
+  //   // Notification that pops up.
+  //   function triggerNotifications() {
+  //     // const window = () => alert("dfgdfgdfg");
+  //     // setTimeout(window, 100);
+  //     handleNotification(e);
+  //   }
 
-    // Check the boolean here. If its true,
-    // clear the interval.
-    if (bool === true) {
-      clearInterval(intervalId);
-    } else {
-      // Create the daily interval.
-      intervalId = setInterval(triggerNotifications, 10000);
-      // TEST: Event triggered and interval created. PASS!
-      // console.log("triggered", intervalId);
-    }
+  //   // Check the boolean here. If its true,
+  //   // clear the interval.
+  //   if (bool === true) {
+  //     clearInterval(intervalId);
+  //   } else {
+  //     // Create the daily interval.
+  //     intervalId = setInterval(triggerNotifications, 10000);
+  //     // TEST: Event triggered and interval created. PASS!
+  //     // console.log("triggered", intervalId);
+  //   }
 
-    // Set the end of the notifications.
-    const endDate = new Date("12-08-2023");
+  //   // Set the end of the notifications.
+  //   const endDate = new Date("12-08-2023");
 
-    // TEST: Get the current date + 24hrs.
-    // Get today.
-    const today = new Date();
-    // Add 24hrs in milliseconds.
-    const nextDay = new Date(today.getTime() + 24 * 60 * 60 * 1000);
-    console.log(nextDay);
+  //   // TEST: Get the current date + 24hrs.
+  //   // Get today.
+  //   const today = new Date();
+  //   // Add 24hrs in milliseconds.
+  //   const nextDay = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+  //   console.log(nextDay);
 
-    // Check right now against the end date
-    if (new Date() >= endDate) {
-      clearInterval(intervalId);
-    }
-  };
+  //   // Check right now against the end date
+  //   if (new Date() >= endDate) {
+  //     clearInterval(intervalId);
+  //   }
+  // };
 
   // Create a separate function to perform the service worker setup
   // and function call to create notification intervals.
-  const handleServiceWorker = (e: any, bool: boolean) => {
-    e.preventDefault();
-    // Add service worker at the top level here.
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        // Registering the service worker in the browser. Go to inspect tools > application > service workers
-        .register("/service-worker.js")
-        .then((registration) => {
-          console.log("scope is: ", registration.scope);
-          handleDailyIntervals(e, bool);
-        });
-    }
-  };
+  // const handleServiceWorker = (e: any, bool: boolean) => {
+  //   e.preventDefault();
+  //   // Add service worker at the top level here.
+  //   if ("serviceWorker" in navigator) {
+  //     navigator.serviceWorker
+  //       // Registering the service worker in the browser. Go to inspect tools > application > service workers
+  //       .register("/service-worker.js")
+  //       .then((registration) => {
+  //         // console.log("scope is: ", registration.scope);
+  //         registration.pushManager.subscribe({
+  //           userVisibleOnly: true,
+  //           applicationServerKey,
+  //         });
+  //         handleDailyIntervals(e, bool);
+  //       });
+  //   }
+  // };
 
   return (
     <>
       <Button onClick={(e) => handleNotification(e)}>Send Notification</Button>
-      <Button onClick={(e) => handleServiceWorker(e, false)}>
+      {/* <Button onClick={(e) => handleServiceWorker(e, false)}>
         Set intervals
       </Button>
       <Button onClick={(e) => handleServiceWorker(e, true)}>
         Delete intervals
-      </Button>
+      </Button> */}
     </>
   );
 }
