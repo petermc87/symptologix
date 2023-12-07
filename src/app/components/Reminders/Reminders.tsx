@@ -13,52 +13,55 @@ import NotificationEmail from "../../../../actions/notificationCalls/emailNofiti
 import { User } from "../../../../typings";
 
 export default function Reminders() {
+  // // Add service worker at the top level here.
+  // useEffect(() => {
+  //   // Checking if the service worker is available in the browser.
+  //   if ("serviceWorker" in navigator) {
+  //     navigator.serviceWorker
+  //       // Registering the service worker in the browser. Go to inspect tools > application > service workers
+  //       .register("/service-worker.js")
+  //       .then((registration) => console.log("scope is: ", registration.scope));
+  //   }
+  // }, []);
+
   // Consume the useSession data here.
   const { data } = useSession();
-
   let currentUser: User;
-
   if (data) {
     currentUser = data?.user;
   }
 
   // Create a function that will perform the notification 3 times.
   // 1. Make sure to have it run when the app has been closed - use window.addEventListner(unload, function(){//code here})
+  // 1.1. Use this resource to create a serviceWorker: https://blog.logrocket.com/implementing-service-workers-next-js/
   // 2. Convert the inputted times to a number format that can be
-  // used in the algorithm.
+  // used in the algorithm: Follow this: https://www.google.com/search?q=get+a+function+to+go+off+at+selected+times+everyday+javascript&oq=get+a+function+to+go+off+at+selected+times+everyday+ja&gs_lcrp=EgZjaHJvbWUqBwgBECEYoAEyBggAEEUYOTIHCAEQIRigATIHCAIQIRigAdIBCTE1OTEyajBqN6gCALACAA&sourceid=chrome&ie=UTF-8
 
-  // const handleDailyIntervals = (e: any) => {
-  //   e.preventDefault();
-  //   // Have another function within this to run based on the
-  //   // trigger update.
+  // Handler function for the notification.
+  const handleNotification = async (e: any) => {
+    e.preventDefault();
 
-  //   function triggerNotifications() {
-  //     const window = () => alert("dfgdfgdfg");
-  //     setTimeout(window, 1000);
-  //   }
-  //   // 1. Setup a set trigger first to determine if it works.
-  //   // setInterval(triggerNotifications, 10000);
-
-  //   // 2. Trigger the notification once per day until a certain date.
-  //   // have this work when the app is closed
-  //   const endDate = new Date("12-08-2023");
-
-  //   // 3. Schedule it to go off a certain number of times a day.
-  //   // NOTE: The first one will go off in the future as the
-  //   // difference between now and when the time occurs again.
-  //   // https://www.google.com/search?q=get+a+function+to+go+off+at+selected+times+everyday+javascript&oq=get+a+function+to+go+off+at+selected+times+everyday+ja&gs_lcrp=EgZjaHJvbWUqBwgBECEYoAEyBggAEEUYOTIHCAEQIRigATIHCAIQIRigAdIBCTE1OTEyajBqN6gCALACAA&sourceid=chrome&ie=UTF-8
-  // };
+    // Test if current user has no type errors.
+    if (currentUser) {
+      await NotificationEmail(
+        currentUser?.id as string,
+        currentUser?.email as string
+      );
+    }
+  };
 
   let intervalId: any;
-
   const handleDailyIntervals = (e: any, bool: boolean) => {
-    console.log(bool);
-
     e.preventDefault(e);
+
+    // TEST: Parameters passed in. PASS!
+    // console.log(bool);
+
     // Notification that pops up.
     function triggerNotifications() {
-      const window = () => alert("dfgdfgdfg");
-      setTimeout(window, 100);
+      // const window = () => alert("dfgdfgdfg");
+      // setTimeout(window, 100);
+      handleNotification(e);
     }
 
     // Check the boolean here. If its true,
@@ -68,34 +71,49 @@ export default function Reminders() {
     } else {
       // Create the daily interval.
       intervalId = setInterval(triggerNotifications, 10000);
+      // TEST: Event triggered and interval created. PASS!
+      // console.log("triggered", intervalId);
     }
 
     // Set the end of the notifications.
-    const endDate = new Date("12-07-2023");
+    const endDate = new Date("12-08-2023");
 
-    // Check this against the end date
-    if (new Date() >= endDate || bool === true) {
+    // TEST: Get the current date + 24hrs.
+    // Get today.
+    const today = new Date();
+    // Add 24hrs in milliseconds.
+    const nextDay = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+    console.log(nextDay);
+
+    // Check right now against the end date
+    if (new Date() >= endDate) {
       clearInterval(intervalId);
     }
   };
 
-  // Handler function for the notification.
-  const handleNotification = async (e: any) => {
+  // Create a separate function to perform the service worker setup
+  // and function call to create notification intervals.
+  const handleServiceWorker = (e: any, bool: boolean) => {
     e.preventDefault();
-
-    // Test if current user has no type errors.
-    if (currentUser) {
-      await NotificationEmail(currentUser?.id, currentUser?.email);
+    // Add service worker at the top level here.
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        // Registering the service worker in the browser. Go to inspect tools > application > service workers
+        .register("/service-worker.js")
+        .then((registration) => {
+          console.log("scope is: ", registration.scope);
+          handleDailyIntervals(e, bool);
+        });
     }
   };
 
   return (
     <>
       <Button onClick={(e) => handleNotification(e)}>Send Notification</Button>
-      <Button onClick={(e) => handleDailyIntervals(e, false)}>
+      <Button onClick={(e) => handleServiceWorker(e, false)}>
         Set intervals
       </Button>
-      <Button onClick={(e) => handleDailyIntervals(e, true)}>
+      <Button onClick={(e) => handleServiceWorker(e, true)}>
         Delete intervals
       </Button>
     </>
