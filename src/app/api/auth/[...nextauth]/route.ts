@@ -97,6 +97,7 @@ const authOptions: NextAuthOptions = {
     jwt({ token, account, trigger, session, user }) {
       if (account) {
         token.accessToken = account.access_token;
+
         token.id = user.id;
         token.username = (user as User | any).username;
       }
