@@ -71,3 +71,5 @@ Below shows a typical logging step using a wireflow. It shows steps to create a 
 9.  [Detailed Dotted Line](https://kovart.github.io/dashed-border-generator/)
 
 10. [Service Worker with NextJS](https://blog.logrocket.com/implementing-service-workers-next-js/)
+
+11. [Convert NextJS to PWA](https://medium.com/@2018.itsuki/convert-a-next-js-app-to-a-progressive-web-app-119d736bbcf)
