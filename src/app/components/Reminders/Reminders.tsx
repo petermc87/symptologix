@@ -37,6 +37,8 @@ export default function Reminders() {
 
     // Test if current user has no type errors.
     if (currentUser) {
+      // TEST: If the notification email was fired. Pass!
+      console.log("Notification Email");
       await NotificationEmail(
         currentUser?.id as string,
         currentUser?.email as string
@@ -55,24 +57,38 @@ export default function Reminders() {
     function triggerNotifications() {
       // const window = () => alert("dfgdfgdfg");
       // setTimeout(window, 100);
+      // TEST: See if the notification fired in the daily intervals. Pass!
+      console.log("Notification Triggered in Daily Notifications.");
       handleNotification(e);
     }
 
+    // TEST: The intervalId
     // Check the boolean here. If its true,
     // clear the interval.
     if (bool === true) {
       clearInterval(intervalId);
+      // TEST: Has the intervalId cleared?
+      intervalId = 0;
+      console.log(intervalId);
     } else {
       // Create the daily interval.
-      intervalId = setInterval(triggerNotifications, 10000);
-      // TEST: Event triggered and interval created. PASS!
-      console.log("triggered", intervalId);
+      if (intervalId === 0) {
+        document.onvisibilitychange = () => {
+          intervalId = setInterval(triggerNotifications, 10000);
+          // TEST: Event triggered and interval created. PASS!
+          console.log("triggered", intervalId);
+        };
+      } else {
+        console.log(
+          "You already have an active notification interval. Please delete the current notification interval to create a new one."
+        );
+      }
     }
 
     // Set the end of the notifications.
-    const endDate = new Date("12-08-2023");
+    const endDate = new Date("12-09-2023");
 
-    // TEST: Get the current date + 24hrs.
+    // TEST: Get the current date + 24hrs. Pass!
     // Get today.
     const today = new Date();
     // Add 24hrs in milliseconds.
@@ -85,52 +101,54 @@ export default function Reminders() {
     }
   };
 
-  // the applicationServerKey be
-
-  // Create a separate function to perform the service worker setup
-  // and function call to create notification intervals.
-  const handleServiceWorker = (e: any, bool: boolean) => {
-    e.preventDefault();
-    // Add service worker at the top level here.
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        // Registering the service worker in the browser. Go to inspect tools > application > service workers
-        .register("/service-worker.js", { scope: "/register" })
-        .then((registration) => {
-          console.log("scope is: ", registration.scope);
-          // ISSUE: Causing the database to drop out.
-          registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            // applicationServerKey,
-          });
-          self.addEventListener("push", (event) => {
-            event.preventDefault();
-            handleDailyIntervals(e, bool);
-          });
-
-          // window.addEventListener("unload", async () => {
-          //   // TEST: Check if this works.
-          //   console.log("beforeunload");
-
-          //   try {
-          //     await handleDailyIntervals(e, bool);
-          //   } catch (error) {
-          //     console.error(error);
-          //   }
-          // });
-        });
-    }
-  };
-
   return (
     <>
       <Button onClick={(e) => handleNotification(e)}>Send Notification</Button>
-      <Button onClick={(e) => handleServiceWorker(e, false)}>
+      <Button onClick={(e) => handleDailyIntervals(e, false)}>
         Set intervals
       </Button>
-      <Button onClick={(e) => handleServiceWorker(e, true)}>
+      <Button onClick={(e) => handleDailyIntervals(e, true)}>
         Delete intervals
       </Button>
     </>
   );
 }
+
+// // Create a separate function to perform the service worker setup
+// // and function call to create notification intervals.
+// const handleServiceWorker = (e: any, bool: boolean) => {
+//   e.preventDefault();
+//   // Add service worker at the top level here.
+//   if ("serviceWorker" in navigator) {
+//     navigator.serviceWorker
+//       // Registering the service worker in the browser. Go to inspect tools > application > service workers
+//       .register("/service-worker.js", { scope: "/settings" })
+//       .then((registration) => {
+//         console.log("scope is: ", registration.scope);
+//         // TEST: Check if the bool is getting passed in. Pass!
+//         // console.log(bool);
+//         handleDailyIntervals(e, bool);
+//       });
+//   }
+// };
+// SERVICE WORKER ORIGINAL CODE.
+// // ISSUE: Causing the database to drop out.
+// registration.pushManager.subscribe({
+//   userVisibleOnly: true,
+//   // applicationServerKey,
+// });
+// self.addEventListener("push", (event) => {
+//   event.preventDefault();
+//   handleDailyIntervals(e, bool);
+// });
+
+// window.addEventListener("unload", async () => {
+//   // TEST: Check if this works.
+//   console.log("beforeunload");
+
+//   try {
+//     await handleDailyIntervals(e, bool);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// });

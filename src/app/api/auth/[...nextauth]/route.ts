@@ -1,7 +1,7 @@
 import db from "@/app/modules/db";
 import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, RequestInternal } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -25,18 +25,6 @@ declare module "next-auth" {
   }
 }
 
-// declare module "next-auth" {
-//   type ReturnedUser = {
-//     id: string;
-//     password: string | null | undefined;
-//     email: string | null | undefined;
-//   }
-
-//   type Session {
-
-//   }
-// }
-
 const authOptions: NextAuthOptions = {
   // These could be google, or facebook, etc...
   providers: [
@@ -48,7 +36,10 @@ const authOptions: NextAuthOptions = {
         password: { label: "Password", placeholder: "Enter Password..." },
       },
       // Checking email and password.
-      async authorize(credentials) {
+      async authorize(
+        credentials,
+        _req: Pick<RequestInternal, "body" | "query" | "headers" | "method">
+      ) {
         // No credentials OR email within the credentials OR password will return null.
         if (!credentials || !credentials.email || !credentials.password)
           return null;

@@ -7,16 +7,6 @@ import SolidLine from "../components/SolidLine/SolidLine";
 import styles from "./page.module.scss";
 
 export default function Settings() {
-  // // Add service worker at the top level here.
-  // useEffect(() => {
-  //   // Checking if the service worker is available in the browser.
-  //   if ("serviceWorker" in navigator) {
-  //     navigator.serviceWorker
-  //       // Registering the service worker in the browser. Go to inspect tools > application > service workers
-  //       .register("/service-worker.js")
-  //       .then((registration) => console.log("scope is: ", registration.scope));
-  //   }
-  // }, []);
   return (
     <>
       <NavBar />
