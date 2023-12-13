@@ -8,7 +8,8 @@
 //   3.1. Research how this can be done.
 
 import { useSession } from "next-auth/react";
-import { Button } from "react-bootstrap";
+import { useState } from "react";
+import { Button, Modal } from "react-bootstrap";
 import NotificationEmail from "../../../../actions/notificationCalls/emailNofitication";
 import { User } from "../../../../typings";
 
@@ -30,6 +31,12 @@ export default function Reminders() {
   // 1.1. Use this resource to create a serviceWorker: https://blog.logrocket.com/implementing-service-workers-next-js/
   // 2. Convert the inputted times to a number format that can be
   // used in the algorithm: Follow this: https://www.google.com/search?q=get+a+function+to+go+off+at+selected+times+everyday+javascript&oq=get+a+function+to+go+off+at+selected+times+everyday+ja&gs_lcrp=EgZjaHJvbWUqBwgBECEYoAEyBggAEEUYOTIHCAEQIRigATIHCAIQIRigAdIBCTE1OTEyajBqN6gCALACAA&sourceid=chrome&ie=UTF-8
+
+  // Function for setting the end date.
+  const handleSetDate = () => {};
+
+  // Show date picker modal.
+  const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
 
   // Handler function for the notification.
   const handleNotification = async (e: any) => {
@@ -110,6 +117,29 @@ export default function Reminders() {
       <Button onClick={(e) => handleDailyIntervals(e, true)}>
         Delete intervals
       </Button>
+      <Button
+        onClick={() => {
+          setShowDatePicker(true);
+        }}
+      >
+        Show Modal
+      </Button>
+      {/* Add in the modal that will appear when the date field is selected. */}
+      {/* Here is the resource: https://codesandbox.io/s/react-bootstrap-with-datepicker-vccyc?file=/src/index.js */}
+      {/* Also need to install react datepicker as a dependency */}
+      <Modal
+        show={showDatePicker}
+        onHide={() => {
+          setShowDatePicker(false);
+        }}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Select Date</Modal.Title>
+        </Modal.Header>
+        <Modal.Footer>
+          <Button>Close</Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
