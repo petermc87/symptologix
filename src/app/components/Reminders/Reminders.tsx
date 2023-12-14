@@ -156,6 +156,7 @@ export default function Reminders() {
   );
 }
 
+// //--> SERVICE WORKER ORIGINAL CODE. <--//
 // // Create a separate function to perform the service worker setup
 // // and function call to create notification intervals.
 // const handleServiceWorker = (e: any, bool: boolean) => {
@@ -173,7 +174,7 @@ export default function Reminders() {
 //       });
 //   }
 // };
-// SERVICE WORKER ORIGINAL CODE.
+
 // // ISSUE: Causing the database to drop out.
 // registration.pushManager.subscribe({
 //   userVisibleOnly: true,
