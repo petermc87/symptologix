@@ -137,15 +137,17 @@ export default function Reminders() {
       to be sent. */}
       {/* Create a container that will have the title of the field before the field. */}
       <div className={styles.pickerContainer}>
-        <h4>From</h4>
+        <div className={styles.tag}>From</div>
         <DatePicker
+          className={styles.pickerField}
           selected={fromDate}
           onChange={(date: Date) => setFromDate(date)}
         />
       </div>
       <div className={styles.pickerContainer}>
-        <h4>To</h4>
+        <div className={styles.tag}>To</div>
         <DatePicker
+          className={styles.pickerField}
           selected={toDate}
           onChange={(date: Date) => setToDate(date)}
         />

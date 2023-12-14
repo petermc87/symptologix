@@ -1,9 +1,35 @@
+@use "../../utilties/elements";
+@use "../../utilties/font";
+
 $line: none;
 
+.remindersWrapper {
+  border: $line black;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  button {
+    margin-bottom: 0.4rem;
+  }
+}
 .pickerContainer {
   display: flex;
   justify-content: space-between;
   border: $line red;
-  width: 50%;
+  width: 75%;
   padding: 0.5rem;
+  .tag {
+    width: 45%;
+    @extend %smallHeadingText;
+  }
+  div {
+    input {
+      width: 100%;
+    }
+  }
+}
+
+// The date picker field styled based on standard component.
+.pickerField {
+  @extend %inputField;
 }
