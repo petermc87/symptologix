@@ -1,0 +1,9 @@
+$line: none;
+
+.pickerContainer {
+  display: flex;
+  justify-content: space-between;
+  border: $line red;
+  width: 50%;
+  padding: 0.5rem;
+}

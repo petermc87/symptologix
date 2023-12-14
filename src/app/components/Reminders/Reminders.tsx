@@ -9,7 +9,11 @@
 
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import styles from "./Reminders.module.scss";
+
 import NotificationEmail from "../../../../actions/notificationCalls/emailNofitication";
 import { User } from "../../../../typings";
 
@@ -37,6 +41,12 @@ export default function Reminders() {
 
   // Show date picker modal.
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
+
+  // Date being set from the calendar.
+  const [fromDate, setFromDate] = useState<Date>(new Date());
+
+  // Date being set from the calendar.
+  const [toDate, setToDate] = useState<Date>(new Date());
 
   // Handler function for the notification.
   const handleNotification = async (e: any) => {
@@ -78,7 +88,7 @@ export default function Reminders() {
       intervalId = 0;
       console.log(intervalId);
     } else {
-      // Create the daily interval.
+      // Create the daily interval (only if there isn't one already created.)
       if (intervalId === 0) {
         document.onvisibilitychange = () => {
           intervalId = setInterval(triggerNotifications, 10000);
@@ -93,14 +103,16 @@ export default function Reminders() {
     }
 
     // Set the end of the notifications.
-    const endDate = new Date("12-09-2023");
+    const endDate = new Date("12/09/2023");
+
+    // console.log(endDate);
 
     // TEST: Get the current date + 24hrs. Pass!
     // Get today.
     const today = new Date();
     // Add 24hrs in milliseconds.
     const nextDay = new Date(today.getTime() + 24 * 60 * 60 * 1000);
-    console.log(nextDay);
+    // console.log(nextDay);
 
     // Check right now against the end date
     if (new Date() >= endDate) {
@@ -109,7 +121,7 @@ export default function Reminders() {
   };
 
   return (
-    <>
+    <div className={styles.remindersWrapper}>
       <Button onClick={(e) => handleNotification(e)}>Send Notification</Button>
       <Button onClick={(e) => handleDailyIntervals(e, false)}>
         Set intervals
@@ -117,30 +129,28 @@ export default function Reminders() {
       <Button onClick={(e) => handleDailyIntervals(e, true)}>
         Delete intervals
       </Button>
-      <Button
-        onClick={() => {
-          setShowDatePicker(true);
-        }}
-      >
-        Show Modal
-      </Button>
       {/* Add in the modal that will appear when the date field is selected. */}
       {/* Here is the resource: https://codesandbox.io/s/react-bootstrap-with-datepicker-vccyc?file=/src/index.js */}
       {/* Also need to install react datepicker as a dependency */}
-      <Modal
-        show={showDatePicker}
-        onHide={() => {
-          setShowDatePicker(false);
-        }}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Select Date</Modal.Title>
-        </Modal.Header>
-        <Modal.Footer>
-          <Button>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+      {/* Create styling that will make the text red if they select today or a previous day.
+      i.e. if its today or a day thats gone, then there isnt enough time for notifications
+      to be sent. */}
+      {/* Create a container that will have the title of the field before the field. */}
+      <div className={styles.pickerContainer}>
+        <h4>From</h4>
+        <DatePicker
+          selected={fromDate}
+          onChange={(date: Date) => setFromDate(date)}
+        />
+      </div>
+      <div className={styles.pickerContainer}>
+        <h4>To</h4>
+        <DatePicker
+          selected={toDate}
+          onChange={(date: Date) => setToDate(date)}
+        />
+      </div>
+    </div>
   );
 }
 
