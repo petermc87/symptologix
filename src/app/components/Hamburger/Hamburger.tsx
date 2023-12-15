@@ -1,6 +1,6 @@
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
   NavBarContext,
   NavBarContextTypes,
@@ -20,10 +20,26 @@ export default function Hamburger() {
     NavBarContext
   );
 
+  // Create a toggle state.
+  const [toggle, setToggle] = useState<boolean>(false);
+
   return (
     <div className={styles.hamburgerMenu}>
       {/* This if for toggling on and off the ham menu. */}
-      <input id={styles.menuToggle} type="checkbox" />
+      <input
+        id={styles.menuToggle}
+        type="checkbox"
+        // Creating a toggle boolean so the hamburger menu can be
+        // closed after either login or signup is selected.
+        checked={toggle}
+        onClick={() => {
+          if (toggle) {
+            setToggle(false);
+          } else {
+            setToggle(true);
+          }
+        }}
+      />
       <label className={styles.menuBtn} htmlFor={styles.menuToggle}>
         <span></span>
       </label>
@@ -37,6 +53,7 @@ export default function Hamburger() {
               onClick={() => {
                 setState("login");
                 setShow(true);
+                setToggle(false);
               }}
             >
               <a className={styles.menuItem}>Log In</a>
@@ -45,6 +62,7 @@ export default function Hamburger() {
               onClick={() => {
                 setState("signup");
                 setShow(true);
+                setToggle(false);
               }}
             >
               <a className={styles.menuItem} id={styles.signUp}>
@@ -54,13 +72,28 @@ export default function Hamburger() {
           </>
         ) : (
           <>
-            <li onClick={() => route.push("/home")}>
+            <li
+              onClick={() => {
+                route.push("/home");
+                setToggle(false);
+              }}
+            >
               <a className={styles.menuItem}>New Log</a>
             </li>
-            <li onClick={() => route.push("/previous")}>
+            <li
+              onClick={() => {
+                route.push("/previous");
+                setToggle(false);
+              }}
+            >
               <a className={styles.menuItem}>Previous Logs</a>
             </li>
-            <li onClick={() => route.push("/insights")}>
+            <li
+              onClick={() => {
+                route.push("/insights");
+                setToggle(false);
+              }}
+            >
               <a className={styles.menuItem}>Insights</a>
             </li>
             <li
@@ -72,7 +105,13 @@ export default function Hamburger() {
                 Log Out
               </a>
             </li>
-            <li onClick={() => route.push("/settings")} id={styles.settings}>
+            <li
+              onClick={() => {
+                route.push("/settings");
+                setToggle(false);
+              }}
+              id={styles.settings}
+            >
               <a className={styles.menuItem}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
