@@ -14,6 +14,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Reminders.module.scss";
 
+import saveDates from "../../../../actions/dateRequests/saveDates";
 import NotificationEmail from "../../../../actions/notificationCalls/emailNofitication";
 import { User } from "../../../../typings";
 import {
@@ -51,14 +52,8 @@ export default function Reminders() {
   // Show date picker modal.
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
 
-  // // Date being set from the calendar.
-  // const [fromDate, setFromDate] = useState<Date>(new Date());
-
-  // // Date being set from the calendar.
-  // const [toDate, setToDate] = useState<Date>(new Date());
-
   // Handler function for the notification.
-  const handleNotification = async (e: any) => {
+  async function handleNotification(e: any) {
     e.preventDefault();
 
     // Test if current user has no type errors.
@@ -70,7 +65,7 @@ export default function Reminders() {
         currentUser?.email as string
       );
     }
-  };
+  }
 
   let intervalId: any;
   const handleDailyIntervals = (e: any, bool: boolean) => {
@@ -129,7 +124,6 @@ export default function Reminders() {
     }
   };
 
-  console.log(fromDate, toDate);
   return (
     <div className={styles.remindersWrapper}>
       <Button onClick={(e) => handleNotification(e)}>Send Notification</Button>
@@ -153,7 +147,6 @@ export default function Reminders() {
           selected={fromDate}
           onChange={(date: Date) => setFromDate(date)}
         />
-        <Button>Save</Button>
       </div>
       <div className={styles.pickerContainer}>
         <div className={styles.tag}>To</div>
@@ -162,8 +155,14 @@ export default function Reminders() {
           selected={toDate}
           onChange={(date: Date) => setToDate(date)}
         />
-        <Button>Save</Button>
       </div>
+      <Button
+        onClick={() => {
+          saveDates(toDate, fromDate, currentUser.id as string);
+        }}
+      >
+        Save
+      </Button>
     </div>
   );
 }
