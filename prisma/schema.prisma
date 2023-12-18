@@ -58,3 +58,10 @@ model Category {
   name          String        @unique
   subCategories SubCategory[]
 }
+
+model CalendarDates {
+  id       String   @id @default(cuid())
+  fromDate DateTime
+  toDate   DateTime
+  user     String
+}
