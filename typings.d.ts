@@ -38,6 +38,7 @@ export type Subcategory = {
 };
 
 export type CalendarDates = {
+  id?: string;
   user?: string;
   fromDate: Date;
   toDate: Date;

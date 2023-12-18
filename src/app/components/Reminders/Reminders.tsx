@@ -8,12 +8,13 @@
 //   3.1. Research how this can be done.
 
 import { useSession } from "next-auth/react";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Reminders.module.scss";
 
+import { useContext } from "react";
 import saveDates from "../../../../actions/dateRequests/saveDates";
 import NotificationEmail from "../../../../actions/notificationCalls/emailNofitication";
 import { User } from "../../../../typings";
@@ -26,15 +27,15 @@ export default function Reminders() {
   // Consume the useSession data here.
   const { data } = useSession();
 
-  // Consume the context data for the dates.
-  const { fromDate, setFromDate, toDate, setToDate } = useContext<
-    NavBarContextTypes | any
-  >(NavBarContext);
-
   let currentUser: User;
   if (data) {
     currentUser = data?.user;
   }
+
+  // Consume the context data for the dates.
+  const { fromDate, setFromDate, toDate, setToDate } = useContext<
+    NavBarContextTypes | any
+  >(NavBarContext);
 
   // TEST: Check if the jwt is visible here.
   // const { accessToken } = data;
