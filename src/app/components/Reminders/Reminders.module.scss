@@ -1,7 +1,7 @@
 @use "../../utilties/elements";
 @use "../../utilties/font";
 
-$line: none;
+$line: solid;
 
 .remindersWrapper {
   border: $line black;
@@ -14,9 +14,9 @@ $line: none;
 }
 .pickerContainer {
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   border: $line red;
-  width: 75%;
+  width: 80%;
   padding: 0.5rem;
   .tag {
     width: 45%;
@@ -24,7 +24,7 @@ $line: none;
   }
   div {
     input {
-      width: 100%;
+      width: 90%;
       padding: 0.2rem;
       text-align: center;
     }

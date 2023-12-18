@@ -143,6 +143,7 @@ export default function Reminders() {
           selected={fromDate}
           onChange={(date: Date) => setFromDate(date)}
         />
+        <Button>Save</Button>
       </div>
       <div className={styles.pickerContainer}>
         <div className={styles.tag}>To</div>
@@ -151,6 +152,7 @@ export default function Reminders() {
           selected={toDate}
           onChange={(date: Date) => setToDate(date)}
         />
+        <Button>Save</Button>
       </div>
     </div>
   );
