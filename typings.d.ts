@@ -37,6 +37,12 @@ export type Subcategory = {
   entries?: Entry[];
 };
 
+export type CalendarDates = {
+  user?: string;
+  fromDate: Date;
+  toDate: Date;
+};
+
 //--- Alternate type for storing an array of a specific object. ---//
 // [{ entry, logId, subCategoryId }]: Entry; --> This wouldn;t work because its not tied to
 // the entries key within the Subcategory type.

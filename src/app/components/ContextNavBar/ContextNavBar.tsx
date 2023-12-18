@@ -8,6 +8,10 @@ import { Entry, Log, Subcategory } from "../../../../typings";
 // Export the counter context.
 
 export type NavBarContextTypes = {
+  fromDate: Date | null | undefined;
+  setFromDate: Dispatch<SetStateAction<Date>>;
+  toDate: Date | null | undefined;
+  setToDate: Dispatch<SetStateAction<Date>>;
   show: boolean | null | undefined;
   setShow: Dispatch<SetStateAction<boolean | undefined>>;
   footerNavBarState: boolean | null | undefined;
@@ -35,6 +39,11 @@ export type NavBarContextTypes = {
 export const NavBarContext = createContext<NavBarContextTypes | null>(null);
 
 export default function NavBarProvider(props: any) {
+  // Date being set from the calendar.
+  const [fromDate, setFromDate] = useState<Date>(new Date());
+
+  // Date being set from the calendar.
+  const [toDate, setToDate] = useState<Date>(new Date());
   // Showing the login or signup modal.
   const [show, setShow] = useState<boolean | undefined>(false);
   // Setting the modal type (either login or signup)
@@ -104,6 +113,10 @@ export default function NavBarProvider(props: any) {
         setMostOccurringState,
         mostOccurringCategories,
         setMostOccurringCategories,
+        fromDate,
+        setFromDate,
+        toDate,
+        setToDate,
       }}
     >
       {props.children}

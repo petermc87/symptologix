@@ -8,7 +8,7 @@
 //   3.1. Research how this can be done.
 
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,10 +16,19 @@ import styles from "./Reminders.module.scss";
 
 import NotificationEmail from "../../../../actions/notificationCalls/emailNofitication";
 import { User } from "../../../../typings";
+import {
+  NavBarContext,
+  NavBarContextTypes,
+} from "../ContextNavBar/ContextNavBar";
 
 export default function Reminders() {
   // Consume the useSession data here.
   const { data } = useSession();
+
+  // Consume the context data for the dates.
+  const { fromDate, setFromDate, toDate, setToDate } = useContext<
+    NavBarContextTypes | any
+  >(NavBarContext);
 
   let currentUser: User;
   if (data) {
@@ -42,11 +51,11 @@ export default function Reminders() {
   // Show date picker modal.
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
 
-  // Date being set from the calendar.
-  const [fromDate, setFromDate] = useState<Date>(new Date());
+  // // Date being set from the calendar.
+  // const [fromDate, setFromDate] = useState<Date>(new Date());
 
-  // Date being set from the calendar.
-  const [toDate, setToDate] = useState<Date>(new Date());
+  // // Date being set from the calendar.
+  // const [toDate, setToDate] = useState<Date>(new Date());
 
   // Handler function for the notification.
   const handleNotification = async (e: any) => {
@@ -120,6 +129,7 @@ export default function Reminders() {
     }
   };
 
+  console.log(fromDate, toDate);
   return (
     <div className={styles.remindersWrapper}>
       <Button onClick={(e) => handleNotification(e)}>Send Notification</Button>
