@@ -89,10 +89,11 @@ export default function LoginSingupForm() {
 
   // Add handle submit for google oauth
   const handleSubmitGoogle = () => {
-    // console.log("Click");
     signIn("google", {
       callbackUrl: "/home",
     });
+    // Also create a user if it has not been created.
+    // If it has, then retrieve the user from the db.
   };
 
   // Use a side effect to call the handle click outside.

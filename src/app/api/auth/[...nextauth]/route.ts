@@ -81,6 +81,7 @@ const authOptions: NextAuthOptions = {
     session({ session, token }) {
       session.user.id = token.id;
       session.user.username = token.username;
+      // --> Create a user in the db if it hasnt been created already.
       return session;
     },
 
@@ -109,6 +110,10 @@ const authOptions: NextAuthOptions = {
       }
       return token;
     },
+
+    // signIn({ profile }) {
+    //   console.log(profile);
+    // },
   },
   // // Current page where signin is happening.
   pages: {
