@@ -25,9 +25,6 @@ export default function Home() {
   // as well as the general input form.
   const [subCategories, setAllSubCategories] = useState<Subcategory[]>([]);
 
-  // // Create state for managing viewing the create category list items.
-  // const [viewEntryForm, setViewEntryForm] = useState(false);
-
   // Consume context for the viewEntryForm
   const { viewEntryForm } = useContext<NavBarContextTypes | any>(NavBarContext);
 
@@ -39,6 +36,9 @@ export default function Home() {
   } catch (error: any) {
     console.error(error);
   }
+
+  // Checking if the session data can be pulled in here.
+  console.log(data);
 
   // Get the current log refreshed. Use a handler function.
   // will get passed down to the log form. We dont need the setCurrentLogInProgress setter

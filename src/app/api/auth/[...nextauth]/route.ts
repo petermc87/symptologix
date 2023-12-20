@@ -5,6 +5,7 @@ import { NextAuthOptions, RequestInternal } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import oauthStore from "../../../../../actions/userRequests/oauthUser";
 // ERROR:  The expected type comes from property 'authorize'
 // which is declared here on type 'UserCredentialsConfig<{ email: { label: string; placeholder:...
 // This is because the types for next-auth have id as a string and not a user. Here, we
@@ -82,6 +83,21 @@ const authOptions: NextAuthOptions = {
       session.user.id = token.id;
       session.user.username = token.username;
       // --> Create a user in the db if it hasnt been created already.
+      // 1. Find the user in the database. If its not there, create a new one.
+      // NOTE: A new variable is created to ensure types are declared
+      const userSession = session.user as User;
+
+      // When signing up regularly, the username is a required field. So, if
+      // the user signs in with google, there wont be a username created.
+      // This ensures that the profile is created when first signing in with
+      // google.
+      if (!session.user.username) {
+        oauthStore(userSession);
+      }
+      //  Setting the username in the session as well.
+      session.user.username = userSession.name;
+
+      // REFERENCE: https://www.youtube.com/watch?v=I_YCC_nFt70&t=16s
       return session;
     },
 
@@ -110,12 +126,8 @@ const authOptions: NextAuthOptions = {
       }
       return token;
     },
-
-    // signIn({ profile }) {
-    //   console.log(profile);
-    // },
   },
-  // // Current page where signin is happening.
+  // Current page where signin is happening.
   pages: {
     signIn: "/",
   },
