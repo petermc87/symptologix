@@ -79,7 +79,7 @@ const authOptions: NextAuthOptions = {
   // This will be instigated right after the account is retrieved.
   callbacks: {
     // The sessions user id will be the token id
-    session({ session, token }) {
+    async session({ session, token }) {
       session.user.id = token.id;
       session.user.username = token.username;
       // --> Create a user in the db if it hasnt been created already.
@@ -91,11 +91,10 @@ const authOptions: NextAuthOptions = {
       // the user signs in with google, there wont be a username created.
       // This ensures that the profile is created when first signing in with
       // google.
-      if (!session.user.username) {
-        oauthStore(userSession);
-      }
+      const returnedUser = await oauthStore(userSession);
+
       //  Setting the username in the session as well.
-      session.user.username = userSession.name;
+      session.user.username = returnedUser.username;
 
       // REFERENCE: https://www.youtube.com/watch?v=I_YCC_nFt70&t=16s
       return session;
