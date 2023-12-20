@@ -1,7 +1,7 @@
 @use "../../utilties/elements";
 @use "../../utilties/font";
 
-$line: solid;
+$line: none;
 
 .remindersWrapper {
   border: $line black;
