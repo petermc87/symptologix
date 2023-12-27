@@ -41,19 +41,11 @@ Below shows a typical logging step using a wireflow. It shows steps to create a 
 
 ### Landing Page
 
-<video src="public/videos/landing.mp4" controls title="Title"></video>
-
 ### New Log Page
-
-<video src="public/videos/login_newlog.mp4" controls title="Title"></video>
 
 ### Previous Log Page
 
-<video src="public/videos/previous_logs.mp4" controls title="Title"></video>
-
 ### Settings Page
-
-<video src="public/videos/settings.mp4" controls title="Title"></video>
 
 ## Breakdown of Application
 
@@ -89,3 +81,11 @@ Below shows a typical logging step using a wireflow. It shows steps to create a 
 10. [Service Worker with NextJS](https://blog.logrocket.com/implementing-service-workers-next-js/)
 
 11. [Convert NextJS to PWA](https://medium.com/@2018.itsuki/convert-a-next-js-app-to-a-progressive-web-app-119d736bbcf)
+
+12. [Embedding Gifs to Markdown](https://www.youtube.com/watch?v=jpeh1WorrWM&t=54s)
+
+13. [Converting MP4 videos to Gifs](https://cloudconvert.com/mp4-to-gif)
+
+14. [Free Screen Capture](https://www.screencapture.com/)
+
+15. [Possible Gif Converter](https://askubuntu.com/questions/648603/how-to-create-an-animated-gif-from-mp4-video-via-command-line)
