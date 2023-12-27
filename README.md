@@ -37,7 +37,23 @@ Below shows a typical logging step using a wireflow. It shows steps to create a 
 ![Wireframing](public/images/wireframes-2.png)
 ![Wireframing](public/images/wireframes-3.png)
 
-## Screenshots
+## App Demo
+
+### Landing Page
+
+<video src="public/videos/landing.mp4" controls title="Title"></video>
+
+### New Log Page
+
+<video src="public/videos/login_newlog.mp4" controls title="Title"></video>
+
+### Previous Log Page
+
+<video src="public/videos/previous_logs.mp4" controls title="Title"></video>
+
+### Settings Page
+
+<video src="public/videos/settings.mp4" controls title="Title"></video>
 
 ## Breakdown of Application
 
