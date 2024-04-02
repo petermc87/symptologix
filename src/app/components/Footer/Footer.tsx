@@ -1,3 +1,4 @@
+import year from "@/app/helpers/year";
 import {
   faFacebook,
   faGithub,
@@ -99,7 +100,7 @@ function Footer() {
             />
           </Link>
         </div>
-        <div className={styles.copyRight}>Ⓒ 2023 symptologix</div>
+        <div className={styles.copyRight}>Ⓒ {year} symptologix</div>
       </div>
     </div>
   );
