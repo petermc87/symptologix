@@ -1,3 +1,4 @@
+import year from "@/app/helpers/year";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
@@ -129,7 +130,7 @@ export default function Hamburger() {
         )}
         <li className={styles.logoWrapper} onClick={() => route.push("/")}>
           <Logo />
-          <p>All rights reserved 2023</p>
+          <p>All rights reserved, {year}</p>
         </li>
       </ul>
     </div>
