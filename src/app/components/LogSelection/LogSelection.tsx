@@ -18,9 +18,6 @@ export default function LogSelection({ userId }: LogSelectionTypes) {
     NavBarContextTypes | any
   >(NavBarContext);
 
-  // Print out logs to the console so that they can be checked.
-  if (logs) console.log(logs);
-
   // Submitting  new log to the database.
   const handleSubmitLog = async (e: any) => {
     e.preventDefault();
@@ -45,7 +42,7 @@ export default function LogSelection({ userId }: LogSelectionTypes) {
       }
     };
     fetchLogs();
-  }, []);
+  }, [userId, setLogs]);
 
   return (
     <>
