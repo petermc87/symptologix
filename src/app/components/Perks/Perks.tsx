@@ -120,10 +120,16 @@ export default function Perks() {
         </h1>
         <div className={styles.chartContainer} id={styles.logsChartsContainer}>
           <div id={styles.inputField} className={styles.chartType}>
-            <Image src="https://symptologix.s3.amazonaws.com/Screenshot+from+2023-09-29+19-54-26.png" />
+            <Image
+              src="https://symptologix.s3.amazonaws.com/Screenshot+from+2023-09-29+19-54-26.png"
+              alt="image"
+            />
           </div>
           <div id={styles.currentLog} className={styles.chartType}>
-            <Image src="https://symptologix.s3.amazonaws.com/Screenshot+from+2023-09-29+18-52-20.png" />
+            <Image
+              src="https://symptologix.s3.amazonaws.com/Screenshot+from+2023-09-29+18-52-20.png"
+              alt="image"
+            />
           </div>
         </div>
       </div>
