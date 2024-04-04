@@ -266,7 +266,13 @@ export default function Insights() {
     };
     fetchData();
     return () => {};
-  }, []);
+  }, [
+    handleHighestOccurrence,
+    setCategories,
+    setEntries,
+    setLogs,
+    setSubCategories,
+  ]);
 
   return (
     <>
