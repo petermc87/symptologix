@@ -50,13 +50,14 @@ export default function LogView() {
     };
     fetchSubcats();
     return () => {};
-  }, []);
+  }, [setSubCategories]);
 
   //Create click outside functionality
   // Add in the code for the ref handler for clicking outside to close.
   // Create reference to the element that will close
   // when clicked outside of it.
   const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent): void {
       if (ref.current && !ref.current.contains(event.target as Node)) {
