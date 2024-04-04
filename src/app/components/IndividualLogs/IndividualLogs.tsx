@@ -92,7 +92,7 @@ export default function IndividualLogs() {
   // so that we are not displaying the previous state.
   useEffect(() => {
     handleFilterWords();
-  }, [filteredEntries]);
+  }, [filteredEntries, handleFilterWords]);
 
   return (
     <>
