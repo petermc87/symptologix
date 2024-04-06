@@ -50,7 +50,7 @@ export default function LogView() {
     };
     fetchSubcats();
     return () => {};
-  }, [setSubCategories]);
+  }, []);
 
   //Create click outside functionality
   // Add in the code for the ref handler for clicking outside to close.

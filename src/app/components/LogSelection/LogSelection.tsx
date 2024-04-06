@@ -42,7 +42,7 @@ export default function LogSelection({ userId }: LogSelectionTypes) {
       }
     };
     fetchLogs();
-  }, [userId, setLogs]);
+  }, []);
 
   return (
     <>
