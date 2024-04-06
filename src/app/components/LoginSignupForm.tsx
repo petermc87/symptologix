@@ -190,6 +190,7 @@ export default function LoginSingupForm() {
                 ) : (
                   ""
                 )}
+
                 {/* Output email already exists here. */}
                 {emailExists ? <div>{emailExists}</div> : ""}
               </Form>
@@ -238,6 +239,11 @@ export default function LoginSingupForm() {
               ) : (
                 ""
               )}
+              <div className={styles.seperator}></div>
+              <p id={styles.boldText} className={styles.demoText}>
+                Check out our demo account
+              </p>
+              <Button>Demo</Button>
             </div>
           </div>
         </div>

@@ -66,3 +66,15 @@
     opacity: 0.7;
   }
 }
+
+// Separator Line
+.seperator {
+  margin-top: 1rem;
+  border-top: solid var.$light-hazy-purple;
+  border-width: 1px;
+}
+
+// Demo
+.demoText {
+  margin-top: 1rem;
+}
